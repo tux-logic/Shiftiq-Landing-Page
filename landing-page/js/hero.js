@@ -5,12 +5,19 @@ const HeroSection = (() => {
   const MAX_MOVE = 14;
   let typewriterSession = 0;
   let typewriterTimer = null;
+  let heroCopy = { title: '', subtitle: '' };
+  let i18nHandled = false;
 
-  function syncFullText() {
+  function captureCopyFromDom() {
     const title = document.querySelector('[data-hero-type="title"]');
     const subtitle = document.querySelector('[data-hero-type="subtitle"]');
-    if (title) title.dataset.fullText = title.textContent.trim();
-    if (subtitle) subtitle.dataset.fullText = subtitle.textContent.trim();
+    if (!title || !subtitle) return false;
+
+    heroCopy = {
+      title: title.textContent.trim(),
+      subtitle: subtitle.textContent.trim(),
+    };
+    return Boolean(heroCopy.title);
   }
 
   function typeText(element, text, charDelay) {
@@ -30,8 +37,16 @@ const HeroSection = (() => {
 
       let index = 0;
 
+      const finish = () => {
+        element.classList.remove('is-typing');
+        resolve();
+      };
+
       const step = () => {
-        if (session !== typewriterSession) return;
+        if (session !== typewriterSession) {
+          finish();
+          return;
+        }
 
         if (index < text.length) {
           element.textContent += text.charAt(index);
@@ -40,8 +55,7 @@ const HeroSection = (() => {
           return;
         }
 
-        element.classList.remove('is-typing');
-        resolve();
+        finish();
       };
 
       step();
@@ -60,15 +74,13 @@ const HeroSection = (() => {
     const title = document.querySelector('[data-hero-type="title"]');
     const subtitle = document.querySelector('[data-hero-type="subtitle"]');
     const actions = document.querySelector('[data-hero-actions]');
-    if (!title || !subtitle || !actions) return;
+    if (!title || !subtitle || !actions || !heroCopy.title) return;
 
     typewriterSession += 1;
     if (typewriterTimer) window.clearTimeout(typewriterTimer);
 
-    syncFullText();
-
-    const titleText = title.dataset.fullText || '';
-    const subtitleText = subtitle.dataset.fullText || '';
+    const titleText = heroCopy.title;
+    const subtitleText = heroCopy.subtitle;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     actions.classList.remove('is-visible');
@@ -83,20 +95,20 @@ const HeroSection = (() => {
       subtitle.textContent = subtitleText;
       content?.classList.add('is-complete');
       actions.classList.add('is-visible');
-      if (hero) hero.dataset.typewriterDone = 'true';
+      hero.dataset.typewriterDone = 'true';
       return;
     }
 
-    await typeText(title, titleText, 38);
+    await typeText(title, titleText, 32);
     title.classList.add('is-typed');
-    await wait(320);
-    await typeText(subtitle, subtitleText, 16);
+    await wait(280);
+    await typeText(subtitle, subtitleText, 14);
     subtitle.classList.add('is-typed');
-    await wait(180);
+    await wait(160);
 
     content?.classList.add('is-complete');
     actions.classList.add('is-visible');
-    if (hero) hero.dataset.typewriterDone = 'true';
+    hero.dataset.typewriterDone = 'true';
   }
 
   function initParallax() {
@@ -128,15 +140,17 @@ const HeroSection = (() => {
 
   function initTypewriter() {
     document.addEventListener('languageChanged', () => {
+      i18nHandled = true;
+      captureCopyFromDom();
       runTypewriter();
     });
 
     window.setTimeout(() => {
-      const hero = document.querySelector('.hero');
-      if (hero && hero.dataset.typewriterDone !== 'true') {
+      if (i18nHandled) return;
+      if (captureCopyFromDom()) {
         runTypewriter();
       }
-    }, 900);
+    }, 2500);
   }
 
   function init() {
