@@ -355,13 +355,14 @@ precisión total en cada reparación.</h1>
 
     <!-- Segmentos B2B / B2C -->
     <section class="section segments" id="segmentos">
+      <div class="segments__rule" aria-hidden="true"></div>
       <div class="container">
-        <div class="segments__header reveal">
-          <div class="segments__header-left">
-            <span class="section-label" data-i18n="segments.label">Segmentos</span>
+        <div class="segments__header">
+          <div class="segments__header-left seg-reveal" style="--reveal-delay: 0s">
+            <span class="segments__eyebrow" data-i18n="segments.label">Segmentos</span>
             <h2 class="segments__title" data-i18n="segments.title">Una plataforma. Dos experiencias poderosas.</h2>
           </div>
-          <div class="segments__header-right">
+          <div class="segments__header-right seg-reveal" style="--reveal-delay: 0.1s">
             <p class="segments__intro" data-seg-intro>
               <span data-seg-intro-text="b2b" data-i18n="segments.b2b.desc">Dueños, administradores y mecánicos de talleres de reparación automotriz.</span>
               <span data-seg-intro-text="b2c" data-i18n="segments.b2c.desc" hidden>Clientes finales que llevan su auto al taller y usan la app móvil.</span>
@@ -369,7 +370,7 @@ precisión total en cada reparación.</h1>
           </div>
         </div>
 
-        <div class="segments__controls reveal">
+        <div class="segments__controls seg-reveal" style="--reveal-delay: 0.18s">
           <button type="button" class="segments__arrow" data-seg-arrow="prev" aria-label="Anterior">
             <i data-lucide="chevron-left" aria-hidden="true"></i>
           </button>
@@ -382,7 +383,7 @@ precisión total en cada reparación.</h1>
           </button>
         </div>
 
-        <div class="segments__stack" data-segments-scroll>
+        <div class="segments__stack seg-reveal" data-segments-scroll style="--reveal-delay: 0.26s">
           <!-- B2B -->
           <div class="segments__group is-active" id="segmentos-talleres" data-seg-panel="b2b">
             <div class="segments__scroller" data-seg-scroller data-seg-steps="4">
@@ -576,20 +577,24 @@ precisión total en cada reparación.</h1>
 
     <!-- Story scroll — tarjetas que emergen -->
     <section class="story-scroll" id="historia" data-story-scroll>
+      <div class="story-scroll__ambient" aria-hidden="true">
+        <div class="story-scroll__grid"></div>
+        <div class="story-scroll__glow"></div>
+      </div>
       <div class="story-scroll__track" data-story-track>
         <div class="story-scroll__sticky">
           <div class="story-scroll__text">
             <div class="story-text is-active" data-story-text="0">
-              <h2 class="story-text__title" data-i18n="story.s1.title">Deja de operar tu taller a ciegas</h2>
-              <p class="story-text__desc" data-i18n="story.s1.text">Gestionar con papel, Excel y llamadas sueltas suele costar más que anticipar fallas, stock y cuellos de botella con datos en tiempo real.</p>
+              <h2 class="story-text__title" data-story-reveal data-i18n="story.s1.title">Deja de operar tu taller a ciegas</h2>
+              <p class="story-text__desc" data-story-reveal data-i18n="story.s1.text">Gestionar con papel, Excel y llamadas sueltas suele costar más que anticipar fallas, stock y cuellos de botella con datos en tiempo real.</p>
             </div>
             <div class="story-text" data-story-text="1">
-              <h2 class="story-text__title" data-i18n="story.s2.title">Conecta operación, equipo y clientes</h2>
-              <p class="story-text__desc" data-i18n="story.s2.text">Shiftiq une la web ejecutiva, la operación del taller y la app móvil en un solo ecosistema que todos entienden.</p>
+              <h2 class="story-text__title" data-story-reveal data-i18n="story.s2.title">Conecta operación, equipo y clientes</h2>
+              <p class="story-text__desc" data-story-reveal data-i18n="story.s2.text">Shiftiq une la web ejecutiva, la operación del taller y la app móvil en un solo ecosistema que todos entienden.</p>
             </div>
             <div class="story-text" data-story-text="2">
-              <h2 class="story-text__title" data-i18n="story.s3.title">Invierte en un taller proactivo</h2>
-              <p class="story-text__desc" data-i18n="story.s3.text">Elige un plan que escale contigo y convierte cada alerta OBD2, cada orden y cada sede en decisiones que protegen tu rentabilidad.</p>
+              <h2 class="story-text__title" data-story-reveal data-i18n="story.s3.title">Invierte en un taller proactivo</h2>
+              <p class="story-text__desc" data-story-reveal data-i18n="story.s3.text">Elige un plan que escale contigo y convierte cada alerta OBD2, cada orden y cada sede en decisiones que protegen tu rentabilidad.</p>
             </div>
           </div>
           <div class="story-scroll__cards" data-story-cards>
@@ -872,38 +877,64 @@ precisión total en cada reparación.</h1>
 
     <!-- Nosotros -->
     <section class="about-shift" id="nosotros" data-about>
-      <span class="about-shift__label" data-i18n="about.label">Nosotros</span>
-
-      <div class="about-shift__hero">
-        <span class="about-shift__badge" data-i18n="about.badge">El equipo</span>
-        <h2 class="about-shift__title" data-i18n="about.mission.heading">Nuestra misión</h2>
-        <p class="about-shift__tagline" data-i18n="about.tagline">Con raíces en la industria automotriz, impulsados por la precisión.</p>
-        <div class="about-shift__divider" aria-hidden="true"></div>
-        <p class="about-shift__statement" data-i18n="about.statement">Ayudamos a talleres, dueños y mecánicos a tomar decisiones más tempranas e inteligentes.</p>
-
-        <div class="about-shift__floats">
-          <article class="about-float about-float--left" data-about-float="left">
-            <div class="about-float__visual">
-              <lottie-player src="assets/animations/repair.json" background="transparent" speed="1" loop autoplay></lottie-player>
-            </div>
-            <div class="about-float__foot">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              <span data-i18n="about.float1">Construido por el equipo Shiftiq</span>
-            </div>
-          </article>
-          <article class="about-float about-float--right" data-about-float="right">
-            <div class="about-float__visual">
-              <lottie-player src="assets/animations/garage.json" background="transparent" speed="1" loop autoplay></lottie-player>
-            </div>
-            <div class="about-float__foot">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M14 9V5a3 3 0 00-6 0v4M5 9h14l1 12H4L5 9z"/></svg>
-              <span data-i18n="about.float2">100% enfocados en talleres automotrices</span>
-            </div>
-          </article>
-        </div>
-
-        <p class="about-shift__story" data-i18n="about.story">Somos un equipo multidisciplinario de desarrolladores, diseñadores y especialistas en movilidad que creemos que la tecnología debe servir al oficio mecánico, no complicarlo. Shiftiq nace para cerrar la brecha entre la operación del taller y la visión del negocio.</p>
+      <div class="about-shift__ambient" aria-hidden="true">
+        <div class="about-shift__grid"></div>
+        <div class="about-shift__glow about-shift__glow--gold"></div>
+        <div class="about-shift__glow about-shift__glow--blue"></div>
       </div>
+
+      <div class="about-shift__rule" aria-hidden="true"></div>
+
+      <div class="about-shift__shell">
+        <span class="about-shift__label" data-i18n="about.label">Nosotros</span>
+
+        <div class="about-shift__hero" data-about-hero>
+          <div class="about-shift__intro" data-about-intro>
+            <span class="about-shift__badge" data-i18n="about.badge">El equipo</span>
+            <h2 class="about-shift__title" data-i18n="about.mission.heading">Nuestra misión</h2>
+            <p class="about-shift__tagline" data-i18n="about.tagline">Con raíces en la industria automotriz, impulsados por la precisión.</p>
+          </div>
+
+          <div class="about-shift__beam" aria-hidden="true">
+            <div class="about-shift__beam-bar"></div>
+            <div class="about-shift__beam-line">
+              <span class="about-shift__beam-light"></span>
+            </div>
+          </div>
+
+          <div class="about-shift__stage" data-about-deck>
+            <article class="about-mission-card about-mission-card--slate about-mission-card--left" data-about-card data-about-float="left">
+              <div class="about-mission-card__shine" aria-hidden="true"></div>
+              <div class="about-mission-card__visual">
+                <img src="assets/icons/solution/work-order.svg" alt="" width="88" height="88" draggable="false">
+              </div>
+              <div class="about-mission-card__body">
+                <span class="about-mission-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </span>
+                <p data-i18n="about.float1">Construido por el equipo Shiftiq</p>
+              </div>
+            </article>
+
+            <div class="about-shift__center">
+              <p class="about-shift__statement" data-about-scroll-statement data-i18n="about.statement">Ayudamos a talleres, dueños y mecánicos a tomar decisiones más tempranas e inteligentes.</p>
+              <p class="about-shift__story" data-about-scroll-story data-i18n="about.story">Somos un equipo multidisciplinario de desarrolladores, diseñadores y especialistas en movilidad que creemos que la tecnología debe servir al oficio mecánico, no complicarlo. Shiftiq nace para cerrar la brecha entre la operación del taller y la visión del negocio.</p>
+            </div>
+
+            <article class="about-mission-card about-mission-card--mint about-mission-card--right" data-about-card data-about-float="right">
+              <div class="about-mission-card__shine" aria-hidden="true"></div>
+              <div class="about-mission-card__visual">
+                <img src="assets/icons/solution/obd.svg" alt="" width="88" height="88" draggable="false">
+              </div>
+              <div class="about-mission-card__body">
+                <span class="about-mission-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
+                </span>
+                <p data-i18n="about.float2">100% enfocados en talleres automotrices</p>
+              </div>
+            </article>
+          </div>
+        </div>
 
       <div class="about-shift__team" data-about-team-panel>
         <div class="about-shift__team-header">
@@ -1001,6 +1032,7 @@ precisión total en cada reparación.</h1>
           </div>
         </div>
         <p class="about-media__footer-text" data-about-scroll-reveal data-i18n="about.media.footerText">Nuestro equipo entiende ambos lados del taller. Desde desarrolladores y diseñadores hasta especialistas en movilidad y telemetría automotriz, todos en Shiftiq estamos unidos para cerrar la brecha entre quienes operan en el piso y quienes dirigen el negocio — convirtiendo datos, procesos y experiencia compartida en talleres más eficientes y rentables.</p>
+      </div>
       </div>
     </section>
 
@@ -1231,6 +1263,7 @@ Esa perspectiva es lo que hace que Shiftiq sea diferente.</p>
   <script src="js/closing.js"></script>
   <script src="js/footer-physics.js"></script>
   <script src="js/fab-welcome.js"></script>
+  <script src="js/scroll-text-reveal.js"></script>
   <script src="js/hero.js"></script>
   <script src="js/main.js"></script>
 </body>

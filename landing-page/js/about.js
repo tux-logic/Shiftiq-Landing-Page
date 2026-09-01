@@ -1,6 +1,5 @@
 /**
- * Shiftiq — About section (float cards, team slider, media toggle)
- * Team slider adapted from Viora team-members-panel
+ * Shiftiq — About section (mission cards, team slider, media toggle)
  */
 const AboutSection = (() => {
   function clamp(value, min, max) {
@@ -11,11 +10,11 @@ const AboutSection = (() => {
     return 1 - Math.pow(1 - value, 3);
   }
 
-  let footerTextReveal = null;
+  const scrollReveals = new Map();
 
   function attachScrollTextReveal(textElement) {
     if (!textElement || textElement.dataset.scrollTextRevealInitialized === 'true') {
-      return footerTextReveal;
+      return scrollReveals.get(textElement);
     }
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -102,36 +101,82 @@ const AboutSection = (() => {
 
     textElement.dataset.scrollTextRevealInitialized = 'true';
 
-    return { rebuild };
+    const controller = { rebuild };
+    scrollReveals.set(textElement, controller);
+    return controller;
   }
 
-  function initFooterTextReveal(root) {
-    const textElement = root.querySelector('[data-about-scroll-reveal]');
-    if (!textElement) return;
-
-    if (!footerTextReveal) {
-      footerTextReveal = attachScrollTextReveal(textElement);
-      return;
-    }
-
-    footerTextReveal.rebuild();
+  function initScrollReveals(root) {
+    root.querySelectorAll('[data-about-scroll-reveal], [data-about-scroll-statement], [data-about-scroll-story]').forEach((el) => {
+      const existing = scrollReveals.get(el);
+      if (existing) {
+        existing.rebuild();
+      } else {
+        attachScrollTextReveal(el);
+      }
+    });
   }
 
-  function initFloats(root) {
-    const floats = root.querySelectorAll('[data-about-float]');
-    if (!floats.length) return;
+  function initHeroIntro(root) {
+    const intro = root.querySelector('[data-about-intro]');
+    if (!intro || intro.dataset.aboutIntroReady === 'true') return;
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const side = el.dataset.aboutFloat;
-        el.classList.add(side === 'left' ? 'is-visible--left' : 'is-visible--right');
-        observer.unobserve(el);
+        intro.classList.add('is-visible');
+        observer.unobserve(intro);
       });
-    }, { threshold: 0.3, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.35, rootMargin: '0px 0px -8% 0px' });
 
-    floats.forEach((el) => observer.observe(el));
+    observer.observe(intro);
+    intro.dataset.aboutIntroReady = 'true';
+  }
+
+  function initMissionCards(root) {
+    const cards = root.querySelectorAll('[data-about-card]');
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.25, rootMargin: '0px 0px -6% 0px' });
+
+    cards.forEach((card) => observer.observe(card));
+  }
+
+  function initCardTilt(root) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    root.querySelectorAll('[data-about-card]').forEach((card) => {
+      if (card.dataset.aboutTiltReady === 'true') return;
+
+      const baseTilt = card.classList.contains('about-mission-card--slate') ? -10 : 10;
+      const isLeft = card.classList.contains('about-mission-card--left');
+      const baseY = isLeft ? '-20%' : '-10%';
+
+      card.addEventListener('pointermove', (event) => {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+        card.style.transform = `
+          translateY(${baseY})
+          rotateX(${(-y * 8).toFixed(2)}deg)
+          rotateY(${(x * 10).toFixed(2)}deg)
+          rotate(${baseTilt}deg)
+        `;
+      });
+
+      card.addEventListener('pointerleave', () => {
+        card.style.transform = `translateY(${baseY}) rotate(${baseTilt}deg)`;
+      });
+
+      card.dataset.aboutTiltReady = 'true';
+    });
   }
 
   function initTeamSlider(root) {
@@ -273,40 +318,20 @@ const AboutSection = (() => {
     });
   }
 
-  function initParallax(root) {
-    const floats = root.querySelectorAll('.about-float');
-    if (!floats.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const rect = root.getBoundingClientRect();
-        const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
-        floats.forEach((el, i) => {
-          const dir = i === 0 ? -1 : 1;
-          const y = (progress - 0.5) * 24 * dir;
-          el.style.translate = `0 ${y}px`;
-        });
-        ticking = false;
-      });
-    }, { passive: true });
-  }
-
   function init() {
     const root = document.querySelector('[data-about]');
     if (!root) return;
-    initFloats(root);
+    initHeroIntro(root);
+    initMissionCards(root);
+    initCardTilt(root);
     initTeamSlider(root);
     initMedia(root);
-    initParallax(root);
-    initFooterTextReveal(root);
+    initScrollReveals(root);
   }
 
   document.addEventListener('languageChanged', () => {
     const root = document.querySelector('[data-about]');
-    if (root) initFooterTextReveal(root);
+    if (root) initScrollReveals(root);
   });
 
   return { init };

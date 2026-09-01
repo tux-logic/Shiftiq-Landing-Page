@@ -31,6 +31,24 @@
   .pricing-referrals__grid .pricing-referrals__card:last-child { grid-column: 1 / -1; }
 }
 
+@media (max-width: 1024px) {
+  .about-shift__center {
+    width: min(100%, 580px);
+  }
+
+  .about-mission-card {
+    width: min(100%, 200px);
+  }
+
+  .about-mission-card--left {
+    left: clamp(4%, 8vw, 10%);
+  }
+
+  .about-mission-card--right {
+    right: clamp(4%, 8vw, 10%);
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
     min-height: 100svh;
@@ -222,10 +240,56 @@
   .story-card.is-hero { width: clamp(170px, 44vw, 210px); height: clamp(240px, 46vh, 300px); }
   .story-scroll--reduced .story-scroll__cards { grid-template-columns: 1fr; }
 
-  .about-shift__floats { min-height: 320px; }
-  .about-float { width: min(200px, 44vw); }
-  .about-float--left { left: 2%; top: 0; }
-  .about-float--right { right: 2%; top: 80px; }
+  .about-shift__stage {
+    min-height: auto;
+    padding-bottom: 1rem;
+  }
+
+  .about-shift__center {
+    width: 100%;
+    max-width: none;
+    padding-inline: 0.25rem;
+  }
+
+  .about-mission-card {
+    position: relative;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+    transform: rotate(var(--card-tilt, 0deg)) !important;
+  }
+
+  .about-mission-card--left,
+  .about-mission-card--mint {
+    --card-tilt: -3deg;
+  }
+
+  .about-mission-card--mint {
+    --card-tilt: 3deg;
+  }
+
+  .about-mission-card--left.is-visible,
+  .about-mission-card--right.is-visible {
+    transform: rotate(var(--card-tilt, 0deg)) !important;
+  }
+
+  .about-shift__stage {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .about-shift__center {
+    order: -1;
+  }
+
+  .about-shift__statement {
+    text-align: center;
+  }
+
   .about-team-card { flex: 0 0 220px; }
   .about-team-slider__track { gap: 1.25rem; }
 

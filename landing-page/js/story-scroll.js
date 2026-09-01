@@ -1,12 +1,44 @@
 /**
- * Shiftiq — Story scroll (cards fan out on scroll)
+ * Shiftiq — Story scroll (cards fan out + texto reveal estilo Viora)
  */
 const StoryScroll = (() => {
   const SPREAD_END = 0.55;
   const TEXT_BREAKS = [0, 0.38, 0.72];
 
+  let revealApis = new Map();
+  let lastActive = -1;
+  let animatingText = false;
+
   function easeOutCubic(t) {
     return 1 - (1 - t) ** 3;
+  }
+
+  function initTextReveals() {
+    document.querySelectorAll('[data-story-reveal]').forEach((el) => {
+      revealApis.set(el, ScrollTextReveal.attach(el));
+    });
+  }
+
+  async function playActiveText(index) {
+    if (animatingText || index === lastActive) return;
+    lastActive = index;
+
+    const block = document.querySelector(`[data-story-text="${index}"]`);
+    if (!block) return;
+
+    const title = block.querySelector('.story-text__title');
+    const desc = block.querySelector('.story-text__desc');
+    if (!title || !desc) return;
+
+    animatingText = true;
+
+    revealApis.get(title)?.rebuild();
+    revealApis.get(desc)?.rebuild();
+
+    await revealApis.get(title)?.playIn(0);
+    await revealApis.get(desc)?.playIn(80);
+
+    animatingText = false;
   }
 
   function init() {
@@ -20,6 +52,14 @@ const StoryScroll = (() => {
     const texts = [...document.querySelectorAll('[data-story-text]')];
 
     if (!section || !track || !cards.center) return;
+
+    initTextReveals();
+
+    ScrollTextReveal.observeEntrance([section], () => {
+      section.classList.add('is-inview');
+      lastActive = -1;
+      playActiveText(0);
+    });
 
     function getProgress() {
       const rect = track.getBoundingClientRect();
@@ -38,6 +78,10 @@ const StoryScroll = (() => {
         el.classList.toggle('is-active', isActive);
         el.classList.toggle('is-exiting', i < active);
       });
+
+      if (section.classList.contains('is-inview') && active !== lastActive) {
+        playActiveText(active);
+      }
     }
 
     function updateCards(p) {
@@ -89,7 +133,7 @@ const StoryScroll = (() => {
     }
 
     function applyHeight() {
-      const vh = window.innerWidth < 768 ? 220 : 260;
+      const vh = window.innerWidth < 768 ? 240 : 280;
       track.style.height = `${vh}vh`;
     }
 
@@ -100,16 +144,27 @@ const StoryScroll = (() => {
       onScroll();
     }, { passive: true });
 
+    document.addEventListener('languageChanged', () => {
+      revealApis.forEach((api) => api.rebuild());
+      lastActive = -1;
+      const p = getProgress();
+      let active = 0;
+      if (p >= TEXT_BREAKS[2]) active = 2;
+      else if (p >= TEXT_BREAKS[1]) active = 1;
+      playActiveText(active);
+    });
+
     onScroll();
   }
 
   return { init };
 })();
 
-document.addEventListener('DOMContentLoaded', () => StoryScroll.init());
-
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll('[data-story-scroll]').forEach((el) => {
-    el.classList.add('story-scroll--reduced');
-  });
-}
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('[data-story-scroll]').forEach((el) => {
+      el.classList.add('story-scroll--reduced');
+    });
+  }
+  StoryScroll.init();
+});

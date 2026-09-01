@@ -29,14 +29,33 @@ const SegmentsScroll = (() => {
       });
     }
 
+    slides.forEach((slide) => {
+      slide.querySelectorAll('.seg-card__content > *, .seg-card__visual').forEach((el) => {
+        el.setAttribute('data-seg-animate', '');
+      });
+    });
+
     function setSlide(index, force = false) {
       const i = Math.max(0, Math.min(steps - 1, index));
       if (!force && i === current) return;
       current = i;
-      slides.forEach((slide, j) => slide.classList.toggle('is-active', j === i));
+      slides.forEach((slide, j) => {
+        const isActive = j === i;
+        slide.classList.toggle('is-active', isActive);
+        if (isActive) animateSlide(slide);
+      });
       if (counter) counter.textContent = `${pad(i + 1)} / ${pad(steps)}`;
       dotsHost?.querySelectorAll('.seg-card__vdot').forEach((dot, j) => {
         dot.classList.toggle('is-active', j === i);
+      });
+    }
+
+    function animateSlide(slide) {
+      const items = slide.querySelectorAll('[data-seg-animate]');
+      items.forEach((item) => {
+        item.classList.remove('is-animated');
+        void item.offsetWidth;
+        item.classList.add('is-animated');
       });
     }
 
@@ -119,9 +138,26 @@ const SegmentsScroll = (() => {
     }
   }
 
+  function initSegReveal() {
+    const items = document.querySelectorAll('.seg-reveal');
+    if (!items.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+    items.forEach((el) => observer.observe(el));
+  }
+
   function init() {
     const root = document.querySelector('[data-segments-scroll]');
     if (!root) return;
+
+    initSegReveal();
 
     root.querySelectorAll('[data-seg-scroller]').forEach((scroller) => {
       const panelId = scroller.closest('[data-seg-panel]')?.dataset.segPanel;
