@@ -306,16 +306,14 @@ const Closing = (() => {
     let ticking = false;
 
     function palette() {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       return {
         white: [255, 255, 255],
-        primary: isDark ? [241, 245, 249] : [10, 25, 47],
-        ink: isDark ? [148, 163, 184] : [100, 116, 139],
-        accent: [37, 99, 235],
-        btnBgFrom: isDark ? [37, 99, 235] : [10, 25, 47],
-        btnBgTo: isDark ? [29, 78, 216] : [30, 58, 95],
-        btnTextFrom: isDark ? [255, 255, 255] : [255, 255, 255],
-        btnTextTo: isDark ? [255, 255, 255] : [255, 255, 255],
+        primary: [10, 25, 47],
+        ink: [100, 116, 139],
+        btnBgFrom: [10, 25, 47],
+        btnBgTo: [30, 58, 95],
+        btnTextFrom: [255, 255, 255],
+        btnTextTo: [255, 255, 255],
       };
     }
 
@@ -403,10 +401,6 @@ const Closing = (() => {
     window.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', requestUpdate);
     document.addEventListener('languageChanged', rebuild);
-
-    document.querySelectorAll('.theme-switch__btn').forEach((btn) => {
-      btn.addEventListener('click', () => requestAnimationFrame(requestUpdate));
-    });
 
     setWipeState(0);
     rebuild();

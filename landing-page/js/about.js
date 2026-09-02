@@ -156,7 +156,7 @@ const AboutSection = (() => {
 
       const baseTilt = card.classList.contains('about-mission-card--slate') ? -10 : 10;
       const isLeft = card.classList.contains('about-mission-card--left');
-      const baseY = isLeft ? '-20%' : '-10%';
+      const baseY = isLeft ? '-38%' : '-32%';
 
       card.addEventListener('pointermove', (event) => {
         const rect = card.getBoundingClientRect();

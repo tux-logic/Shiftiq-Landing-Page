@@ -142,6 +142,8 @@ const SolutionCarousel = (() => {
     bindClicks();
     bindSwipe();
 
+    if (window.lucide) lucide.createIcons();
+
     prevBtn?.addEventListener('click', prev);
     nextBtn?.addEventListener('click', next);
 

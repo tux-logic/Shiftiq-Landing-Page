@@ -6,12 +6,7 @@
   <meta name="description" content="Términos y condiciones de uso de Shiftiq — plataforma de gestión para talleres automotrices.">
   <title data-i18n="terms.meta.title">Términos y condiciones — Shiftiq</title>
   <script>
-    (function () {
-      var t = localStorage.getItem('shiftiq-theme');
-      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
-    })();
+    document.documentElement.setAttribute('data-theme', 'dark');
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,14 +23,6 @@
         <img src="assets/images/shiftiq-logo.png" alt="ShiftIQ" class="logo__img" width="140" height="36">
       </a>
       <div class="header__actions">
-        <div class="theme-switch" role="group" aria-label="Tema">
-          <button class="theme-switch__btn active" data-theme-value="light" aria-pressed="true" title="Modo claro">
-            <i data-lucide="sun" aria-hidden="true"></i>
-          </button>
-          <button class="theme-switch__btn" data-theme-value="dark" aria-pressed="false" title="Modo oscuro">
-            <i data-lucide="moon" aria-hidden="true"></i>
-          </button>
-        </div>
         <div class="lang-switch" role="group" aria-label="Idioma">
           <button class="lang-switch__btn" data-lang="en" aria-pressed="false">EN</button>
           <button class="lang-switch__btn active" data-lang="es" aria-pressed="true">ES</button>

@@ -6,12 +6,7 @@
   <meta name="description" content="Shiftiq — Gestión inteligente para talleres automotrices. Web ejecutiva, web operativa y app móvil.">
   <title>Shiftiq — Gestión inteligente para talleres</title>
   <script>
-    (function () {
-      var t = localStorage.getItem('shiftiq-theme');
-      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
-    })();
+    document.documentElement.setAttribute('data-theme', 'dark');
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,14 +68,6 @@
         </nav>
 
         <div class="header__actions">
-          <div class="theme-switch" role="group" aria-label="Tema">
-            <button class="theme-switch__btn active" data-theme-value="light" aria-pressed="true" title="Modo claro">
-              <i data-lucide="sun" aria-hidden="true"></i>
-            </button>
-            <button class="theme-switch__btn" data-theme-value="dark" aria-pressed="false" title="Modo oscuro">
-              <i data-lucide="moon" aria-hidden="true"></i>
-            </button>
-          </div>
           <div class="lang-switch" role="group" aria-label="Idioma">
             <button class="lang-switch__btn" data-lang="en" aria-pressed="false">EN</button>
             <button class="lang-switch__btn active" data-lang="es" aria-pressed="true">ES</button>
@@ -125,12 +112,16 @@ precisión total en cada reparación.</h1>
         </svg>
       </div>
       <div class="statement__body">
-        <div class="container statement__content reveal">
-          <p class="statement__eyebrow" id="statement-heading">
+        <div class="statement__ambient" aria-hidden="true">
+          <div class="statement__grid"></div>
+          <div class="statement__glow"></div>
+        </div>
+        <div class="container statement__content">
+          <p class="statement__eyebrow statement__fade" id="statement-heading" data-statement-fade>
             <span class="statement__dot" aria-hidden="true"></span>
             <span data-i18n="statement.eyebrow">Diseñado para el taller moderno</span>
           </p>
-          <p class="statement__text" data-i18n="statement.text">
+          <p class="statement__text" data-statement-reveal data-i18n="statement.text">
             Convierte los datos de tu operación en decisiones inteligentes. Monitorea cada sede, anticipa fallas con OBD2 y actúa antes para proteger ingresos y la productividad de tu equipo.
           </p>
         </div>
@@ -172,17 +163,19 @@ precisión total en cada reparación.</h1>
         <!-- Funciones: desafío (mismo fondo azul) -->
         <div class="funciones-dark" id="funciones">
           <div class="container">
-            <div class="funciones-dark__divider reveal">
+            <div class="funciones-dark__divider statement__fade" data-funciones-divider data-statement-fade>
               <span class="funciones-dark__tag">
                 <span class="statement__dot" aria-hidden="true"></span>
                 <span data-i18n="features.section">Funciones</span>
               </span>
-              <span class="funciones-dark__line" aria-hidden="true"></span>
+              <span class="funciones-dark__line" aria-hidden="true">
+                <span class="funciones-dark__line-light"></span>
+              </span>
             </div>
 
-            <div class="funciones-dark__grid reveal">
+            <div class="funciones-dark__grid">
               <!-- Acordeón izquierda -->
-              <div class="acc-panel" id="challengeAccordion">
+              <div class="acc-panel statement__fade" id="challengeAccordion" data-statement-fade style="--fade-delay: 0.06s">
                 <p class="acc-panel__heading">
                   <span data-i18n="challenge.accordion_label">Los retos del taller</span>
                   <i data-lucide="chevron-down" aria-hidden="true"></i>
@@ -258,10 +251,10 @@ precisión total en cada reparación.</h1>
               </div>
 
               <!-- Texto derecha -->
-              <div class="funciones-dark__copy">
+              <div class="funciones-dark__copy statement__fade" data-statement-fade style="--fade-delay: 0.12s">
                 <span class="funciones-dark__kicker" data-i18n="challenge.label">El desafío</span>
-                <h2 class="funciones-dark__title" data-i18n="challenge.title">La gestión tradicional del taller deja demasiado al azar</h2>
-                <p class="funciones-dark__desc" data-i18n="challenge.text">Órdenes en papel, inventario desactualizado, sin visibilidad de telemetría y reportes que llegan tarde.</p>
+                <h2 class="funciones-dark__title" data-statement-reveal data-i18n="challenge.title">La gestión tradicional del taller deja demasiado al azar</h2>
+                <p class="funciones-dark__desc" data-statement-reveal data-i18n="challenge.text">Órdenes en papel, inventario desactualizado, sin visibilidad de telemetría y reportes que llegan tarde.</p>
                 <a href="#solucion" class="btn btn--outline-light">
                   <span data-i18n="challenge.cta">Conoce la solución</span>
                   <i data-lucide="arrow-right" aria-hidden="true"></i>
@@ -274,7 +267,7 @@ precisión total en cada reparación.</h1>
     </section>
 
     <!-- Solución -->
-    <section class="section funciones-solution" id="solucion">
+    <section class="section funciones-solution section--light" id="solucion">
       <div class="funciones-solution__curve" aria-hidden="true">
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0,0 L0,25 C360,75 720,5 1080,30 C1260,45 1380,55 1440,20 L1440,0 Z" fill="currentColor"/>
@@ -296,7 +289,7 @@ precisión total en cada reparación.</h1>
                   <button class="sol-card__btn" type="button">
                     <h3 class="sol-card__title" data-i18n="solution.slide1.title">Órdenes de trabajo</h3>
                     <span class="sol-card__icon-wrap">
-                      <img src="assets/icons/solution/work-order.svg" alt="" class="sol-card__icon" width="64" height="64">
+                      <i data-lucide="clipboard-check" class="sol-card__icon" aria-hidden="true"></i>
                     </span>
                     <p class="sol-card__desc" data-i18n="solution.slide1.text">Crea, asigna y da seguimiento a cada reparación desde la web principal.</p>
                   </button>
@@ -305,7 +298,7 @@ precisión total en cada reparación.</h1>
                   <button class="sol-card__btn" type="button">
                     <h3 class="sol-card__title" data-i18n="solution.slide2.title">Inventario inteligente</h3>
                     <span class="sol-card__icon-wrap">
-                      <img src="assets/icons/solution/inventory.svg" alt="" class="sol-card__icon" width="64" height="64">
+                      <i data-lucide="warehouse" class="sol-card__icon" aria-hidden="true"></i>
                     </span>
                     <p class="sol-card__desc" data-i18n="solution.slide2.text">Productos, lotes y reserva de repuestos vinculados a cada tarea.</p>
                   </button>
@@ -314,7 +307,7 @@ precisión total en cada reparación.</h1>
                   <button class="sol-card__btn" type="button">
                     <h3 class="sol-card__title" data-i18n="solution.slide3.title">OBD2 y telemetría</h3>
                     <span class="sol-card__icon-wrap">
-                      <img src="assets/icons/solution/obd.svg" alt="" class="sol-card__icon" width="64" height="64">
+                      <i data-lucide="car-front" class="sol-card__icon" aria-hidden="true"></i>
                     </span>
                     <p class="sol-card__desc" data-i18n="solution.slide3.text">Vincula dispositivos, recibe alertas DTC y consulta datos técnicos del vehículo.</p>
                   </button>
@@ -323,7 +316,7 @@ precisión total en cada reparación.</h1>
                   <button class="sol-card__btn" type="button">
                     <h3 class="sol-card__title" data-i18n="solution.slide4.title">Dashboard ejecutivo</h3>
                     <span class="sol-card__icon-wrap">
-                      <img src="assets/icons/solution/dashboard.svg" alt="" class="sol-card__icon" width="64" height="64">
+                      <i data-lucide="chart-column-big" class="sol-card__icon" aria-hidden="true"></i>
                     </span>
                     <p class="sol-card__desc" data-i18n="solution.slide4.text">Ingresos, ganancias y métricas por sede para dueños y gerentes.</p>
                   </button>
@@ -332,7 +325,7 @@ precisión total en cada reparación.</h1>
                   <button class="sol-card__btn" type="button">
                     <h3 class="sol-card__title" data-i18n="solution.slide5.title">App para mecánicos</h3>
                     <span class="sol-card__icon-wrap">
-                      <img src="assets/icons/solution/mobile-app.svg" alt="" class="sol-card__icon" width="64" height="64">
+                      <i data-lucide="tablet-smartphone" class="sol-card__icon" aria-hidden="true"></i>
                     </span>
                     <p class="sol-card__desc" data-i18n="solution.slide5.text">Tareas, repuestos y telemetría en tiempo real desde el piso del taller.</p>
                   </button>
@@ -350,12 +343,80 @@ precisión total en cada reparación.</h1>
               </div>
             </div>
           </div>
+
+          <div class="solution-results reveal">
+            <div class="solution-results__media" aria-hidden="true">
+              <img
+                class="solution-results__img"
+                src="assets/images/hero/home-hero-imagen.png"
+                alt=""
+                width="960"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              >
+              <div class="solution-results__media-overlay"></div>
+            </div>
+            <div class="solution-results__content">
+              <span class="solution-results__label" data-i18n="solution.results.label">Resultados esperados</span>
+              <h3 class="solution-results__title" data-i18n="solution.results.title">Toma decisiones más inteligentes en tu taller y reduce el riesgo operativo.</h3>
+              <div class="solution-results__connector" aria-hidden="true"></div>
+              <dl class="solution-results__stats">
+                <div class="solution-results__stat">
+                  <dt class="solution-results__value" data-i18n="solution.results.s1.value">&lt;5 min</dt>
+                  <dd class="solution-results__desc" data-i18n="solution.results.s1.label">Meta de respuesta a alertas OBD2</dd>
+                </div>
+                <div class="solution-results__stat">
+                  <dt class="solution-results__value" data-i18n="solution.results.s2.value">200+</dt>
+                  <dd class="solution-results__desc" data-i18n="solution.results.s2.label">Talleres en adopción temprana</dd>
+                </div>
+                <div class="solution-results__stat">
+                  <dt class="solution-results__value" data-i18n="solution.results.s3.value">40+</dt>
+                  <dd class="solution-results__desc" data-i18n="solution.results.s3.label">Especialistas objetivo en la red</dd>
+                </div>
+                <div class="solution-results__stat">
+                  <dt class="solution-results__value" data-i18n="solution.results.s4.value">20%</dt>
+                  <dd class="solution-results__desc" data-i18n="solution.results.s4.label">Reducción estimada en tiempos muertos</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <div class="solution-marketplace reveal">
+            <div class="solution-marketplace__content">
+              <span class="solution-marketplace__label" data-i18n="solution.marketplace.label">Una recomendación de Shiftiq</span>
+              <h3 class="solution-marketplace__title" data-i18n="solution.marketplace.title">Nunca enfrentes una avería crítica solo</h3>
+              <div class="solution-marketplace__connector" aria-hidden="true"></div>
+              <p class="solution-marketplace__text" data-i18n="solution.marketplace.text">Cuando el riesgo aumenta, Shiftiq te conecta con talleres y especialistas cercanos que pueden revisar los datos de tu vehículo, evaluar la situación y ayudarte a responder más rápido con acciones técnicas focalizadas.</p>
+              <a href="#segmentos" class="solution-marketplace__cta" data-i18n="solution.marketplace.cta">Explorar la red</a>
+            </div>
+            <div class="solution-marketplace__media" aria-hidden="true">
+              <img
+                class="solution-marketplace__img"
+                src="assets/images/hero/home-hero-imagen.png"
+                alt=""
+                width="960"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              >
+              <div class="solution-marketplace__media-overlay"></div>
+            </div>
+          </div>
+
+          <div class="solution-video">
+            <div class="solution-video__frame" data-solution-video data-video-url="">
+              <button type="button" class="solution-video__play" aria-label="Reproducir video" disabled>
+                <i data-lucide="play" aria-hidden="true"></i>
+              </button>
+              <p class="solution-video__hint" data-i18n="solution.video.hint">Próximamente: video de la plataforma</p>
+            </div>
+          </div>
       </div>
     </section>
 
     <!-- Segmentos B2B / B2C -->
-    <section class="section segments" id="segmentos">
-      <div class="segments__rule" aria-hidden="true"></div>
+    <section class="section segments section--light" id="segmentos">
       <div class="container">
         <div class="segments__header">
           <div class="segments__header-left seg-reveal" style="--reveal-delay: 0s">
@@ -622,25 +683,21 @@ precisión total en cada reparación.</h1>
     </section>
 
     <!-- Planes de precio -->
-    <section class="pricing section" id="planes" data-pricing>
+    <section class="pricing section section--light" id="planes" data-pricing data-pricing-segment="b2b">
       <div class="container pricing__wrap reveal">
         <div class="pricing__head">
           <span class="pricing__label" data-i18n="plans.label">Planes de precio</span>
+          <div class="pricing__rule" aria-hidden="true"></div>
 
-          <div class="pricing__toolbar">
-            <div class="pricing__nav" aria-label="Navegación de planes">
-              <button type="button" class="pricing__arrow" data-pricing-prev aria-label="Plan anterior">
+          <div class="pricing__controls">
+            <div class="pricing__nav" aria-label="Navegación de segmentos">
+              <button type="button" class="pricing__arrow" data-pricing-prev aria-label="Segmento anterior">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg>
               </button>
-              <span class="pricing__counter" data-pricing-counter>1/3</span>
-              <button type="button" class="pricing__arrow" data-pricing-next aria-label="Plan siguiente">
+              <span class="pricing__counter" data-pricing-counter>1/2</span>
+              <button type="button" class="pricing__arrow" data-pricing-next aria-label="Segmento siguiente">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg>
               </button>
-            </div>
-
-            <div class="pricing__pill" role="tablist">
-              <button type="button" class="pricing__pill-btn is-active" data-pricing-segment="b2b" role="tab" aria-selected="true" data-i18n="plans.segment.b2b">Talleres</button>
-              <button type="button" class="pricing__pill-btn" data-pricing-segment="b2c" role="tab" aria-selected="false" data-i18n="plans.segment.b2c">Propietarios</button>
             </div>
 
             <div class="pricing__billing" data-pricing-billing>
@@ -650,29 +707,23 @@ precisión total en cada reparación.</h1>
           </div>
         </div>
 
+        <div class="pricing__card" data-pricing-card data-pricing-segment="b2b">
         <div class="pricing__stage">
           <div class="pricing__visual" aria-hidden="true">
             <div class="pricing-boleto" data-pricing-ticket>
               <div class="pricing-boleto__shadow"></div>
-              <div class="pricing-boleto__stage" data-pricing-boleto tabindex="0">
-                <svg class="pricing-boleto__svg" viewBox="0 0 800 450" role="img" aria-label="Boleto Shiftiq">
-                  <defs>
-                    <clipPath id="boleto-left-clip">
-                      <rect x="0" y="0" width="274" height="450" rx="18" ry="18"/>
-                    </clipPath>
-                    <clipPath id="boleto-right-clip">
-                      <rect x="274" y="0" width="526" height="450" rx="18" ry="18"/>
-                    </clipPath>
-                  </defs>
-                  <g class="pricing-boleto__part pricing-boleto__part--left">
-                    <image href="assets/images/planes/boleto-planes.png" width="800" height="450" clip-path="url(#boleto-left-clip)" preserveAspectRatio="xMidYMid slice"/>
-                  </g>
-                  <g class="pricing-boleto__part pricing-boleto__part--right">
-                    <image href="assets/images/planes/boleto-planes.png" width="800" height="450" clip-path="url(#boleto-right-clip)" preserveAspectRatio="xMidYMid slice"/>
-                  </g>
-                  <line class="pricing-boleto__perforation" x1="274" y1="34" x2="274" y2="416" stroke-dasharray="4 8"/>
-                </svg>
-              </div>
+              <figure class="pricing-boleto__figure" data-pricing-boleto>
+                <img
+                  src="assets/images/planes/boleto-planes.png"
+                  alt="Boleto Shiftiq"
+                  class="pricing-boleto__img"
+                  width="800"
+                  height="450"
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority="high"
+                >
+              </figure>
             </div>
           </div>
 
@@ -729,35 +780,9 @@ precisión total en cada reparación.</h1>
               </a>
             </article>
 
-            <!-- B2B: Corporativo -->
-            <article class="pricing-panel" data-pricing-panel data-segment="b2b" data-index="2"
-              data-lottie="assets/animations/analytics.json" data-ticket-tag="Scale" data-ticket-code="SHIFT-B2B-03" data-theme="navy">
-              <h2 class="pricing-panel__title" data-i18n="plans.b2b.enterprise.title">Para cadenas de talleres</h2>
-              <div class="pricing-panel__badge">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7L12 16.8 5.7 21l2.3-7-6-4.6h7.6z"/></svg>
-                <span data-i18n="plans.b2b.enterprise.badge">Plan Corporativo · Scale</span>
-              </div>
-              <ul class="pricing-panel__features">
-                <li data-i18n="plans.b2b.enterprise.f1">Todo lo del plan Profesional</li>
-                <li data-i18n="plans.b2b.enterprise.f2">Múltiples sedes y usuarios ilimitados</li>
-                <li data-i18n="plans.b2b.enterprise.f3">Dashboard ejecutivo con métricas globales</li>
-                <li data-i18n="plans.b2b.enterprise.f4">Integraciones avanzadas vía API</li>
-                <li data-i18n="plans.b2b.enterprise.f5">Soporte prioritario y onboarding dedicado</li>
-              </ul>
-              <div class="pricing-panel__price">
-                <span class="pricing-panel__amount" data-price-monthly="S/ 899" data-price-annual="A medida">Desde S/ 899</span>
-                <span class="pricing-panel__period" data-i18n="plans.period.monthly">/mes</span>
-              </div>
-              <p class="pricing-panel__note" data-pricing-annual-note hidden data-i18n="plans.billing.enterprise">Precio personalizado según sedes y volumen</p>
-              <a href="#" class="pricing-cta">
-                <span data-i18n="plans.cta.contact">Contactar ventas</span>
-                <span class="pricing-cta__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              </a>
-            </article>
-
             <!-- B2C: Gratis -->
             <article class="pricing-panel" data-pricing-panel data-segment="b2c" data-index="0"
-              data-lottie="assets/animations/mobile-app.json" data-ticket-tag="Free" data-ticket-code="SHIFT-B2C-01" data-theme="gold" data-no-billing>
+              data-lottie="assets/animations/mobile-app.json" data-ticket-tag="Free" data-ticket-code="SHIFT-B2C-01" data-theme="gold">
               <h2 class="pricing-panel__title" data-i18n="plans.b2c.free.title">Para propietarios de vehículos</h2>
               <div class="pricing-panel__badge pricing-panel__badge--gold">
                 <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7L12 16.8 5.7 21l2.3-7-6-4.6h7.6z"/></svg>
@@ -783,10 +808,10 @@ precisión total en cada reparación.</h1>
             <!-- B2C: Premium -->
             <article class="pricing-panel" data-pricing-panel data-segment="b2c" data-index="1"
               data-lottie="assets/animations/car-service.json" data-ticket-tag="Premium" data-ticket-code="SHIFT-B2C-02" data-theme="gold">
-              <h2 class="pricing-panel__title" data-i18n="plans.b2c.premium.title">Diagnóstico avanzado en tu bolsillo</h2>
+              <h2 class="pricing-panel__title" data-i18n="plans.b2c.premium.title">Para propietarios de vehículos</h2>
               <div class="pricing-panel__badge pricing-panel__badge--gold">
                 <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7L12 16.8 5.7 21l2.3-7-6-4.6h7.6z"/></svg>
-                <span data-i18n="plans.b2c.premium.badge">Premium · Suscripción anual</span>
+                <span data-i18n="plans.b2c.premium.badge">Plan Premium · App móvil</span>
               </div>
               <ul class="pricing-panel__features">
                 <li data-i18n="plans.b2c.premium.f1">Lectura avanzada de códigos DTC con explicaciones</li>
@@ -796,8 +821,8 @@ precisión total en cada reparación.</h1>
                 <li data-i18n="plans.b2c.premium.f5">Aprobación de cotizaciones desde el móvil</li>
               </ul>
               <div class="pricing-panel__price">
-                <span class="pricing-panel__amount" data-price-monthly="S/ 7.90" data-price-annual="S/ 79">S/ 79</span>
-                <span class="pricing-panel__period" data-i18n="plans.period.annual">/año</span>
+                <span class="pricing-panel__amount" data-price-monthly="S/ 7.90" data-price-annual="S/ 79">S/ 7.90</span>
+                <span class="pricing-panel__period" data-i18n="plans.period.monthly">/mes</span>
               </div>
               <p class="pricing-panel__note" data-pricing-annual-note hidden data-i18n="plans.b2c.premium.note">Equivale a S/ 6.58/mes facturado anualmente</p>
               <a href="#" class="pricing-cta pricing-cta--gold">
@@ -805,32 +830,8 @@ precisión total en cada reparación.</h1>
                 <span class="pricing-cta__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
               </a>
             </article>
-
-            <!-- B2C: Referidos -->
-            <article class="pricing-panel" data-pricing-panel data-segment="b2c" data-index="2"
-              data-lottie="assets/animations/garage.json" data-ticket-tag="Referral" data-ticket-code="SHIFT-REF-01" data-theme="gold" data-no-billing>
-              <h2 class="pricing-panel__title" data-i18n="plans.b2c.referral.title">Ingresos por servicios generados</h2>
-              <div class="pricing-panel__badge pricing-panel__badge--gold">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7L12 16.8 5.7 21l2.3-7-6-4.6h7.6z"/></svg>
-                <span data-i18n="plans.b2c.referral.badge">Comisiones · Red de talleres</span>
-              </div>
-              <ul class="pricing-panel__features">
-                <li data-i18n="plans.b2c.referral.f1">El cliente aprueba cotizaciones desde la app</li>
-                <li data-i18n="plans.b2c.referral.f2">Agenda servicios en talleres afiliados</li>
-                <li data-i18n="plans.b2c.referral.f3">El taller paga comisión por cliente referido</li>
-                <li data-i18n="plans.b2c.referral.f4">Modelo que premia la adopción de la red</li>
-                <li data-i18n="plans.b2c.referral.f5">Sin costo fijo para el propietario</li>
-              </ul>
-              <div class="pricing-panel__price">
-                <span class="pricing-panel__amount" data-i18n="plans.b2c.referral.price">Sin costo</span>
-                <span class="pricing-panel__period" data-i18n="plans.b2c.referral.period">comisión al taller</span>
-              </div>
-              <a href="#" class="pricing-cta pricing-cta--gold">
-                <span data-i18n="plans.b2c.referral.cta">Unirme a la red</span>
-                <span class="pricing-cta__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              </a>
-            </article>
           </div>
+        </div>
         </div>
 
         <footer class="pricing-referrals reveal">
@@ -848,28 +849,87 @@ precisión total en cada reparación.</h1>
             </div>
           </div>
 
-          <div class="pricing-referrals__grid">
-            <article class="pricing-referrals__card">
-              <span class="pricing-referrals__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M16 6l-4-4-4 4M12 2v14"/></svg>
-              </span>
-              <h4 data-i18n="plans.referrals.s1.title">Comparte tu enlace</h4>
-              <p data-i18n="plans.referrals.s1.text">Genera tu código de referido y envíalo por WhatsApp, correo o redes a talleres y conductores de tu red.</p>
-            </article>
-            <article class="pricing-referrals__card">
-              <span class="pricing-referrals__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-              </span>
-              <h4 data-i18n="plans.referrals.s2.title">Rastrea nuevos registros</h4>
-              <p data-i18n="plans.referrals.s2.text">Monitorea en tiempo real cuándo tus invitados se registran, activan su cuenta o agendan su primer servicio.</p>
-            </article>
-            <article class="pricing-referrals__card">
-              <span class="pricing-referrals__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7L12 16.8 5.7 21l2.3-7-6-4.6h7.6z"/></svg>
-              </span>
-              <h4 data-i18n="plans.referrals.s3.title">Desbloquea recompensas</h4>
-              <p data-i18n="plans.referrals.s3.text">Gana meses gratis, créditos en tu plan o comisiones extra cuando tus referidos operen dentro del ecosistema Shiftiq.</p>
-            </article>
+          <div class="pricing-referrals__marquee" data-referrals-marquee>
+            <div class="pricing-referrals__track">
+              <div class="pricing-referrals__group">
+                <article class="pricing-referrals__card pricing-referrals__card--share">
+                  <span class="pricing-referrals__step" aria-hidden="true">01</span>
+                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="share-2"></i></span>
+                  <h4 data-i18n="plans.referrals.s1.title">Comparte tu enlace</h4>
+                  <p data-i18n="plans.referrals.s1.text">Genera tu código de referido y envíalo por WhatsApp, correo o redes a talleres y conductores de tu red.</p>
+                </article>
+                <article class="pricing-referrals__card pricing-referrals__card--track">
+                  <span class="pricing-referrals__step" aria-hidden="true">02</span>
+                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="user-plus"></i></span>
+                  <h4 data-i18n="plans.referrals.s2.title">Rastrea nuevos registros</h4>
+                  <p data-i18n="plans.referrals.s2.text">Monitorea en tiempo real cuándo tus invitados se registran, activan su cuenta o agendan su primer servicio.</p>
+                </article>
+                <article class="pricing-referrals__card pricing-referrals__card--reward">
+                  <span class="pricing-referrals__step" aria-hidden="true">03</span>
+                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="gift"></i></span>
+                  <h4 data-i18n="plans.referrals.s3.title">Desbloquea recompensas</h4>
+                  <p data-i18n="plans.referrals.s3.text">Gana meses gratis, créditos en tu plan o comisiones extra cuando tus referidos operen dentro del ecosistema Shiftiq.</p>
+                </article>
+                <article class="pricing-referrals__card pricing-referrals__card--grow">
+                  <span class="pricing-referrals__step" aria-hidden="true">04</span>
+                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="users"></i></span>
+                  <h4 data-i18n="plans.referrals.s4.title">Escala tu red</h4>
+                  <p data-i18n="plans.referrals.s4.text">Cada taller o propietario que sumes fortalece la red Shiftiq y amplía tu impacto dentro del ecosistema automotriz.</p>
+                </article>
+              </div>
+              <div class="pricing-referrals__group" aria-hidden="true">
+                <article class="pricing-referrals__card pricing-referrals__card--share">
+                  <span class="pricing-referrals__step" aria-hidden="true">01</span>
+                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="share-2"></i></span>
+                  <h4 data-i18n="plans.referrals.s1.title">Comparte tu enlace</h4>
+                  <p data-i18n="plans.referrals.s1.text">Genera tu código de referido y envíalo por WhatsApp, correo o redes a talleres y conductores de tu red.</p>
+                </article>
+                <article class="pricing-referrals__card pricing-referrals__card--track">
+                  <span class="pricing-referrals__step" aria-hidden="true">02</span>
+                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="user-plus"></i></span>
+                  <h4 data-i18n="plans.referrals.s2.title">Rastrea nuevos registros</h4>
+                  <p data-i18n="plans.referrals.s2.text">Monitorea en tiempo real cuándo tus invitados se registran, activan su cuenta o agendan su primer servicio.</p>
+                </article>
+                <article class="pricing-referrals__card pricing-referrals__card--reward">
+                  <span class="pricing-referrals__step" aria-hidden="true">03</span>
+                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="gift"></i></span>
+                  <h4 data-i18n="plans.referrals.s3.title">Desbloquea recompensas</h4>
+                  <p data-i18n="plans.referrals.s3.text">Gana meses gratis, créditos en tu plan o comisiones extra cuando tus referidos operen dentro del ecosistema Shiftiq.</p>
+                </article>
+                <article class="pricing-referrals__card pricing-referrals__card--grow">
+                  <span class="pricing-referrals__step" aria-hidden="true">04</span>
+                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="users"></i></span>
+                  <h4 data-i18n="plans.referrals.s4.title">Escala tu red</h4>
+                  <p data-i18n="plans.referrals.s4.text">Cada taller o propietario que sumes fortalece la red Shiftiq y amplía tu impacto dentro del ecosistema automotriz.</p>
+                </article>
+              </div>
+              <div class="pricing-referrals__group" aria-hidden="true">
+                <article class="pricing-referrals__card pricing-referrals__card--share">
+                  <span class="pricing-referrals__step" aria-hidden="true">01</span>
+                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="share-2"></i></span>
+                  <h4 data-i18n="plans.referrals.s1.title">Comparte tu enlace</h4>
+                  <p data-i18n="plans.referrals.s1.text">Genera tu código de referido y envíalo por WhatsApp, correo o redes a talleres y conductores de tu red.</p>
+                </article>
+                <article class="pricing-referrals__card pricing-referrals__card--track">
+                  <span class="pricing-referrals__step" aria-hidden="true">02</span>
+                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="user-plus"></i></span>
+                  <h4 data-i18n="plans.referrals.s2.title">Rastrea nuevos registros</h4>
+                  <p data-i18n="plans.referrals.s2.text">Monitorea en tiempo real cuándo tus invitados se registran, activan su cuenta o agendan su primer servicio.</p>
+                </article>
+                <article class="pricing-referrals__card pricing-referrals__card--reward">
+                  <span class="pricing-referrals__step" aria-hidden="true">03</span>
+                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="gift"></i></span>
+                  <h4 data-i18n="plans.referrals.s3.title">Desbloquea recompensas</h4>
+                  <p data-i18n="plans.referrals.s3.text">Gana meses gratis, créditos en tu plan o comisiones extra cuando tus referidos operen dentro del ecosistema Shiftiq.</p>
+                </article>
+                <article class="pricing-referrals__card pricing-referrals__card--grow">
+                  <span class="pricing-referrals__step" aria-hidden="true">04</span>
+                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="users"></i></span>
+                  <h4 data-i18n="plans.referrals.s4.title">Escala tu red</h4>
+                  <p data-i18n="plans.referrals.s4.text">Cada taller o propietario que sumes fortalece la red Shiftiq y amplía tu impacto dentro del ecosistema automotriz.</p>
+                </article>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
@@ -1158,9 +1218,24 @@ Esa perspectiva es lo que hace que Shiftiq sea diferente.</p>
           </a>
         </div>
         <ul class="closing-cta__perks" data-closing-cta-extra>
-          <li data-i18n="closing.cta.perk1">Sin permanencia</li>
-          <li data-i18n="closing.cta.perk2">Configuración en minutos</li>
-          <li data-i18n="closing.cta.perk3">Soporte en español</li>
+          <li class="closing-cta__perk closing-cta__perk--freedom">
+            <span class="closing-cta__perk-icon" aria-hidden="true">
+              <i data-lucide="unlock-keyhole"></i>
+            </span>
+            <span data-i18n="closing.cta.perk1">Sin permanencia</span>
+          </li>
+          <li class="closing-cta__perk closing-cta__perk--speed">
+            <span class="closing-cta__perk-icon" aria-hidden="true">
+              <i data-lucide="zap"></i>
+            </span>
+            <span data-i18n="closing.cta.perk2">Configuración en minutos</span>
+          </li>
+          <li class="closing-cta__perk closing-cta__perk--support">
+            <span class="closing-cta__perk-icon" aria-hidden="true">
+              <i data-lucide="headset"></i>
+            </span>
+            <span data-i18n="closing.cta.perk3">Soporte en español</span>
+          </li>
         </ul>
       </div>
     </section>
@@ -1256,6 +1331,7 @@ Esa perspectiva es lo que hace que Shiftiq sea diferente.</p>
   <script src="js/theme.js"></script>
   <script src="js/carousel.js"></script>
   <script src="js/solution-carousel.js"></script>
+  <script src="js/solution-video.js"></script>
   <script src="js/segments-carousel.js"></script>
   <script src="js/story-scroll.js"></script>
   <script src="js/pricing.js"></script>
@@ -1264,6 +1340,7 @@ Esa perspectiva es lo que hace que Shiftiq sea diferente.</p>
   <script src="js/footer-physics.js"></script>
   <script src="js/fab-welcome.js"></script>
   <script src="js/scroll-text-reveal.js"></script>
+  <script src="js/statement.js"></script>
   <script src="js/hero.js"></script>
   <script src="js/main.js"></script>
 </body>

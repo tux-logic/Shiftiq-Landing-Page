@@ -1,28 +1,47 @@
 /**
- * Shiftiq — Pricing section (segment tabs, plan carousel, billing toggle)
+ * Shiftiq — Pricing (estilo Viora)
+ * Flechas = segmentos (1/2). Mensual/Anual = precio del segmento activo.
  */
 const Pricing = (() => {
-  const SEGMENT_COUNTS = { b2b: 3, b2c: 3 };
+  const SEGMENTS = [
+    { segment: 'b2b', index: 0 },
+    { segment: 'b2c', index: 1 },
+  ];
 
   function init() {
     const root = document.querySelector('[data-pricing]');
     if (!root) return;
 
     const panels = [...root.querySelectorAll('[data-pricing-panel]')];
-    const segmentBtns = [...root.querySelectorAll('[data-pricing-segment]')];
     const prevBtn = root.querySelector('[data-pricing-prev]');
     const nextBtn = root.querySelector('[data-pricing-next]');
     const counter = root.querySelector('[data-pricing-counter]');
     const billingWrap = root.querySelector('[data-pricing-billing]');
     const billingBtns = [...root.querySelectorAll('[data-billing]')];
-    const boletoStage = root.querySelector('[data-pricing-boleto]');
+    const boletoFigure = root.querySelector('[data-pricing-boleto]');
+    const card = root.querySelector('[data-pricing-card]');
+    const content = root.querySelector('.pricing__content');
 
-    let segment = 'b2b';
-    let index = 0;
+    let segmentSlide = 0;
     let billing = 'monthly';
+    let animating = false;
+
+    function lang() {
+      return document.documentElement.lang === 'en' ? 'en' : 'es';
+    }
+
+    function currentMeta() {
+      return SEGMENTS[segmentSlide];
+    }
 
     function getActivePanel() {
+      const { segment, index } = currentMeta();
       return panels.find((p) => p.dataset.segment === segment && Number(p.dataset.index) === index);
+    }
+
+    function setSegmentTheme(segment) {
+      if (card) card.dataset.pricingSegment = segment;
+      root.dataset.pricingSegment = segment;
     }
 
     function updateBillingVisibility() {
@@ -51,45 +70,36 @@ const Pricing = (() => {
 
       if (billing === 'annual' && annual) {
         amount.textContent = annual;
-        if (period) {
-          const isEnterprise = segment === 'b2b' && index === 2;
-          period.textContent = isEnterprise
-            ? (document.documentElement.lang === 'en' ? 'custom' : 'a medida')
-            : (document.documentElement.lang === 'en' ? '/year' : '/año');
-        }
+        if (period) period.textContent = lang() === 'en' ? '/year' : '/año';
         notes.forEach((n) => { n.hidden = false; });
       } else {
         amount.textContent = monthly;
-        if (period) {
-          period.textContent = document.documentElement.lang === 'en' ? '/mo' : '/mes';
-        }
+        if (period) period.textContent = lang() === 'en' ? '/mo' : '/mes';
         notes.forEach((n) => { n.hidden = true; });
       }
     }
 
-    function updateTicket() {
-      if (!boletoStage) return;
-      boletoStage.classList.remove('is-changing');
-      void boletoStage.offsetWidth;
-      boletoStage.classList.add('is-changing');
+    function animateBoleto() {
+      if (!boletoFigure) return;
+      boletoFigure.classList.remove('is-changing');
+      void boletoFigure.offsetWidth;
+      boletoFigure.classList.add('is-changing');
     }
 
-    function render() {
-      const total = SEGMENT_COUNTS[segment];
+    function applyState() {
+      const { segment } = currentMeta();
+      const activePanel = getActivePanel();
 
       panels.forEach((p) => {
-        const active = p.dataset.segment === segment && Number(p.dataset.index) === index;
+        const active = p === activePanel;
+        p.classList.remove('is-entering', 'is-exiting', 'is-exiting-left', 'is-entering-left');
         p.classList.toggle('is-active', active);
         p.setAttribute('aria-hidden', active ? 'false' : 'true');
       });
 
-      segmentBtns.forEach((btn) => {
-        const isActive = btn.dataset.pricingSegment === segment;
-        btn.classList.toggle('is-active', isActive);
-        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
-      });
+      setSegmentTheme(segment);
 
-      if (counter) counter.textContent = `${index + 1}/${total}`;
+      if (counter) counter.textContent = `${segmentSlide + 1}/${SEGMENTS.length}`;
 
       billingBtns.forEach((btn) => {
         btn.classList.toggle('is-active', btn.dataset.billing === billing);
@@ -97,41 +107,91 @@ const Pricing = (() => {
 
       updateBillingVisibility();
       updatePrices();
-      updateTicket();
     }
 
-    function goTo(newSegment, newIndex) {
-      segment = newSegment;
-      index = Math.max(0, Math.min(SEGMENT_COUNTS[segment] - 1, newIndex));
-      render();
+    function animateTransition(nextSlide, dir) {
+      if (animating || nextSlide === segmentSlide) return;
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        segmentSlide = nextSlide;
+        applyState();
+        return;
+      }
+
+      const current = getActivePanel();
+      segmentSlide = nextSlide;
+      const nextMeta = currentMeta();
+      const nextPanel = getActivePanel();
+
+      if (!current || !nextPanel) {
+        applyState();
+        return;
+      }
+
+      animating = true;
+
+      const exitClass = dir > 0 ? 'is-exiting' : 'is-exiting-left';
+      const enterClass = dir > 0 ? 'is-entering' : 'is-entering-left';
+
+      current.classList.add(exitClass);
+      current.classList.remove('is-active');
+
+      setSegmentTheme(nextMeta.segment);
+
+      nextPanel.classList.add(enterClass, 'is-active');
+      nextPanel.setAttribute('aria-hidden', 'false');
+
+      animateBoleto();
+      content?.classList.add('is-switching');
+
+      prevBtn?.classList.add('is-pressed');
+      nextBtn?.classList.add('is-pressed');
+      window.setTimeout(() => {
+        prevBtn?.classList.remove('is-pressed');
+        nextBtn?.classList.remove('is-pressed');
+      }, 280);
+
+      window.setTimeout(() => {
+        panels.forEach((p) => {
+          p.classList.remove('is-entering', 'is-exiting', 'is-exiting-left', 'is-entering-left', 'is-active');
+          p.setAttribute('aria-hidden', 'true');
+        });
+
+        nextPanel.classList.add('is-active');
+        nextPanel.classList.remove(enterClass);
+        nextPanel.setAttribute('aria-hidden', 'false');
+
+        if (counter) counter.textContent = `${segmentSlide + 1}/${SEGMENTS.length}`;
+
+        billingBtns.forEach((btn) => {
+          btn.classList.toggle('is-active', btn.dataset.billing === billing);
+        });
+
+        updateBillingVisibility();
+        updatePrices();
+        content?.classList.remove('is-switching');
+        animating = false;
+      }, 420);
     }
 
-    segmentBtns.forEach((btn) => {
-      btn.addEventListener('click', () => goTo(btn.dataset.pricingSegment, 0));
-    });
+    function goToSegment(next, dir) {
+      const wrapped = (next + SEGMENTS.length) % SEGMENTS.length;
+      animateTransition(wrapped, dir);
+    }
 
-    prevBtn?.addEventListener('click', () => {
-      const next = index - 1;
-      goTo(segment, next < 0 ? SEGMENT_COUNTS[segment] - 1 : next);
-    });
-
-    nextBtn?.addEventListener('click', () => {
-      const next = index + 1;
-      goTo(segment, next >= SEGMENT_COUNTS[segment] ? 0 : next);
-    });
+    prevBtn?.addEventListener('click', () => goToSegment(segmentSlide - 1, -1));
+    nextBtn?.addEventListener('click', () => goToSegment(segmentSlide + 1, 1));
 
     billingBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         billing = btn.dataset.billing;
-        render();
+        applyState();
       });
     });
 
-    document.addEventListener('languageChanged', () => {
-      updatePrices();
-    });
+    document.addEventListener('languageChanged', applyState);
 
-    render();
+    applyState();
   }
 
   return { init };

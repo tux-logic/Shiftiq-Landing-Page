@@ -23,12 +23,18 @@
   .carousel--cards .carousel__slide.active { display: block; }
 
   .pricing__stage { grid-template-columns: 1fr; }
-  .pricing__visual { min-height: 280px; order: -1; }
-  .pricing-boleto { width: min(100%, 320px); }
-  .pricing-boleto__stage { transform: rotate(-4deg); }
-  .pricing-referrals__header { grid-template-columns: 1fr; gap: 1.5rem; }
-  .pricing-referrals__grid { grid-template-columns: 1fr 1fr; }
-  .pricing-referrals__grid .pricing-referrals__card:last-child { grid-column: 1 / -1; }
+  .pricing__stage { grid-template-columns: 1fr; gap: 2rem; }
+  .pricing__visual { min-height: 340px; order: -1; padding: 0.5rem; justify-content: center; }
+  .pricing-boleto { width: min(100%, 560px); margin-left: 0; }
+  .pricing-boleto__figure { transform: rotate(-3deg); }
+  .pricing-referrals__header {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .pricing-referrals__aside {
+    padding: 1.25rem;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -41,11 +47,13 @@
   }
 
   .about-mission-card--left {
-    left: clamp(4%, 8vw, 10%);
+    left: clamp(0%, 2vw, 4%);
+    top: 22%;
   }
 
   .about-mission-card--right {
-    right: clamp(4%, 8vw, 10%);
+    right: clamp(0%, 2vw, 4%);
+    top: 26%;
   }
 }
 
@@ -204,24 +212,68 @@
   }
 
   .pricing__nav { justify-content: center; }
-  .pricing__pill { justify-content: center; }
   .pricing__billing { align-self: center; }
   .pricing-panel__title { max-width: none; }
 
   .pricing-referrals__header { grid-template-columns: 1fr; }
   .pricing-referrals__title { max-width: none; }
-  .pricing-referrals__grid { grid-template-columns: 1fr; }
 
   .section { padding: 4rem 0; }
   .section-title { font-size: 1.75rem; }
 
   .acc-panel__body.open { max-height: 400px; }
 
-  .sol-carousel { --sol-flex-slot: min(200px, 42vw); }
-  .sol-card__btn { min-height: 360px; }
-  .sol-card.is-active .sol-card__btn { min-height: 380px; }
+  .sol-carousel {
+    --sol-flex-slot: min(175px, 40vw);
+    --sol-flex-active: min(280px, 72vw);
+  }
+  .sol-card__btn { min-height: 380px; padding-inline: 1.1rem; }
+  .sol-card.is-active .sol-card__btn { min-height: 420px; padding-inline: 1.35rem; }
+
+  .solution-results {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .solution-results__media {
+    min-height: clamp(240px, 52vw, 320px);
+  }
+
+  .solution-results__content {
+    padding: clamp(2rem, 5vw, 2.75rem) clamp(1.25rem, 4vw, 1.75rem);
+  }
+
+  .solution-results__title {
+    max-width: none;
+  }
+
+  .solution-results__stat {
+    grid-template-columns: minmax(4.5rem, 5.5rem) 1fr;
+    gap: 1rem;
+  }
+
+  .solution-marketplace {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .solution-marketplace__content {
+    order: 1;
+    padding: clamp(2rem, 5vw, 2.75rem) clamp(1.25rem, 4vw, 1.75rem);
+  }
+
+  .solution-marketplace__media {
+    order: 2;
+    min-height: clamp(240px, 52vw, 320px);
+  }
+
+  .solution-marketplace__title {
+    max-width: none;
+  }
 
   .segments__header { grid-template-columns: 1fr; }
+  .segments__controls { max-width: 100%; padding-inline: 0.25rem; }
+  .segments__pill-btn { min-width: 5.5rem; padding-inline: 1rem; }
   .segments__sticky { top: 80px; }
   .seg-slide__grid { grid-template-columns: 1fr; }
   .seg-card__visual { order: -1; min-height: 200px; }
@@ -292,6 +344,15 @@
 
   .about-team-card { flex: 0 0 220px; }
   .about-team-slider__track { gap: 1.25rem; }
+
+  .about-shift__media {
+    padding-inline: clamp(1rem, 3.5vw, 1.75rem);
+  }
+
+  .about-media__toggle-btn {
+    padding: 0.72rem 2rem;
+    min-width: 6.75rem;
+  }
 
   .site-footer__grid {
     grid-template-columns: 1fr 1fr;
@@ -394,7 +455,15 @@
 
   .closing-cta__btn { font-size: 0.92rem; padding-left: 1.5rem; }
   .closing-cta__btn-icon { width: 40px; height: 40px; }
-  .closing-cta__perks { flex-direction: column; align-items: center; }
+  .closing-cta__perks {
+    flex-direction: column;
+    align-items: stretch;
+    width: min(100%, 20rem);
+  }
+
+  .closing-cta__perk {
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 480px) {

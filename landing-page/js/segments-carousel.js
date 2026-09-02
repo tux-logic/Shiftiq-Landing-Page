@@ -1,10 +1,11 @@
 /**
- * Shiftiq — Segments: pill switch + sticky scroll slides
+ * Shiftiq — Segments: pill switch + sticky scroll slides (stacked cards)
  */
 const SegmentsScroll = (() => {
   const STICKY_TOP = 100;
   const scrollers = new Map();
   let activePanel = 'b2b';
+  let panelObserver = null;
 
   function pad(n) {
     return String(n).padStart(2, '0');
@@ -60,16 +61,14 @@ const SegmentsScroll = (() => {
     }
 
     function applyHeight() {
-      if (scroller.closest('[data-seg-panel]')?.classList.contains('is-active')) {
-        const vh = window.innerWidth < 768 ? 60 : 70;
-        scroller.style.height = `${steps * vh}vh`;
-      } else {
-        scroller.style.height = '0';
-      }
+      const vh = window.innerWidth < 768 ? 60 : 70;
+      scroller.style.height = `${steps * vh}vh`;
     }
 
     function scrollToStep(index) {
-      const top = scroller.offsetTop + (index / steps) * (scroller.offsetHeight - window.innerHeight) + 1;
+      const scrollable = scroller.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      const top = scroller.getBoundingClientRect().top + window.scrollY + (index / steps) * scrollable + 1;
       window.scrollTo({ top, behavior: 'smooth' });
     }
 
@@ -103,17 +102,13 @@ const SegmentsScroll = (() => {
     applyHeight();
     setSlide(0, true);
 
-    const api = { setSlide, next, prev, onScroll, applyHeight, goToStep, get current() { return current; } };
+    const api = { setSlide, next, prev, onScroll, applyHeight, goToStep, get current() { return current; }, panelId };
     scrollers.set(panelId, api);
     return api;
   }
 
-  function showPanel(id, initial = false) {
+  function updateTabs(id) {
     activePanel = id;
-    const root = document.querySelector('[data-segments-scroll]');
-    root?.querySelectorAll('[data-seg-panel]').forEach((panel) => {
-      panel.classList.toggle('is-active', panel.dataset.segPanel === id);
-    });
 
     document.querySelectorAll('[data-seg-tab]').forEach((tab) => {
       const on = tab.dataset.segTab === id;
@@ -125,17 +120,49 @@ const SegmentsScroll = (() => {
       el.hidden = el.dataset.segIntroText !== id;
     });
 
-    scrollers.forEach((api) => api.applyHeight());
+    const root = document.querySelector('[data-segments-scroll]');
+    root?.querySelectorAll('[data-seg-panel]').forEach((panel) => {
+      panel.classList.toggle('is-active', panel.dataset.segPanel === id);
+    });
+  }
+
+  function scrollToPanel(id) {
+    const root = document.querySelector('[data-segments-scroll]');
+    const panel = root?.querySelector(`[data-seg-panel="${id}"]`);
+    const scroller = panel?.querySelector('[data-seg-scroller]');
+    if (!scroller) return;
+
+    const top = scroller.getBoundingClientRect().top + window.scrollY - STICKY_TOP;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  }
+
+  function showPanel(id, initial = false) {
+    updateTabs(id);
     scrollers.get(id)?.setSlide(0, true);
 
-    if (!initial) {
-      const panel = root?.querySelector(`[data-seg-panel="${id}"]`);
-      const scroller = panel?.querySelector('[data-seg-scroller]');
-      if (scroller) {
-        const top = scroller.offsetTop - STICKY_TOP;
-        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-      }
-    }
+    if (!initial) scrollToPanel(id);
+  }
+
+  function initPanelObserver() {
+    const root = document.querySelector('[data-segments-scroll]');
+    if (!root || panelObserver) return;
+
+    const panels = [...root.querySelectorAll('[data-seg-panel]')];
+    panelObserver = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (!visible) return;
+      const id = visible.target.dataset.segPanel;
+      if (id && id !== activePanel) updateTabs(id);
+    }, {
+      root: null,
+      threshold: [0.25, 0.45, 0.65],
+      rootMargin: '-20% 0px -35% 0px',
+    });
+
+    panels.forEach((panel) => panelObserver.observe(panel));
   }
 
   function initSegReveal() {
@@ -158,6 +185,7 @@ const SegmentsScroll = (() => {
     if (!root) return;
 
     initSegReveal();
+    initPanelObserver();
 
     root.querySelectorAll('[data-seg-scroller]').forEach((scroller) => {
       const panelId = scroller.closest('[data-seg-panel]')?.dataset.segPanel;
@@ -178,11 +206,11 @@ const SegmentsScroll = (() => {
     });
 
     document.querySelector('[data-seg-arrow="prev"]')?.addEventListener('click', () => {
-      scrollers.get(activePanel)?.prev();
+      showPanel('b2b');
     });
 
     document.querySelector('[data-seg-arrow="next"]')?.addEventListener('click', () => {
-      scrollers.get(activePanel)?.next();
+      showPanel('b2c');
     });
 
     showPanel('b2b', true);
