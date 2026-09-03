@@ -1,11 +1,10 @@
 /**
- * Shiftiq — Segments: pill switch + sticky scroll slides (stacked cards)
+ * Shiftiq — Segmentos: pill switch + carrusel manual (4 pasos por segmento)
  */
 const SegmentsScroll = (() => {
   const STICKY_TOP = 100;
   const scrollers = new Map();
   let activePanel = 'b2b';
-  let panelObserver = null;
 
   function pad(n) {
     return String(n).padStart(2, '0');
@@ -16,6 +15,8 @@ const SegmentsScroll = (() => {
     const slides = [...scroller.querySelectorAll('[data-seg-slide]')];
     const counter = scroller.querySelector('[data-seg-counter]');
     const dotsHost = scroller.querySelector('[data-seg-dots]');
+    const prevBtn = scroller.querySelector('[data-seg-prev]');
+    const nextBtn = scroller.querySelector('[data-seg-next]');
     let current = 0;
 
     if (dotsHost) {
@@ -25,20 +26,38 @@ const SegmentsScroll = (() => {
         dot.type = 'button';
         dot.className = 'seg-card__vdot';
         dot.setAttribute('aria-label', `Paso ${i + 1}`);
-        dot.addEventListener('click', () => goToStep(i, true));
+        dot.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          goToStep(i);
+        });
         dotsHost.appendChild(dot);
       });
     }
 
     slides.forEach((slide) => {
-      slide.querySelectorAll('.seg-card__content > *, .seg-card__visual').forEach((el) => {
+      slide.querySelectorAll('.seg-card__head, .seg-card__title, .seg-card__text, .seg-card__features, .seg-card__cta, .seg-card__visual').forEach((el) => {
         el.setAttribute('data-seg-animate', '');
       });
     });
 
-    function setSlide(index, force = false) {
+    function updateNavState() {
+      if (prevBtn) {
+        prevBtn.disabled = current <= 0;
+        prevBtn.classList.toggle('is-disabled', current <= 0);
+      }
+      if (nextBtn) {
+        nextBtn.disabled = current >= steps - 1;
+        nextBtn.classList.toggle('is-disabled', current >= steps - 1);
+      }
+    }
+
+    function setSlide(index) {
       const i = Math.max(0, Math.min(steps - 1, index));
-      if (!force && i === current) return;
+      if (i === current && slides[i]?.classList.contains('is-active')) {
+        updateNavState();
+        return;
+      }
       current = i;
       slides.forEach((slide, j) => {
         const isActive = j === i;
@@ -49,66 +68,52 @@ const SegmentsScroll = (() => {
       dotsHost?.querySelectorAll('.seg-card__vdot').forEach((dot, j) => {
         dot.classList.toggle('is-active', j === i);
       });
+      updateNavState();
     }
 
     function animateSlide(slide) {
-      const items = slide.querySelectorAll('[data-seg-animate]');
-      items.forEach((item) => {
+      slide.querySelectorAll('[data-seg-animate]').forEach((item) => {
         item.classList.remove('is-animated');
         void item.offsetWidth;
         item.classList.add('is-animated');
       });
     }
 
-    function applyHeight() {
-      const vh = window.innerWidth < 768 ? 60 : 70;
-      scroller.style.height = `${steps * vh}vh`;
-    }
-
-    function scrollToStep(index) {
-      const scrollable = scroller.offsetHeight - window.innerHeight;
-      if (scrollable <= 0) return;
-      const top = scroller.getBoundingClientRect().top + window.scrollY + (index / steps) * scrollable + 1;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-
-    function goToStep(index, smooth = false) {
-      setSlide(index, true);
-      if (smooth) scrollToStep(index);
-    }
-
-    function next() {
-      const nextIndex = (current + 1) % steps;
-      goToStep(nextIndex, true);
-    }
-
-    function prev() {
-      const prevIndex = (current - 1 + steps) % steps;
-      goToStep(prevIndex, true);
-    }
-
-    function onScroll() {
-      if (activePanel !== panelId) return;
-      const rect = scroller.getBoundingClientRect();
-      const scrollable = scroller.offsetHeight - window.innerHeight;
-      if (scrollable <= 0) return;
-
-      const scrolled = Math.max(0, STICKY_TOP - rect.top);
-      const progress = Math.min(1, scrolled / scrollable);
-      const index = Math.min(steps - 1, Math.floor(progress * steps));
+    function goToStep(index) {
       setSlide(index);
     }
 
-    applyHeight();
-    setSlide(0, true);
+    function next() {
+      if (current < steps - 1) setSlide(current + 1);
+    }
 
-    const api = { setSlide, next, prev, onScroll, applyHeight, goToStep, get current() { return current; }, panelId };
+    function prev() {
+      if (current > 0) setSlide(current - 1);
+    }
+
+    prevBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      prev();
+    });
+
+    nextBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      next();
+    });
+
+    scroller.style.height = 'auto';
+    setSlide(0);
+
+    const api = { setSlide, next, prev, goToStep, panelId };
     scrollers.set(panelId, api);
     return api;
   }
 
   function updateTabs(id) {
     activePanel = id;
+    document.querySelector('[data-seg-root]')?.setAttribute('data-seg-active', id);
 
     document.querySelectorAll('[data-seg-tab]').forEach((tab) => {
       const on = tab.dataset.segTab === id;
@@ -120,64 +125,66 @@ const SegmentsScroll = (() => {
       el.hidden = el.dataset.segIntroText !== id;
     });
 
-    const root = document.querySelector('[data-segments-scroll]');
-    root?.querySelectorAll('[data-seg-panel]').forEach((panel) => {
+    document.querySelector('[data-segments-scroll]')?.querySelectorAll('[data-seg-panel]').forEach((panel) => {
       panel.classList.toggle('is-active', panel.dataset.segPanel === id);
     });
   }
 
   function scrollToPanel(id) {
-    const root = document.querySelector('[data-segments-scroll]');
-    const panel = root?.querySelector(`[data-seg-panel="${id}"]`);
-    const scroller = panel?.querySelector('[data-seg-scroller]');
-    if (!scroller) return;
-
-    const top = scroller.getBoundingClientRect().top + window.scrollY - STICKY_TOP;
+    const panel = document.querySelector(`[data-seg-panel="${id}"]`);
+    if (!panel) return;
+    const top = panel.getBoundingClientRect().top + window.scrollY - STICKY_TOP + 8;
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   }
 
   function showPanel(id, initial = false) {
     updateTabs(id);
-    scrollers.get(id)?.setSlide(0, true);
-
     if (!initial) scrollToPanel(id);
   }
 
-  function initPanelObserver() {
-    const root = document.querySelector('[data-segments-scroll]');
-    if (!root || panelObserver) return;
-
-    const panels = [...root.querySelectorAll('[data-seg-panel]')];
-    panelObserver = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter((e) => e.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-      if (!visible) return;
-      const id = visible.target.dataset.segPanel;
-      if (id && id !== activePanel) updateTabs(id);
-    }, {
-      root: null,
-      threshold: [0.25, 0.45, 0.65],
-      rootMargin: '-20% 0px -35% 0px',
-    });
-
-    panels.forEach((panel) => panelObserver.observe(panel));
-  }
-
   function initSegReveal() {
-    const items = document.querySelectorAll('.seg-reveal');
+    const section = document.getElementById('segmentos');
+    const items = document.querySelectorAll('#segmentos .seg-reveal');
     if (!items.length) return;
+
+    function reveal(el) {
+      el.classList.add('is-visible');
+    }
+
+    function revealAllInSection() {
+      items.forEach(reveal);
+    }
+
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.94 && rect.bottom > 0) {
+        revealAllInSection();
+        return;
+      }
+
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          revealAllInSection();
+          sectionObserver.disconnect();
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
+
+      sectionObserver.observe(section);
+    }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
+        reveal(entry.target);
         observer.unobserve(entry.target);
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    }, { threshold: 0.05, rootMargin: '0px 0px -2% 0px' });
 
-    items.forEach((el) => observer.observe(el));
+    items.forEach((el) => {
+      if (el.classList.contains('is-visible')) return;
+      observer.observe(el);
+    });
   }
 
   function init() {
@@ -185,19 +192,11 @@ const SegmentsScroll = (() => {
     if (!root) return;
 
     initSegReveal();
-    initPanelObserver();
 
     root.querySelectorAll('[data-seg-scroller]').forEach((scroller) => {
       const panelId = scroller.closest('[data-seg-panel]')?.dataset.segPanel;
       if (panelId) initScroller(scroller, panelId);
     });
-
-    const onScroll = () => scrollers.get(activePanel)?.onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => {
-      scrollers.forEach((api) => api.applyHeight());
-      onScroll();
-    }, { passive: true });
 
     document.querySelectorAll('[data-seg-tab]').forEach((tab) => {
       tab.addEventListener('click', () => {
@@ -214,7 +213,14 @@ const SegmentsScroll = (() => {
     });
 
     showPanel('b2b', true);
-    onScroll();
+
+    if (window.lucide) lucide.createIcons();
+
+    if (window.location.hash === '#segmentos') {
+      document.querySelectorAll('#segmentos .seg-reveal').forEach((el) => {
+        el.classList.add('is-visible');
+      });
+    }
   }
 
   return { init };
