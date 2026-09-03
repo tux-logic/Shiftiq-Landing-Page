@@ -3,6 +3,7 @@
  */
 const StatementSection = (() => {
   const revealApis = [];
+  let marqueeObserver = null;
 
   function initScrollReveals() {
     revealApis.length = 0;
@@ -38,15 +39,68 @@ const StatementSection = (() => {
     items.forEach((el) => observer.observe(el));
   }
 
+  function syncMarqueeTrack(track) {
+    const groups = [...track.querySelectorAll('.marquee__group')];
+    if (!groups.length) return;
+
+    const firstGroup = groups[0];
+    const groupWidth = Math.ceil(firstGroup.getBoundingClientRect().width);
+    if (!groupWidth) return;
+
+    while (track.querySelectorAll('.marquee__group').length < 2) {
+      track.appendChild(firstGroup.cloneNode(true));
+    }
+
+    const speed = 72;
+    const duration = Math.max(18, groupWidth / speed);
+
+    track.style.setProperty('--marquee-offset', `-${groupWidth}px`);
+    track.style.setProperty('--marquee-duration', `${duration}s`);
+    track.style.animation = 'none';
+    void track.offsetWidth;
+    track.style.removeProperty('animation');
+  }
+
+  function initMarquee() {
+    const root = document.querySelector('[data-statement-marquee]');
+    if (!root) return;
+
+    const track = root.querySelector('.marquee__track');
+    if (!track) return;
+
+    const run = () => syncMarqueeTrack(track);
+
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(run).catch(run);
+    } else {
+      run();
+    }
+
+    window.addEventListener('resize', () => {
+      clearTimeout(track._marqueeResizeTimer);
+      track._marqueeResizeTimer = setTimeout(run, 120);
+    });
+
+    if (marqueeObserver) marqueeObserver.disconnect();
+    marqueeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        track.classList.toggle('is-paused', !entry.isIntersecting);
+      });
+    }, { threshold: 0.05 });
+    marqueeObserver.observe(root);
+  }
+
   function rebuild() {
     document.querySelectorAll('[data-statement-reveal]').forEach((el) => {
       el._scrollRevealApi?.rebuild();
     });
+    initMarquee();
   }
 
   function init() {
     initScrollReveals();
     initFadeIns();
+    initMarquee();
   }
 
   document.addEventListener('languageChanged', rebuild);

@@ -58,26 +58,38 @@
 }
 
 @media (max-width: 768px) {
+  :root {
+    --hero-gutter: clamp(2rem, 7.5vw, 3rem);
+    --header-gutter: clamp(1.5rem, 6vw, 2.25rem);
+    --page-gutter: clamp(1.5rem, 6vw, 2.25rem);
+  }
+
   .hero {
     min-height: 100svh;
   }
 
   .hero__inner {
     align-items: flex-end;
-    padding-inline: clamp(1.75rem, 7vw, 2.75rem);
-    padding-bottom: 2.5rem;
+    padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 0px));
     min-height: calc(100svh - var(--header-h));
   }
 
   .hero__title {
     max-width: none;
-    font-size: clamp(2.15rem, 9vw, 2.85rem);
-    line-height: 1.15;
+    font-size: clamp(1.75rem, 7.5vw, 2.25rem);
+    line-height: 1.14;
+    font-weight: 600;
   }
 
   .hero__subtitle {
     max-width: none;
-    font-size: 0.98rem;
+    font-size: 0.9375rem;
+    line-height: 1.48;
+  }
+
+  .hero__cta {
+    min-height: 44px;
+    font-size: 1rem;
   }
 
   .hero__bg {
@@ -85,7 +97,15 @@
   }
 
   .statement__content {
-    padding: 1.75rem 0 2.5rem;
+    padding-block: 2.25rem 1.75rem;
+  }
+
+  .funciones-dark__title {
+    font-size: clamp(1.5rem, 6.5vw, 1.85rem);
+  }
+
+  .funciones-dark__copy {
+    padding-top: 0.5rem;
   }
 
   .marquee__group span:not(.marquee__sep) {
@@ -95,19 +115,20 @@
 
   .marquee__sep { width: 1.75rem; }
 
-  .header__wrapper { padding: 0.75rem 0.85rem 0; }
-  .header--compact .header__wrapper { padding: 0.6rem 0.75rem 0; }
+  .header__wrapper {
+    padding-top: max(0.65rem, env(safe-area-inset-top, 0px));
+  }
 
   .header__bar {
     grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
     gap: 0;
-    padding: 0.65rem 0.75rem;
-    border-radius: var(--radius-full);
+    padding: 0.55rem 0.85rem;
+    border-radius: var(--ios-radius-pill);
   }
 
   .header--compact .header__bar {
-    padding: 0.5rem 0.6rem 0.5rem 0.85rem;
+    padding: 0.45rem 0.75rem 0.45rem 0.9rem;
   }
 
   .logo { grid-column: 1; grid-row: 1; }
@@ -177,13 +198,11 @@
 
   .container {
     width: min(1360px, 98vw);
-    padding-inline: 0.75rem;
+    padding-inline: var(--page-gutter);
   }
 
   .hero__inner {
     text-align: left;
-    margin-inline: auto;
-    padding-inline: clamp(1.5rem, 6.5vw, 2.25rem);
   }
 
   .hero__subtitle { margin-inline: 0; }
@@ -224,23 +243,117 @@
   .acc-panel__body.open { max-height: 400px; }
 
   .sol-carousel {
-    --sol-flex-slot: min(175px, 40vw);
-    --sol-flex-active: min(280px, 72vw);
+    --sol-flex-slot: min(132px, 34vw);
+    --sol-flex-active: min(248px, 68vw);
+    --sol-gap: 0.45rem;
   }
-  .sol-card__btn { min-height: 380px; padding-inline: 1.1rem; }
-  .sol-card.is-active .sol-card__btn { min-height: 420px; padding-inline: 1.35rem; }
+
+  .sol-card__btn {
+    min-height: 300px;
+    padding-inline: 0.85rem;
+  }
+
+  .sol-card.is-active .sol-card__btn {
+    min-height: 320px;
+    padding-inline: 1rem;
+  }
+
+  .sol-card__title,
+  .sol-card__desc,
+  .sol-card.is-active .sol-card__desc {
+    font-size: 0.9375rem;
+  }
+
+  .sol-card.is-active .sol-card__title {
+    font-size: 1.0625rem;
+  }
+
+  .sol-card__icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .sol-card.is-active .sol-card__icon {
+    width: 68px;
+    height: 68px;
+  }
+
+  .sol-carousel__footer {
+    margin-top: 0.75rem;
+  }
+
+  .solution-video__frame {
+    aspect-ratio: 16 / 9;
+  }
+
+  .solution-video__dock {
+    right: 0.75rem;
+    bottom: 0.75rem;
+    gap: 0.4rem;
+  }
+
+  .solution-video__dock-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .solution-video__expand-foreground {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    padding:
+      clamp(0.85rem, 3vw, 1.1rem)
+      clamp(0.85rem, 3vw, 1.1rem)
+      clamp(3.1rem, 8vw, 3.5rem);
+    gap: 0.65rem;
+  }
+
+  .solution-video__expand-hero {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .solution-video__expand-hero-img {
+    width: min(58vw, 200px);
+    max-height: none;
+    aspect-ratio: 16 / 11;
+  }
+
+  .solution-video__expand-panel {
+    align-items: center;
+    text-align: center;
+    padding-inline: 0.25rem;
+    padding-right: clamp(3rem, 10vw, 3.75rem);
+  }
+
+  .solution-video__expand-brand {
+    justify-content: center;
+  }
+
+  .solution-video__expand-text {
+    max-width: none;
+  }
+
+  .solution-video__expand-tags {
+    justify-content: center;
+  }
+
+  .solution-video__expand-marquees {
+    height: 46%;
+    opacity: 0.55;
+  }
 
   .solution-results {
     grid-template-columns: 1fr;
     min-height: auto;
   }
 
-  .solution-results__media {
+  .solution-results__media,
+  .solution-marketplace__media {
     min-height: clamp(240px, 52vw, 320px);
   }
 
   .solution-results__content {
-    padding: clamp(2rem, 5vw, 2.75rem) clamp(1.25rem, 4vw, 1.75rem);
+    padding: clamp(2rem, 5vw, 2.75rem) max(var(--page-gutter), env(safe-area-inset-left, 0px));
   }
 
   .solution-results__title {
@@ -259,7 +372,18 @@
 
   .solution-marketplace__content {
     order: 1;
-    padding: clamp(2rem, 5vw, 2.75rem) clamp(1.25rem, 4vw, 1.75rem);
+    padding: clamp(2rem, 5vw, 2.75rem) max(var(--page-gutter), env(safe-area-inset-left, 0px));
+  }
+
+  .sol-split__media--from-left,
+  .sol-split__media--from-right {
+    --split-x: 0;
+    transform: translateY(28px) scale(1.03);
+  }
+
+  .solution-results.visible .sol-split__media,
+  .solution-marketplace.visible .sol-split__media {
+    transform: translateY(0) scale(1);
   }
 
   .solution-marketplace__media {
@@ -273,11 +397,16 @@
 
   .segments__header { grid-template-columns: 1fr; }
   .segments__controls { max-width: 100%; padding-inline: 0.25rem; }
-  .segments__pill-btn { min-width: 5.5rem; padding-inline: 1rem; }
-  .segments__sticky { top: 80px; }
+  .segments__pill-btn { min-width: 5.25rem; padding-inline: 0.95rem; }
+  .segments__sticky { position: relative; top: auto; }
   .seg-slide__grid { grid-template-columns: 1fr; }
-  .seg-card__visual { order: -1; min-height: 200px; }
+  .seg-card__visual { order: -1; min-height: 180px; }
   .seg-card__title { max-width: none; }
+  .seg-card__inner {
+    min-height: auto;
+    padding: 1.35rem 1.35rem 1.5rem;
+    padding-right: 1.35rem;
+  }
   .seg-card__vdots {
     top: auto;
     bottom: 1.25rem;
