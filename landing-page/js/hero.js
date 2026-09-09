@@ -116,7 +116,23 @@ const HeroSection = (() => {
     const bg = document.querySelector('[data-hero-bg]');
     if (!hero || !bg || hero.dataset.heroReady === 'true') return;
 
+    const video = bg.querySelector('.hero__video');
+    if (video) {
+      video.playsInline = true;
+      video.muted = true;
+      const play = () => {
+        const p = video.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      };
+      if (video.readyState >= 2) play();
+      else video.addEventListener('canplay', play, { once: true });
+    }
+
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (video) {
+        video.pause();
+        video.removeAttribute('autoplay');
+      }
       hero.dataset.heroReady = 'true';
       return;
     }

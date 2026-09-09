@@ -35,6 +35,8 @@
   "challenge.acc3.text": "Diagnósticos manuales sin alertas DTC en tiempo real ni historial del vehículo.",
   "challenge.acc4.title": "Ceguera estratégica",
   "challenge.acc4.text": "Dueños sin métricas por sede, ingresos ni alertas de negocio hasta que es demasiado tarde.",
+  "challenge.video.intro": "Cada día sin datos claros es una oportunidad perdida: demoras, costos ocultos y clientes que no vuelven.",
+  "challenge.video.caption": "Shiftiq muestra el taller como es: órdenes, alertas OBD2 e inventario en una sola vista para actuar a tiempo.",
 
   "solution.label": "La solución",
   "solution.titleLine1": "Convierte la operación del taller",

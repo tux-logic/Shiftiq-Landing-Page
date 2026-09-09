@@ -1,9 +1,10 @@
 /**
- * Shiftiq — Statement + Funciones (scroll reveal borroso estilo Viora)
+ * Shiftiq — Statement + Funciones (scroll reveal + panel ovalado que sube)
  */
 const StatementSection = (() => {
   const revealApis = [];
   let marqueeObserver = null;
+  let riseRaf = 0;
 
   function initScrollReveals() {
     revealApis.length = 0;
@@ -90,17 +91,58 @@ const StatementSection = (() => {
     marqueeObserver.observe(root);
   }
 
+  function updatePanelRise() {
+    const panel = document.querySelector('[data-statement-panel]');
+    if (!panel) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      panel.style.setProperty('--statement-rise', '0px');
+      return;
+    }
+
+    const rect = panel.getBoundingClientRect();
+    const vh = window.innerHeight || 1;
+    const start = vh * 0.92;
+    const end = vh * 0.18;
+    const raw = (start - rect.top) / (start - end);
+    const progress = Math.max(0, Math.min(1, raw));
+    const eased = 1 - Math.pow(1 - progress, 2.2);
+    const maxRise = Math.min(120, Math.max(56, window.innerWidth * 0.08));
+    const rise = -eased * maxRise;
+
+    panel.style.setProperty('--statement-rise', `${rise.toFixed(2)}px`);
+  }
+
+  function requestRiseUpdate() {
+    if (riseRaf) return;
+    riseRaf = requestAnimationFrame(() => {
+      riseRaf = 0;
+      updatePanelRise();
+    });
+  }
+
+  function initPanelRise() {
+    const panel = document.querySelector('[data-statement-panel]');
+    if (!panel) return;
+
+    updatePanelRise();
+    window.addEventListener('scroll', requestRiseUpdate, { passive: true });
+    window.addEventListener('resize', requestRiseUpdate, { passive: true });
+  }
+
   function rebuild() {
     document.querySelectorAll('[data-statement-reveal]').forEach((el) => {
       el._scrollRevealApi?.rebuild();
     });
     initMarquee();
+    updatePanelRise();
   }
 
   function init() {
     initScrollReveals();
     initFadeIns();
     initMarquee();
+    initPanelRise();
   }
 
   document.addEventListener('languageChanged', rebuild);

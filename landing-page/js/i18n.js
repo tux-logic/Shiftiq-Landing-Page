@@ -58,7 +58,12 @@ const I18n = (() => {
     });
   }
 
-  return { init, load, get currentLang() { return currentLang; } };
+  return {
+    init,
+    load,
+    t: (key) => (translations[key] !== undefined ? translations[key] : ''),
+    get currentLang() { return currentLang; },
+  };
 })();
 
 document.addEventListener('DOMContentLoaded', () => I18n.init());

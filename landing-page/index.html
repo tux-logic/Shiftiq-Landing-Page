@@ -88,7 +88,18 @@
 
     <!-- Hero -->
     <section class="hero" id="inicio">
-      <div class="hero__bg" data-hero-bg aria-hidden="true"></div>
+      <div class="hero__bg" data-hero-bg aria-hidden="true">
+        <video
+          class="hero__video"
+          src="assets/images/videos/video-automotriz-4.mp4"
+          poster="assets/images/hero/home-hero-imagen.png"
+          muted
+          autoplay
+          loop
+          playsinline
+          preload="auto"
+        ></video>
+      </div>
       <div class="hero__lights" aria-hidden="true"></div>
       <div class="hero__grain" aria-hidden="true"></div>
       <div class="hero__overlay" aria-hidden="true"></div>
@@ -104,13 +115,8 @@ precisión total en cada reparación.</h1>
       </div>
     </section>
 
-    <!-- Statement + marquee (curva bajo hero) -->
-    <section class="statement" aria-labelledby="statement-heading">
-      <div class="statement__curve" aria-hidden="true">
-        <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0,100 L0,70 C240,95 480,15 720,35 C960,55 1200,10 1440,65 L1440,100 Z" fill="currentColor"/>
-        </svg>
-      </div>
+    <!-- Statement + marquee (borde ovalado que sube al scroll) -->
+    <section class="statement" aria-labelledby="statement-heading" data-statement-panel>
       <div class="statement__body">
         <div class="statement__ambient" aria-hidden="true">
           <div class="statement__grid"></div>
@@ -266,6 +272,38 @@ precisión total en cada reparación.</h1>
       </div>
     </section>
 
+    <!-- Video expand al scroll — patrón Viora / problem-panel -->
+    <section class="challenge-video" data-video-expand-section aria-labelledby="challenge-video-title">
+      <div class="challenge-video__sticky" data-video-expand-sticky>
+        <div class="challenge-video__intro">
+          <div class="challenge-video__intro-content">
+            <h2 class="challenge-video__intro-text" id="challenge-video-title" data-i18n="challenge.video.intro">
+              Cada día sin datos claros es una oportunidad perdida: demoras, costos ocultos y clientes que no vuelven.
+            </h2>
+          </div>
+          <div class="challenge-video__placeholder" data-video-expand-placeholder></div>
+        </div>
+
+        <figure class="challenge-video__media" data-video-expand-media>
+          <video
+            class="challenge-video__video"
+            src="assets/images/videos/video-automotriz-2.mp4"
+            muted
+            autoplay
+            loop
+            playsinline
+            preload="metadata"
+          ></video>
+          <figcaption class="challenge-video__caption" data-video-expand-caption>
+            <div class="challenge-video__caption-line"></div>
+            <p class="challenge-video__caption-text" data-i18n="challenge.video.caption">
+              Shiftiq muestra el taller como es: órdenes, alertas OBD2 e inventario en una sola vista para actuar a tiempo.
+            </p>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
     <!-- Solución -->
     <section class="section funciones-solution section--light" id="solucion">
       <div class="funciones-solution__curve" aria-hidden="true">
@@ -343,67 +381,74 @@ precisión total en cada reparación.</h1>
               </div>
             </div>
           </div>
+      </div>
 
-          <div class="solution-results reveal">
-            <div class="solution-results__media" aria-hidden="true">
-              <img
-                class="solution-results__img"
-                src="assets/images/hero/home-hero-imagen.png"
-                alt=""
-                width="960"
-                height="720"
-                loading="lazy"
-                decoding="async"
-              >
-              <div class="solution-results__media-overlay"></div>
-            </div>
-            <div class="solution-results__content">
-              <span class="solution-results__label" data-i18n="solution.results.label">Resultados esperados</span>
-              <h3 class="solution-results__title" data-i18n="solution.results.title">Toma decisiones más inteligentes en tu taller y reduce el riesgo operativo.</h3>
-              <div class="solution-results__connector" aria-hidden="true"></div>
-              <dl class="solution-results__stats">
-                <div class="solution-results__stat">
-                  <dt class="solution-results__value" data-i18n="solution.results.s1.value">&lt;5 min</dt>
-                  <dd class="solution-results__desc" data-i18n="solution.results.s1.label">Meta de respuesta a alertas OBD2</dd>
-                </div>
-                <div class="solution-results__stat">
-                  <dt class="solution-results__value" data-i18n="solution.results.s2.value">200+</dt>
-                  <dd class="solution-results__desc" data-i18n="solution.results.s2.label">Talleres en adopción temprana</dd>
-                </div>
-                <div class="solution-results__stat">
-                  <dt class="solution-results__value" data-i18n="solution.results.s3.value">40+</dt>
-                  <dd class="solution-results__desc" data-i18n="solution.results.s3.label">Especialistas objetivo en la red</dd>
-                </div>
-                <div class="solution-results__stat">
-                  <dt class="solution-results__value" data-i18n="solution.results.s4.value">20%</dt>
-                  <dd class="solution-results__desc" data-i18n="solution.results.s4.label">Reducción estimada en tiempos muertos</dd>
-                </div>
-              </dl>
-            </div>
+      <!-- Splits full-bleed con videos — patrón Viora expected-outcomes -->
+      <div class="solution-outcomes" data-outcomes-parallax-section>
+        <div class="solution-results reveal">
+          <div class="solution-results__media sol-split__media sol-split__media--from-left" aria-hidden="true">
+            <video
+              class="solution-results__video"
+              src="assets/images/videos/video-automotriz-5.mp4"
+              muted
+              autoplay
+              loop
+              playsinline
+              preload="metadata"
+              data-outcomes-parallax-video
+            ></video>
+            <div class="solution-results__media-overlay"></div>
           </div>
-
-          <div class="solution-marketplace reveal">
-            <div class="solution-marketplace__content">
-              <span class="solution-marketplace__label" data-i18n="solution.marketplace.label">Una recomendación de Shiftiq</span>
-              <h3 class="solution-marketplace__title" data-i18n="solution.marketplace.title">Nunca enfrentes una avería crítica solo</h3>
-              <div class="solution-marketplace__connector" aria-hidden="true"></div>
-              <p class="solution-marketplace__text" data-i18n="solution.marketplace.text">Cuando el riesgo aumenta, Shiftiq te conecta con talleres y especialistas cercanos que pueden revisar los datos de tu vehículo, evaluar la situación y ayudarte a responder más rápido con acciones técnicas focalizadas.</p>
-              <a href="#segmentos" class="solution-marketplace__cta" data-i18n="solution.marketplace.cta">Explorar la red</a>
-            </div>
-            <div class="solution-marketplace__media" aria-hidden="true">
-              <img
-                class="solution-marketplace__img"
-                src="assets/images/hero/home-hero-imagen.png"
-                alt=""
-                width="960"
-                height="720"
-                loading="lazy"
-                decoding="async"
-              >
-              <div class="solution-marketplace__media-overlay"></div>
-            </div>
+          <div class="solution-results__content">
+            <span class="solution-results__label sol-split__item" data-i18n="solution.results.label">Resultados esperados</span>
+            <h3 class="solution-results__title sol-split__item" data-i18n="solution.results.title">Toma decisiones más inteligentes en tu taller y reduce el riesgo operativo.</h3>
+            <div class="solution-results__connector sol-split__item" aria-hidden="true"></div>
+            <dl class="solution-results__stats">
+              <div class="solution-results__stat sol-split__item">
+                <dt class="solution-results__value" data-i18n="solution.results.s1.value">&lt;5 min</dt>
+                <dd class="solution-results__desc" data-i18n="solution.results.s1.label">Meta de respuesta a alertas OBD2</dd>
+              </div>
+              <div class="solution-results__stat sol-split__item">
+                <dt class="solution-results__value" data-i18n="solution.results.s2.value">200+</dt>
+                <dd class="solution-results__desc" data-i18n="solution.results.s2.label">Talleres en adopción temprana</dd>
+              </div>
+              <div class="solution-results__stat sol-split__item">
+                <dt class="solution-results__value" data-i18n="solution.results.s3.value">40+</dt>
+                <dd class="solution-results__desc" data-i18n="solution.results.s3.label">Especialistas objetivo en la red</dd>
+              </div>
+              <div class="solution-results__stat sol-split__item">
+                <dt class="solution-results__value" data-i18n="solution.results.s4.value">20%</dt>
+                <dd class="solution-results__desc" data-i18n="solution.results.s4.label">Reducción estimada en tiempos muertos</dd>
+              </div>
+            </dl>
           </div>
+        </div>
 
+        <div class="solution-marketplace reveal">
+          <div class="solution-marketplace__content">
+            <span class="solution-marketplace__label sol-split__item" data-i18n="solution.marketplace.label">Una recomendación de Shiftiq</span>
+            <h3 class="solution-marketplace__title sol-split__item" data-i18n="solution.marketplace.title">Nunca enfrentes una avería crítica solo</h3>
+            <div class="solution-marketplace__connector sol-split__item" aria-hidden="true"></div>
+            <p class="solution-marketplace__text sol-split__item" data-i18n="solution.marketplace.text">Cuando el riesgo aumenta, Shiftiq te conecta con talleres y especialistas cercanos que pueden revisar los datos de tu vehículo, evaluar la situación y ayudarte a responder más rápido con acciones técnicas focalizadas.</p>
+            <a href="#segmentos" class="solution-marketplace__cta sol-split__item" data-i18n="solution.marketplace.cta">Explorar la red</a>
+          </div>
+          <div class="solution-marketplace__media sol-split__media sol-split__media--from-right" aria-hidden="true">
+            <video
+              class="solution-marketplace__video"
+              src="assets/images/videos/video-automotriz-3.mp4"
+              muted
+              autoplay
+              loop
+              playsinline
+              preload="metadata"
+              data-outcomes-parallax-video
+            ></video>
+            <div class="solution-marketplace__media-overlay"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
           <div class="solution-video reveal">
             <div
               class="solution-video__frame"
@@ -536,329 +581,79 @@ precisión total en cada reparación.</h1>
       </div>
     </section>
 
-    <!-- Segmentos B2B / B2C -->
-    <section class="section segments section--light" id="segmentos" data-seg-root data-seg-active="b2b">
-      <div class="container">
-        <div class="segments__header">
-          <div class="segments__header-left seg-reveal" style="--reveal-delay: 0s">
-            <span class="segments__eyebrow" data-i18n="segments.label">Segmentos</span>
-            <h2 class="segments__title" data-i18n="segments.title">Una plataforma. Dos experiencias poderosas.</h2>
-          </div>
-          <div class="segments__header-right seg-reveal" style="--reveal-delay: 0.1s">
-            <p class="segments__intro" data-seg-intro>
-              <span data-seg-intro-text="b2b" data-i18n="segments.b2b.desc">Dueños, administradores y mecánicos de talleres de reparación automotriz.</span>
-              <span data-seg-intro-text="b2c" data-i18n="segments.b2c.desc" hidden>Clientes finales que llevan su auto al taller y usan la app móvil.</span>
-            </p>
-          </div>
+    <!-- Segmentos B2B / B2C — scroll story estilo Viora -->
+    <section class="segments-overview section--light" id="segmentos" aria-labelledby="segments-overview-title">
+      <div class="container segments-overview__inner">
+        <div class="segments-overview__topline">
+          <span class="segments-overview__label" data-i18n="segments.label">Segmentos</span>
         </div>
-
-        <div class="segments__controls seg-reveal" style="--reveal-delay: 0.18s">
-          <button type="button" class="segments__arrow" data-seg-arrow="prev" aria-label="Anterior">
+        <div class="segments-overview__intro">
+          <h2 class="segments-overview__title" id="segments-overview-title" data-i18n="segments.title">Una plataforma. Dos experiencias poderosas.</h2>
+          <p class="segments-overview__description" data-i18n="segments.intro">Conectamos talleres automotrices con propietarios de vehículos en un ecosistema digital integrado.</p>
+        </div>
+        <nav class="segments-overview__nav" aria-label="Elegir segmento">
+          <a class="segments-overview__arrow segments-overview__arrow--prev" href="#segmentos-talleres" aria-label="Ir a Talleres">
             <i data-lucide="chevron-left" aria-hidden="true"></i>
-          </button>
-          <div class="segments__pill" role="tablist">
-            <button type="button" class="segments__pill-btn is-active" role="tab" data-seg-tab="b2b" aria-selected="true" data-i18n="segments.tab.b2b">Talleres</button>
-            <button type="button" class="segments__pill-btn" role="tab" data-seg-tab="b2c" aria-selected="false" data-i18n="segments.tab.b2c">Propietarios</button>
-          </div>
-          <button type="button" class="segments__arrow" data-seg-arrow="next" aria-label="Siguiente">
+          </a>
+          <a class="segments-overview__option segments-overview__option--b2b" href="#segmentos-talleres" data-i18n="segments.tab.b2b">Talleres</a>
+          <a class="segments-overview__option segments-overview__option--b2c" href="#segmentos-propietarios" data-i18n="segments.tab.b2c">Propietarios</a>
+          <a class="segments-overview__arrow segments-overview__arrow--next" href="#segmentos-propietarios" aria-label="Ir a Propietarios">
             <i data-lucide="chevron-right" aria-hidden="true"></i>
-          </button>
-        </div>
-
-        <div class="segments__stack seg-reveal" data-segments-scroll style="--reveal-delay: 0.26s">
-          <!-- B2B -->
-          <div class="segments__group is-active" id="segmentos-talleres" data-seg-panel="b2b">
-            <header class="segments__group-head">
-              <span class="segments__group-badge segments__group-badge--b2b"><i data-lucide="wrench" aria-hidden="true"></i><span data-i18n="segments.tab.b2b">Talleres</span></span>
-              <p class="segments__group-desc" data-i18n="segments.b2b.desc">Dueños, administradores y mecánicos de talleres de reparación automotriz.</p>
-            </header>
-            <div class="segments__scroller" data-seg-scroller data-seg-steps="4">
-              <div class="segments__sticky">
-                <article class="seg-card seg-card--b2b">
-                  <div class="seg-card__inner">
-                    <span class="seg-card__counter" data-seg-counter>01 / 04</span>
-                    <div class="seg-card__vdots" data-seg-dots aria-hidden="true"></div>
-                    <div class="seg-card__slides">
-                      <div class="seg-slide is-active" data-seg-slide>
-                        <div class="seg-slide__grid">
-                          <div class="seg-card__content">
-                            <div class="seg-card__head"><span class="seg-card__label" data-i18n="segments.b2b.tag">Talleres</span></div>
-                            <h3 class="seg-card__title" data-i18n="segments.b2b.s1.title">Gestiona tu taller desde un solo lugar</h3>
-                            <p class="seg-card__text" data-i18n="segments.b2b.s1.text">Centraliza la operación de tu taller con un dashboard ejecutivo que te da control total sobre tu negocio.</p>
-                            <ul class="seg-card__features">
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="bar-chart-3"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2b.s1.b1"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="users"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2b.s1.b2"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="map-pin"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2b.s1.b3"></span>
-                              </li>
-                            </ul>
-                            <a href="#planes" class="seg-card__cta" data-i18n="segments.b2b.s1.cta">Comenzar ahora<i data-lucide="chevron-right" aria-hidden="true"></i></a>
-                          </div>
-                          <div class="seg-card__visual">
-                            <div class="seg-card__visual-frame">
-                              <div class="seg-card__visual-glow" aria-hidden="true"></div>
-                              <img src="assets/icons/solution/dashboard.svg" alt="" class="seg-card__visual-icon" width="120" height="120" loading="lazy">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="seg-slide" data-seg-slide>
-                        <div class="seg-slide__grid">
-                          <div class="seg-card__content">
-                            <div class="seg-card__head"><span class="seg-card__label" data-i18n="segments.b2b.tag">Talleres</span></div>
-                            <h3 class="seg-card__title" data-i18n="segments.b2b.s2.title">Conecta con clientes con necesidades reales</h3>
-                            <p class="seg-card__text" data-i18n="segments.b2b.s2.text">Recibe alertas automáticas cuando un vehículo cercano detecta fallas a través de su dispositivo OBD2.</p>
-                            <ul class="seg-card__features">
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="radio"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2b.s2.b1"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="phone-outgoing"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2b.s2.b2"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="clipboard-list"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2b.s2.b3"></span>
-                              </li>
-                            </ul>
-                            <a href="#planes" class="seg-card__cta" data-i18n="segments.b2b.s2.cta">Activar alertas<i data-lucide="chevron-right" aria-hidden="true"></i></a>
-                          </div>
-                          <div class="seg-card__visual">
-                            <div class="seg-card__visual-frame">
-                              <div class="seg-card__visual-glow" aria-hidden="true"></div>
-                              <img src="assets/icons/solution/obd.svg" alt="" class="seg-card__visual-icon" width="120" height="120" loading="lazy">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="seg-slide" data-seg-slide>
-                        <div class="seg-slide__grid">
-                          <div class="seg-card__content">
-                            <div class="seg-card__head"><span class="seg-card__label" data-i18n="segments.b2b.tag">Talleres</span></div>
-                            <h3 class="seg-card__title" data-i18n="segments.b2b.s3.title">Gestiona el inventario sin complicaciones</h3>
-                            <p class="seg-card__text" data-i18n="segments.b2b.s3.text">Controla tus repuestos y productos con un sistema integrado que te avisa cuando necesitas reabastecer.</p>
-                            <ul class="seg-card__features">
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="package"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2b.s3.b1"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="bookmark"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2b.s3.b2"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="triangle-alert"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2b.s3.b3"></span>
-                              </li>
-                            </ul>
-                            <a href="#planes" class="seg-card__cta" data-i18n="segments.b2b.s3.cta">Gestionar inventario<i data-lucide="chevron-right" aria-hidden="true"></i></a>
-                          </div>
-                          <div class="seg-card__visual">
-                            <div class="seg-card__visual-frame">
-                              <div class="seg-card__visual-glow" aria-hidden="true"></div>
-                              <img src="assets/icons/solution/inventory.svg" alt="" class="seg-card__visual-icon" width="120" height="120" loading="lazy">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="seg-slide" data-seg-slide>
-                        <div class="seg-slide__grid">
-                          <div class="seg-card__content">
-                            <div class="seg-card__head"><span class="seg-card__label" data-i18n="segments.b2b.tag">Talleres</span></div>
-                            <h3 class="seg-card__title" data-i18n="segments.b2b.s4.title">Optimiza el flujo de trabajo de tu equipo</h3>
-                            <p class="seg-card__text" data-i18n="segments.b2b.s4.text">Asigna tareas a tus mecánicos, da seguimiento y asegura que cada reparación se complete a tiempo.</p>
-                            <ul class="seg-card__features">
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="user-cog"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2b.s4.b1"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="list-todo"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2b.s4.b2"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="trending-up"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2b.s4.b3"></span>
-                              </li>
-                            </ul>
-                            <a href="#planes" class="seg-card__cta" data-i18n="segments.b2b.s4.cta">Optimizar equipo<i data-lucide="chevron-right" aria-hidden="true"></i></a>
-                          </div>
-                          <div class="seg-card__visual">
-                            <div class="seg-card__visual-frame">
-                              <div class="seg-card__visual-glow" aria-hidden="true"></div>
-                              <img src="assets/icons/solution/work-order.svg" alt="" class="seg-card__visual-icon" width="120" height="120" loading="lazy">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  
-                    <div class="seg-card__nav">
-                      <button type="button" class="seg-card__nav-btn" data-seg-prev aria-label="Anterior"><i data-lucide="chevron-left" aria-hidden="true"></i></button>
-                      <span class="seg-card__nav-hint" data-i18n="segments.nav.hint">Cambia de paso con las flechas</span>
-                      <button type="button" class="seg-card__nav-btn" data-seg-next aria-label="Siguiente"><i data-lucide="chevron-right" aria-hidden="true"></i></button>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </div>
-
-          <!-- B2C -->
-          <div class="segments__group" id="segmentos-propietarios" data-seg-panel="b2c">
-            <header class="segments__group-head">
-              <span class="segments__group-badge segments__group-badge--b2c"><i data-lucide="car" aria-hidden="true"></i><span data-i18n="segments.tab.b2c">Propietarios</span></span>
-              <p class="segments__group-desc" data-i18n="segments.b2c.desc">Clientes finales que llevan su auto al taller y usan la app móvil.</p>
-            </header>
-            <div class="segments__scroller" data-seg-scroller data-seg-steps="4">
-              <div class="segments__sticky">
-                <article class="seg-card seg-card--b2c">
-                  <div class="seg-card__inner">
-                    <span class="seg-card__counter" data-seg-counter>01 / 04</span>
-                    <div class="seg-card__vdots" data-seg-dots aria-hidden="true"></div>
-                    <div class="seg-card__slides">
-                      <div class="seg-slide is-active" data-seg-slide>
-                        <div class="seg-slide__grid">
-                          <div class="seg-card__content">
-                            <div class="seg-card__head"><span class="seg-card__label" data-i18n="segments.b2c.tag">Propietarios</span></div>
-                            <h3 class="seg-card__title" data-i18n="segments.b2c.s1.title">Monitorea la salud de tu vehículo en tiempo real</h3>
-                            <p class="seg-card__text" data-i18n="segments.b2c.s1.text">Conecta tu auto a la app y recibe información clara sobre su estado mecánico en todo momento.</p>
-                            <ul class="seg-card__features">
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="car"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2c.s1.b1"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="smartphone"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2c.s1.b2"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="bell-ring"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2c.s1.b3"></span>
-                              </li>
-                            </ul>
-                            <a href="#planes" class="seg-card__cta" data-i18n="segments.b2c.s1.cta">Registrar mi vehículo<i data-lucide="chevron-right" aria-hidden="true"></i></a>
-                          </div>
-                          <div class="seg-card__visual">
-                            <div class="seg-card__visual-frame">
-                              <div class="seg-card__visual-glow" aria-hidden="true"></div>
-                              <img src="assets/icons/solution/mobile-app.svg" alt="" class="seg-card__visual-icon" width="120" height="120" loading="lazy">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="seg-slide" data-seg-slide>
-                        <div class="seg-slide__grid">
-                          <div class="seg-card__content">
-                            <div class="seg-card__head"><span class="seg-card__label" data-i18n="segments.b2c.tag">Propietarios</span></div>
-                            <h3 class="seg-card__title" data-i18n="segments.b2c.s2.title">Actúa antes de la avería</h3>
-                            <p class="seg-card__text" data-i18n="segments.b2c.s2.text">Cuando tu vehículo detecta un problema, recibe alertas claras y recomendaciones para actuar a tiempo.</p>
-                            <ul class="seg-card__features">
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="scan-line"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2c.s2.b1"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="alert-circle"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2c.s2.b2"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="lightbulb"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2c.s2.b3"></span>
-                              </li>
-                            </ul>
-                            <a href="#planes" class="seg-card__cta" data-i18n="segments.b2c.s2.cta">Conectar mi vehículo<i data-lucide="chevron-right" aria-hidden="true"></i></a>
-                          </div>
-                          <div class="seg-card__visual">
-                            <div class="seg-card__visual-frame">
-                              <div class="seg-card__visual-glow" aria-hidden="true"></div>
-                              <img src="assets/icons/solution/obd.svg" alt="" class="seg-card__visual-icon" width="120" height="120" loading="lazy">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="seg-slide" data-seg-slide>
-                        <div class="seg-slide__grid">
-                          <div class="seg-card__content">
-                            <div class="seg-card__head"><span class="seg-card__label" data-i18n="segments.b2c.tag">Propietarios</span></div>
-                            <h3 class="seg-card__title" data-i18n="segments.b2c.s3.title">Conecta con soporte experto</h3>
-                            <p class="seg-card__text" data-i18n="segments.b2c.s3.text">Cuando el problema es crítico, encuentra talleres especializados cerca de ti y obtén una solución rápida.</p>
-                            <ul class="seg-card__features">
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="map-pin"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2c.s3.b1"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="file-check-2"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2c.s3.b2"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="route"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2c.s3.b3"></span>
-                              </li>
-                            </ul>
-                            <a href="#planes" class="seg-card__cta" data-i18n="segments.b2c.s3.cta">Buscar taller<i data-lucide="chevron-right" aria-hidden="true"></i></a>
-                          </div>
-                          <div class="seg-card__visual">
-                            <div class="seg-card__visual-frame">
-                              <div class="seg-card__visual-glow" aria-hidden="true"></div>
-                              <img src="assets/icons/solution/work-order.svg" alt="" class="seg-card__visual-icon" width="120" height="120" loading="lazy">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="seg-slide" data-seg-slide>
-                        <div class="seg-slide__grid">
-                          <div class="seg-card__content">
-                            <div class="seg-card__head"><span class="seg-card__label" data-i18n="segments.b2c.tag">Propietarios</span></div>
-                            <h3 class="seg-card__title" data-i18n="segments.b2c.s4.title">Gestiona tus citas y pagos sin complicaciones</h3>
-                            <p class="seg-card__text" data-i18n="segments.b2c.s4.text">Agenda, reprograma o cancela tus citas desde la app y mantén todo el control financiero de tus servicios.</p>
-                            <ul class="seg-card__features">
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="calendar"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2c.s4.b1"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="credit-card"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2c.s4.b2"></span>
-                              </li>
-                              <li class="seg-card__feature">
-                                <span class="seg-card__feature-icon" aria-hidden="true"><i data-lucide="file-text"></i></span>
-                                <span class="seg-card__feature-text" data-i18n="segments.b2c.s4.b3"></span>
-                              </li>
-                            </ul>
-                            <a href="#planes" class="seg-card__cta" data-i18n="segments.b2c.s4.cta">Gestionar mi cuenta<i data-lucide="chevron-right" aria-hidden="true"></i></a>
-                          </div>
-                          <div class="seg-card__visual">
-                            <div class="seg-card__visual-frame">
-                              <div class="seg-card__visual-glow" aria-hidden="true"></div>
-                              <img src="assets/icons/solution/mobile-app.svg" alt="" class="seg-card__visual-icon" width="120" height="120" loading="lazy">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  
-                    <div class="seg-card__nav">
-                      <button type="button" class="seg-card__nav-btn" data-seg-prev aria-label="Anterior"><i data-lucide="chevron-left" aria-hidden="true"></i></button>
-                      <span class="seg-card__nav-hint" data-i18n="segments.nav.hint">Cambia de paso con las flechas</span>
-                      <button type="button" class="seg-card__nav-btn" data-seg-next aria-label="Siguiente"><i data-lucide="chevron-right" aria-hidden="true"></i></button>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </div>
-        </div>
+          </a>
+        </nav>
       </div>
+    </section>
+
+    <section class="segment-story-group" aria-label="Historias por segmento">
+      <section class="segment-story segment-story--b2b" id="segmentos-talleres" data-segment-story="b2b" aria-labelledby="segment-story-b2b-title">
+        <div class="segment-story__sticky">
+          <article class="segment-story__card">
+            <div class="segment-story__content">
+              <p class="segment-story__eyebrow" data-segment-eyebrow>Talleres</p>
+              <h2 class="segment-story__title" id="segment-story-b2b-title" data-segment-title>Gestiona tu taller desde un solo lugar</h2>
+              <p class="segment-story__description" data-segment-description></p>
+              <ul class="segment-story__bullets" data-segment-bullets></ul>
+              <div class="segment-story__actions">
+                <a class="segment-story__cta" href="#planes" data-segment-cta>Comenzar ahora</a>
+              </div>
+            </div>
+            <div class="segment-story__visual-wrap" aria-hidden="true">
+              <div class="segment-story__visual" data-segment-visual></div>
+            </div>
+            <div class="segment-story__progress" aria-hidden="true">
+              <span data-segment-current>01</span>
+              <span>/ 04</span>
+            </div>
+            <div class="segment-story__dots" data-segment-dots aria-hidden="true"></div>
+          </article>
+        </div>
+        <div class="segment-story__mobile-list" data-segment-mobile-list></div>
+      </section>
+
+      <section class="segment-story segment-story--b2c" id="segmentos-propietarios" data-segment-story="b2c" aria-labelledby="segment-story-b2c-title">
+        <div class="segment-story__sticky">
+          <article class="segment-story__card">
+            <div class="segment-story__content">
+              <p class="segment-story__eyebrow" data-segment-eyebrow>Propietarios</p>
+              <h2 class="segment-story__title" id="segment-story-b2c-title" data-segment-title>Monitorea la salud de tu vehículo en tiempo real</h2>
+              <p class="segment-story__description" data-segment-description></p>
+              <ul class="segment-story__bullets" data-segment-bullets></ul>
+              <div class="segment-story__actions">
+                <a class="segment-story__cta" href="#planes" data-segment-cta>Registrar mi vehículo</a>
+              </div>
+            </div>
+            <div class="segment-story__visual-wrap" aria-hidden="true">
+              <div class="segment-story__visual" data-segment-visual></div>
+            </div>
+            <div class="segment-story__progress" aria-hidden="true">
+              <span data-segment-current>01</span>
+              <span>/ 04</span>
+            </div>
+            <div class="segment-story__dots" data-segment-dots aria-hidden="true"></div>
+          </article>
+        </div>
+        <div class="segment-story__mobile-list" data-segment-mobile-list></div>
+      </section>
     </section>
 
     <!-- Story scroll — tarjetas que emergen -->
@@ -1059,116 +854,21 @@ precisión total en cada reparación.</h1>
         </div>
         </div>
 
-        <footer class="pricing-referrals reveal">
-          <div class="pricing-referrals__header">
-            <div class="pricing-referrals__lead">
-              <span class="pricing-referrals__tag" data-i18n="plans.referrals.tag">Referidos</span>
-              <h3 class="pricing-referrals__title" data-i18n="plans.referrals.title">Invita a otros a Shiftiq. Hagamos crecer la red juntos.</h3>
-            </div>
-            <div class="pricing-referrals__aside">
-              <p class="pricing-referrals__desc" data-i18n="plans.referrals.desc">Comparte tu enlace único, invita talleres o propietarios a la plataforma y desbloquea beneficios cuando completen su primer servicio o suscripción.</p>
-              <a href="#" class="pricing-cta pricing-referrals__cta">
-                <span data-i18n="plans.referrals.cta">Obtener mi enlace</span>
-                <span class="pricing-cta__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              </a>
-            </div>
-          </div>
-
-          <div class="pricing-referrals__marquee" data-referrals-marquee>
-            <div class="pricing-referrals__track">
-              <div class="pricing-referrals__group">
-                <article class="pricing-referrals__card pricing-referrals__card--share">
-                  <span class="pricing-referrals__step" aria-hidden="true">01</span>
-                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="share-2"></i></span>
-                  <h4 data-i18n="plans.referrals.s1.title">Comparte tu enlace</h4>
-                  <p data-i18n="plans.referrals.s1.text">Genera tu código de referido y envíalo por WhatsApp, correo o redes a talleres y conductores de tu red.</p>
-                </article>
-                <article class="pricing-referrals__card pricing-referrals__card--track">
-                  <span class="pricing-referrals__step" aria-hidden="true">02</span>
-                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="user-plus"></i></span>
-                  <h4 data-i18n="plans.referrals.s2.title">Rastrea nuevos registros</h4>
-                  <p data-i18n="plans.referrals.s2.text">Monitorea en tiempo real cuándo tus invitados se registran, activan su cuenta o agendan su primer servicio.</p>
-                </article>
-                <article class="pricing-referrals__card pricing-referrals__card--reward">
-                  <span class="pricing-referrals__step" aria-hidden="true">03</span>
-                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="gift"></i></span>
-                  <h4 data-i18n="plans.referrals.s3.title">Desbloquea recompensas</h4>
-                  <p data-i18n="plans.referrals.s3.text">Gana meses gratis, créditos en tu plan o comisiones extra cuando tus referidos operen dentro del ecosistema Shiftiq.</p>
-                </article>
-                <article class="pricing-referrals__card pricing-referrals__card--grow">
-                  <span class="pricing-referrals__step" aria-hidden="true">04</span>
-                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="users"></i></span>
-                  <h4 data-i18n="plans.referrals.s4.title">Escala tu red</h4>
-                  <p data-i18n="plans.referrals.s4.text">Cada taller o propietario que sumes fortalece la red Shiftiq y amplía tu impacto dentro del ecosistema automotriz.</p>
-                </article>
-              </div>
-              <div class="pricing-referrals__group" aria-hidden="true">
-                <article class="pricing-referrals__card pricing-referrals__card--share">
-                  <span class="pricing-referrals__step" aria-hidden="true">01</span>
-                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="share-2"></i></span>
-                  <h4 data-i18n="plans.referrals.s1.title">Comparte tu enlace</h4>
-                  <p data-i18n="plans.referrals.s1.text">Genera tu código de referido y envíalo por WhatsApp, correo o redes a talleres y conductores de tu red.</p>
-                </article>
-                <article class="pricing-referrals__card pricing-referrals__card--track">
-                  <span class="pricing-referrals__step" aria-hidden="true">02</span>
-                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="user-plus"></i></span>
-                  <h4 data-i18n="plans.referrals.s2.title">Rastrea nuevos registros</h4>
-                  <p data-i18n="plans.referrals.s2.text">Monitorea en tiempo real cuándo tus invitados se registran, activan su cuenta o agendan su primer servicio.</p>
-                </article>
-                <article class="pricing-referrals__card pricing-referrals__card--reward">
-                  <span class="pricing-referrals__step" aria-hidden="true">03</span>
-                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="gift"></i></span>
-                  <h4 data-i18n="plans.referrals.s3.title">Desbloquea recompensas</h4>
-                  <p data-i18n="plans.referrals.s3.text">Gana meses gratis, créditos en tu plan o comisiones extra cuando tus referidos operen dentro del ecosistema Shiftiq.</p>
-                </article>
-                <article class="pricing-referrals__card pricing-referrals__card--grow">
-                  <span class="pricing-referrals__step" aria-hidden="true">04</span>
-                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="users"></i></span>
-                  <h4 data-i18n="plans.referrals.s4.title">Escala tu red</h4>
-                  <p data-i18n="plans.referrals.s4.text">Cada taller o propietario que sumes fortalece la red Shiftiq y amplía tu impacto dentro del ecosistema automotriz.</p>
-                </article>
-              </div>
-              <div class="pricing-referrals__group" aria-hidden="true">
-                <article class="pricing-referrals__card pricing-referrals__card--share">
-                  <span class="pricing-referrals__step" aria-hidden="true">01</span>
-                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="share-2"></i></span>
-                  <h4 data-i18n="plans.referrals.s1.title">Comparte tu enlace</h4>
-                  <p data-i18n="plans.referrals.s1.text">Genera tu código de referido y envíalo por WhatsApp, correo o redes a talleres y conductores de tu red.</p>
-                </article>
-                <article class="pricing-referrals__card pricing-referrals__card--track">
-                  <span class="pricing-referrals__step" aria-hidden="true">02</span>
-                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="user-plus"></i></span>
-                  <h4 data-i18n="plans.referrals.s2.title">Rastrea nuevos registros</h4>
-                  <p data-i18n="plans.referrals.s2.text">Monitorea en tiempo real cuándo tus invitados se registran, activan su cuenta o agendan su primer servicio.</p>
-                </article>
-                <article class="pricing-referrals__card pricing-referrals__card--reward">
-                  <span class="pricing-referrals__step" aria-hidden="true">03</span>
-                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="gift"></i></span>
-                  <h4 data-i18n="plans.referrals.s3.title">Desbloquea recompensas</h4>
-                  <p data-i18n="plans.referrals.s3.text">Gana meses gratis, créditos en tu plan o comisiones extra cuando tus referidos operen dentro del ecosistema Shiftiq.</p>
-                </article>
-                <article class="pricing-referrals__card pricing-referrals__card--grow">
-                  <span class="pricing-referrals__step" aria-hidden="true">04</span>
-                  <span class="pricing-referrals__icon" aria-hidden="true"><i data-lucide="users"></i></span>
-                  <h4 data-i18n="plans.referrals.s4.title">Escala tu red</h4>
-                  <p data-i18n="plans.referrals.s4.text">Cada taller o propietario que sumes fortalece la red Shiftiq y amplía tu impacto dentro del ecosistema automotriz.</p>
-                </article>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </section>
 
     <!-- Nosotros -->
     <section class="about-shift" id="nosotros" data-about>
+      <div class="about-shift__curve" aria-hidden="true">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,0 L0,25 C360,75 720,5 1080,30 C1260,45 1380,55 1440,20 L1440,0 Z" fill="currentColor"/>
+        </svg>
+      </div>
       <div class="about-shift__ambient" aria-hidden="true">
         <div class="about-shift__grid"></div>
         <div class="about-shift__glow about-shift__glow--gold"></div>
         <div class="about-shift__glow about-shift__glow--blue"></div>
       </div>
-
-      <div class="about-shift__rule" aria-hidden="true"></div>
 
       <div class="about-shift__shell">
         <span class="about-shift__label" data-i18n="about.label">Nosotros</span>
@@ -1557,6 +1257,8 @@ Esa perspectiva es lo que hace que Shiftiq sea diferente.</p>
   <script src="js/carousel.js"></script>
   <script src="js/solution-carousel.js"></script>
   <script src="js/solution-video.js"></script>
+  <script src="js/challenge-video.js"></script>
+  <script src="js/outcomes-parallax.js"></script>
   <script src="js/segments-carousel.js"></script>
   <script src="js/story-scroll.js"></script>
   <script src="js/pricing.js"></script>

@@ -1,226 +1,231 @@
 /**
- * Shiftiq — Segmentos: pill switch + carrusel manual (4 pasos por segmento)
+ * Shiftiq — Segmentos scroll-story (patrón Viora role-benefits)
+ * Talleres (navy) + Propietarios (gold)
  */
 const SegmentsScroll = (() => {
-  const STICKY_TOP = 100;
-  const scrollers = new Map();
-  let activePanel = 'b2b';
+  const STICKY_OFFSET = 96;
+  const VISUAL_SLOT_SPACING = 1.36;
+  const TEXT_SWITCH_RATIO = 0.5;
 
-  function pad(n) {
-    return String(n).padStart(2, '0');
+  const STORY_CONFIG = {
+    b2b: {
+      tagKey: 'segments.b2b.tag',
+      steps: [
+        { image: 'assets/icons/solution/dashboard.svg', title: 'segments.b2b.s1.title', text: 'segments.b2b.s1.text', b1: 'segments.b2b.s1.b1', b2: 'segments.b2b.s1.b2', b3: 'segments.b2b.s1.b3', cta: 'segments.b2b.s1.cta' },
+        { image: 'assets/icons/solution/obd.svg', title: 'segments.b2b.s2.title', text: 'segments.b2b.s2.text', b1: 'segments.b2b.s2.b1', b2: 'segments.b2b.s2.b2', b3: 'segments.b2b.s2.b3', cta: 'segments.b2b.s2.cta' },
+        { image: 'assets/icons/solution/inventory.svg', title: 'segments.b2b.s3.title', text: 'segments.b2b.s3.text', b1: 'segments.b2b.s3.b1', b2: 'segments.b2b.s3.b2', b3: 'segments.b2b.s3.b3', cta: 'segments.b2b.s3.cta' },
+        { image: 'assets/icons/solution/work-order.svg', title: 'segments.b2b.s4.title', text: 'segments.b2b.s4.text', b1: 'segments.b2b.s4.b1', b2: 'segments.b2b.s4.b2', b3: 'segments.b2b.s4.b3', cta: 'segments.b2b.s4.cta' },
+      ],
+    },
+    b2c: {
+      tagKey: 'segments.b2c.tag',
+      steps: [
+        { image: 'assets/icons/solution/mobile-app.svg', title: 'segments.b2c.s1.title', text: 'segments.b2c.s1.text', b1: 'segments.b2c.s1.b1', b2: 'segments.b2c.s1.b2', b3: 'segments.b2c.s1.b3', cta: 'segments.b2c.s1.cta' },
+        { image: 'assets/icons/solution/obd.svg', title: 'segments.b2c.s2.title', text: 'segments.b2c.s2.text', b1: 'segments.b2c.s2.b1', b2: 'segments.b2c.s2.b2', b3: 'segments.b2c.s2.b3', cta: 'segments.b2c.s2.cta' },
+        { image: 'assets/icons/solution/work-order.svg', title: 'segments.b2c.s3.title', text: 'segments.b2c.s3.text', b1: 'segments.b2c.s3.b1', b2: 'segments.b2c.s3.b2', b3: 'segments.b2c.s3.b3', cta: 'segments.b2c.s3.cta' },
+        { image: 'assets/icons/solution/mobile-app.svg', title: 'segments.b2c.s4.title', text: 'segments.b2c.s4.text', b1: 'segments.b2c.s4.b1', b2: 'segments.b2c.s4.b2', b3: 'segments.b2c.s4.b3', cta: 'segments.b2c.s4.cta' },
+      ],
+    },
+  };
+
+  function t(key, fallback = '') {
+    if (typeof I18n !== 'undefined' && typeof I18n.t === 'function') {
+      const value = I18n.t(key);
+      if (value) return value;
+    }
+    return fallback;
   }
 
-  function initScroller(scroller, panelId) {
-    const steps = parseInt(scroller.dataset.segSteps, 10) || 4;
-    const slides = [...scroller.querySelectorAll('[data-seg-slide]')];
-    const counter = scroller.querySelector('[data-seg-counter]');
-    const dotsHost = scroller.querySelector('[data-seg-dots]');
-    const prevBtn = scroller.querySelector('[data-seg-prev]');
-    const nextBtn = scroller.querySelector('[data-seg-next]');
-    let current = 0;
-
-    if (dotsHost) {
-      dotsHost.innerHTML = '';
-      slides.forEach((_, i) => {
-        const dot = document.createElement('button');
-        dot.type = 'button';
-        dot.className = 'seg-card__vdot';
-        dot.setAttribute('aria-label', `Paso ${i + 1}`);
-        dot.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          goToStep(i);
-        });
-        dotsHost.appendChild(dot);
-      });
-    }
-
-    slides.forEach((slide) => {
-      slide.querySelectorAll('.seg-card__head, .seg-card__title, .seg-card__text, .seg-card__features, .seg-card__cta, .seg-card__visual').forEach((el) => {
-        el.setAttribute('data-seg-animate', '');
-      });
-    });
-
-    function updateNavState() {
-      if (prevBtn) {
-        prevBtn.disabled = current <= 0;
-        prevBtn.classList.toggle('is-disabled', current <= 0);
-      }
-      if (nextBtn) {
-        nextBtn.disabled = current >= steps - 1;
-        nextBtn.classList.toggle('is-disabled', current >= steps - 1);
-      }
-    }
-
-    function setSlide(index) {
-      const i = Math.max(0, Math.min(steps - 1, index));
-      if (i === current && slides[i]?.classList.contains('is-active')) {
-        updateNavState();
-        return;
-      }
-      current = i;
-      slides.forEach((slide, j) => {
-        const isActive = j === i;
-        slide.classList.toggle('is-active', isActive);
-        if (isActive) animateSlide(slide);
-      });
-      if (counter) counter.textContent = `${pad(i + 1)} / ${pad(steps)}`;
-      dotsHost?.querySelectorAll('.seg-card__vdot').forEach((dot, j) => {
-        dot.classList.toggle('is-active', j === i);
-      });
-      updateNavState();
-    }
-
-    function animateSlide(slide) {
-      slide.querySelectorAll('[data-seg-animate]').forEach((item) => {
-        item.classList.remove('is-animated');
-        void item.offsetWidth;
-        item.classList.add('is-animated');
-      });
-    }
-
-    function goToStep(index) {
-      setSlide(index);
-    }
-
-    function next() {
-      if (current < steps - 1) setSlide(current + 1);
-    }
-
-    function prev() {
-      if (current > 0) setSlide(current - 1);
-    }
-
-    prevBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      prev();
-    });
-
-    nextBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      next();
-    });
-
-    scroller.style.height = 'auto';
-    setSlide(0);
-
-    const api = { setSlide, next, prev, goToStep, panelId };
-    scrollers.set(panelId, api);
-    return api;
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
   }
 
-  function updateTabs(id) {
-    activePanel = id;
-    document.querySelector('[data-seg-root]')?.setAttribute('data-seg-active', id);
-
-    document.querySelectorAll('[data-seg-tab]').forEach((tab) => {
-      const on = tab.dataset.segTab === id;
-      tab.classList.toggle('is-active', on);
-      tab.setAttribute('aria-selected', on);
-    });
-
-    document.querySelectorAll('[data-seg-intro-text]').forEach((el) => {
-      el.hidden = el.dataset.segIntroText !== id;
-    });
-
-    document.querySelector('[data-segments-scroll]')?.querySelectorAll('[data-seg-panel]').forEach((panel) => {
-      panel.classList.toggle('is-active', panel.dataset.segPanel === id);
-    });
+  function formatCounter(index) {
+    return String(index + 1).padStart(2, '0');
   }
 
-  function scrollToPanel(id) {
-    const panel = document.querySelector(`[data-seg-panel="${id}"]`);
-    if (!panel) return;
-    const top = panel.getBoundingClientRect().top + window.scrollY - STICKY_TOP + 8;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  function getStepText(storyKey, index) {
+    const config = STORY_CONFIG[storyKey];
+    const step = config.steps[index];
+    return {
+      eyebrow: t(config.tagKey),
+      title: t(step.title),
+      description: t(step.text),
+      bullets: [t(step.b1), t(step.b2), t(step.b3)].filter(Boolean),
+      cta: t(step.cta),
+    };
   }
 
-  function showPanel(id, initial = false) {
-    updateTabs(id);
-    if (!initial) scrollToPanel(id);
+  function createVisualMarkup(config) {
+    return `
+      <div class="segment-story__image-stage">
+        <div class="segment-story__image-track">
+          ${config.steps.map((step, stepIndex) => `
+            <div class="segment-story__image-slot" style="--segment-slot-index: ${stepIndex};">
+              <div class="segment-story__visual-plate">
+                <img class="segment-story__character" src="${step.image}" alt="" loading="lazy" aria-hidden="true" />
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
   }
 
-  function initSegReveal() {
-    const section = document.getElementById('segmentos');
-    const items = document.querySelectorAll('#segmentos .seg-reveal');
-    if (!items.length) return;
+  function renderDots(container, count, activeIndex) {
+    if (!container) return;
+    container.innerHTML = Array.from({ length: count }, (_, index) => (
+      `<span class="segment-story__dot${index === activeIndex ? ' segment-story__dot--active' : ''}"></span>`
+    )).join('');
+  }
 
-    function reveal(el) {
-      el.classList.add('is-visible');
+  function renderBullets(list, bullets) {
+    if (!list) return;
+    list.innerHTML = bullets.map((bullet) => `<li>${bullet}</li>`).join('');
+  }
+
+  function renderStep(section, storyKey, index, force = false) {
+    const config = STORY_CONFIG[storyKey];
+    const text = getStepText(storyKey, index);
+    const eyebrow = section.querySelector('[data-segment-eyebrow]');
+    const title = section.querySelector('[data-segment-title]');
+    const description = section.querySelector('[data-segment-description]');
+    const bullets = section.querySelector('[data-segment-bullets]');
+    const cta = section.querySelector('[data-segment-cta]');
+    const current = section.querySelector('[data-segment-current]');
+    const dots = section.querySelector('[data-segment-dots]');
+    const content = section.querySelector('.segment-story__content');
+
+    const update = () => {
+      if (eyebrow) eyebrow.textContent = text.eyebrow;
+      if (title) title.textContent = text.title;
+      if (description) description.textContent = text.description;
+      if (cta) cta.textContent = text.cta;
+      if (current) current.textContent = formatCounter(index);
+      renderBullets(bullets, text.bullets);
+      renderDots(dots, config.steps.length, index);
+      section.dataset.activeSegmentStep = String(index);
+    };
+
+    if (force) {
+      update();
+      return;
     }
 
-    function revealAllInSection() {
-      items.forEach(reveal);
-    }
+    content?.classList.add('segment-story__content--switching');
+    window.setTimeout(() => {
+      update();
+      content?.classList.remove('segment-story__content--switching');
+    }, 140);
+  }
 
-    if (section) {
+  function createMobileCard(storyKey, index) {
+    const config = STORY_CONFIG[storyKey];
+    const text = getStepText(storyKey, index);
+    const step = config.steps[index];
+    const bullets = text.bullets.map((bullet) => `<li>${bullet}</li>`).join('');
+
+    return `
+      <article class="segment-story__mobile-card">
+        <div class="segment-story__mobile-visual" aria-hidden="true">
+          <div class="segment-story__visual-plate">
+            <img class="segment-story__mobile-character" src="${step.image}" alt="" loading="lazy" />
+          </div>
+        </div>
+        <div class="segment-story__mobile-content">
+          <span class="segment-story__mobile-count">${formatCounter(index)} / ${String(config.steps.length).padStart(2, '0')}</span>
+          <h3>${text.title}</h3>
+          <p>${text.description}</p>
+          <ul>${bullets}</ul>
+          <a class="segment-story__cta" href="#planes">${text.cta}</a>
+        </div>
+      </article>
+    `;
+  }
+
+  function renderMobileList(section, storyKey) {
+    const config = STORY_CONFIG[storyKey];
+    const list = section.querySelector('[data-segment-mobile-list]');
+    if (!list) return;
+    list.innerHTML = config.steps.map((_, index) => createMobileCard(storyKey, index)).join('');
+  }
+
+  function attachSegmentStory(section) {
+    if (!section || section.dataset.segmentStoryInitialized === 'true') return;
+
+    const storyKey = section.dataset.segmentStory;
+    const config = STORY_CONFIG[storyKey];
+    if (!config) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let ticking = false;
+
+    function updateFromScroll() {
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       const rect = section.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.94 && rect.bottom > 0) {
-        revealAllInSection();
-        return;
+      const scrollableDistance = Math.max(section.offsetHeight - viewportHeight, 1);
+      const scrolled = clamp(-rect.top + STICKY_OFFSET, 0, scrollableDistance);
+      const progress = clamp(scrolled / scrollableDistance, 0, 1);
+      const maxVisualStep = config.steps.length - 1;
+      const visualTrackPosition = progress * maxVisualStep * VISUAL_SLOT_SPACING;
+      const visualStepPosition = visualTrackPosition / VISUAL_SLOT_SPACING;
+      const activeIndex = clamp(
+        Math.floor(visualStepPosition + TEXT_SWITCH_RATIO),
+        0,
+        config.steps.length - 1
+      );
+      const currentIndex = Number(section.dataset.activeSegmentStep || 0);
+      const renderedTrackPosition = reducedMotion.matches
+        ? activeIndex * VISUAL_SLOT_SPACING
+        : visualTrackPosition;
+      const visualScale = reducedMotion.matches ? 1 : 0.985 + progress * 0.015;
+
+      section.style.setProperty('--segment-track-position', renderedTrackPosition.toFixed(3));
+      section.style.setProperty('--segment-visual-scale', visualScale.toFixed(3));
+
+      if (activeIndex !== currentIndex) {
+        renderStep(section, storyKey, activeIndex);
       }
 
-      const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          revealAllInSection();
-          sectionObserver.disconnect();
-        });
-      }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
-
-      sectionObserver.observe(section);
+      ticking = false;
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        reveal(entry.target);
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.05, rootMargin: '0px 0px -2% 0px' });
+    function requestUpdate() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateFromScroll);
+      }
+    }
 
-    items.forEach((el) => {
-      if (el.classList.contains('is-visible')) return;
-      observer.observe(el);
+    function rebuild() {
+      const activeIndex = Number(section.dataset.activeSegmentStep || 0);
+      const visual = section.querySelector('[data-segment-visual]');
+
+      if (visual && visual.dataset.segmentVisualRendered !== 'true') {
+        visual.innerHTML = createVisualMarkup(config);
+        visual.dataset.segmentVisualRendered = 'true';
+      }
+
+      renderStep(section, storyKey, activeIndex, true);
+      renderMobileList(section, storyKey);
+      requestUpdate();
+    }
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    document.addEventListener('languageChanged', () => {
+      renderStep(section, storyKey, Number(section.dataset.activeSegmentStep || 0), true);
+      renderMobileList(section, storyKey);
     });
+
+    section.dataset.activeSegmentStep = '0';
+    rebuild();
+    section.dataset.segmentStoryInitialized = 'true';
   }
 
   function init() {
-    const root = document.querySelector('[data-segments-scroll]');
-    if (!root) return;
-
-    initSegReveal();
-
-    root.querySelectorAll('[data-seg-scroller]').forEach((scroller) => {
-      const panelId = scroller.closest('[data-seg-panel]')?.dataset.segPanel;
-      if (panelId) initScroller(scroller, panelId);
-    });
-
-    document.querySelectorAll('[data-seg-tab]').forEach((tab) => {
-      tab.addEventListener('click', () => {
-        if (tab.dataset.segTab !== activePanel) showPanel(tab.dataset.segTab);
-      });
-    });
-
-    document.querySelector('[data-seg-arrow="prev"]')?.addEventListener('click', () => {
-      showPanel('b2b');
-    });
-
-    document.querySelector('[data-seg-arrow="next"]')?.addEventListener('click', () => {
-      showPanel('b2c');
-    });
-
-    showPanel('b2b', true);
-
+    document.querySelectorAll('[data-segment-story]').forEach(attachSegmentStory);
     if (window.lucide) lucide.createIcons();
-
-    if (window.location.hash === '#segmentos') {
-      document.querySelectorAll('#segmentos .seg-reveal').forEach((el) => {
-        el.classList.add('is-visible');
-      });
-    }
   }
 
   return { init };

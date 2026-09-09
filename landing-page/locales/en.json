@@ -35,6 +35,8 @@
   "challenge.acc3.text": "Manual diagnostics without real-time DTC alerts or vehicle history.",
   "challenge.acc4.title": "Strategic blindness",
   "challenge.acc4.text": "Owners without per-branch metrics, revenue, or business alerts until it's too late.",
+  "challenge.video.intro": "Every day without clear data is a missed opportunity: delays, hidden costs, and customers who don't return.",
+  "challenge.video.caption": "Shiftiq shows the workshop as it is: work orders, OBD2 alerts, and inventory in one view so you can act on time.",
 
   "solution.label": "The solution",
   "solution.titleLine1": "Turn workshop operations",
