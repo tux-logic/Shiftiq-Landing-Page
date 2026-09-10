@@ -1,5 +1,5 @@
 /**
- * Shiftiq — Pricing (estilo Viora)
+ * Shiftiq — Pricing
  * Flechas = segmentos (1/2). Mensual/Anual = precio del segmento activo.
  */
 const Pricing = (() => {

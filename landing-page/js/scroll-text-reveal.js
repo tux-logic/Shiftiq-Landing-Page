@@ -1,5 +1,5 @@
 /**
- * Shiftiq — Scroll text reveal (palabra por palabra, estilo Viora)
+ * Shiftiq — Scroll text reveal (palabra por palabra)
  */
 const ScrollTextReveal = (() => {
   function clamp(value, min, max) {

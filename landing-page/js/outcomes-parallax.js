@@ -1,5 +1,5 @@
 /**
- * Shiftiq — Parallax en splits resultados / marketplace (patrón Viora)
+ * Shiftiq — Parallax en splits resultados / marketplace
  */
 (() => {
   const VIDEO_PARALLAX_STRENGTH = 2.4;

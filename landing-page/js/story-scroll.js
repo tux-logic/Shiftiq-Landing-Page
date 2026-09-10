@@ -1,5 +1,5 @@
 /**
- * Shiftiq — Story scroll (cards fan out + texto reveal estilo Viora)
+ * Shiftiq — Story scroll (cards fan out + texto reveal)
  */
 const StoryScroll = (() => {
   const SPREAD_END = 0.55;

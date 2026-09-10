@@ -1,5 +1,5 @@
 /**
- * Shiftiq — Video dock (play inline, YouTube, expand in-place) — patrón Viora
+ * Shiftiq — Video dock (play inline, YouTube, expand in-place)
  */
 const SolutionVideo = (() => {
   function parseYouTubeId(frame) {

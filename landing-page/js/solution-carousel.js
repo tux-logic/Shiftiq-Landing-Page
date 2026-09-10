@@ -1,9 +1,9 @@
 /**
- * Shiftiq — Solution infinite spotlight carousel
+ * Shiftiq — Solution spotlight carousel (one-by-one, smooth)
  */
 const SolutionCarousel = (() => {
-  const TRANSITION_MS = 600;
-  const AUTO_MS = 5800;
+  const TRANSITION_MS = 520;
+  const AUTO_MS = 5600;
   let interval = null;
 
   function init() {
@@ -45,9 +45,9 @@ const SolutionCarousel = (() => {
 
     function applyTransform(index, animate = true) {
       track.style.transition = animate
-        ? `transform ${TRANSITION_MS}ms cubic-bezier(0.25, 0.1, 0.25, 1)`
+        ? `transform ${TRANSITION_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`
         : 'none';
-      track.style.transform = `translateX(${-getOffset(index)}px)`;
+      track.style.transform = `translate3d(${-getOffset(index)}px, 0, 0)`;
     }
 
     function updateState() {
@@ -55,7 +55,7 @@ const SolutionCarousel = (() => {
         const dist = Math.abs(i - current);
         card.classList.toggle('is-active', i === current);
         card.classList.toggle('is-adjacent', dist === 1);
-        card.classList.toggle('is-near', dist === 2);
+        card.classList.toggle('is-near', dist >= 2);
       });
     }
 
@@ -80,18 +80,10 @@ const SolutionCarousel = (() => {
       if (animate) {
         isAnimating = true;
         clearTimeout(track._snapTimer);
-        track._snapTimer = setTimeout(snapIfNeeded, TRANSITION_MS + 40);
+        track._snapTimer = setTimeout(snapIfNeeded, TRANSITION_MS + 48);
       } else {
         isAnimating = false;
       }
-    }
-
-    function goToReal(targetReal) {
-      if (targetReal === realIndex()) return;
-      current = REAL + targetReal;
-      updateState();
-      applyTransform(current, false);
-      resetAuto();
     }
 
     function next() {
@@ -142,13 +134,7 @@ const SolutionCarousel = (() => {
     bindClicks();
     bindSwipe();
 
-    if (window.lucide) {
-      lucide.createIcons({
-        attrs: {
-          'stroke-width': 1.5,
-        },
-      });
-    }
+    if (window.lucide) lucide.createIcons();
 
     prevBtn?.addEventListener('click', prev);
     nextBtn?.addEventListener('click', next);

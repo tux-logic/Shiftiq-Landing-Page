@@ -1,5 +1,5 @@
 /**
- * Shiftiq — Video expand al scroll (patrón Viora problem-panel)
+ * Shiftiq — Video expand al scroll
  */
 (() => {
   function clamp(value, min, max) {

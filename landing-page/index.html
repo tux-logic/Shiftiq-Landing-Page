@@ -7,7 +7,12 @@
   <title>Shiftiq — Gestión inteligente para talleres</title>
   <script>
     document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('is-loading');
   </script>
+  <style>
+    .page-loader{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:#0a192f}
+    html.is-loading,html.is-loading body{overflow:hidden}
+  </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,6 +22,16 @@
   <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.4/dist/lottie-player.js" defer></script>
 </head>
 <body>
+  <div class="page-loader" id="pageLoader" role="status" aria-live="polite" aria-label="Cargando Shiftiq">
+    <div class="page-loader__ambient" aria-hidden="true"></div>
+    <div class="page-loader__stage">
+      <div class="page-loader__ring" aria-hidden="true"></div>
+      <div class="page-loader__core">
+        <img class="page-loader__logo" src="assets/images/hero/Shiptiq-logo-icono.png" alt="" width="56" height="56" draggable="false">
+      </div>
+    </div>
+    <p class="page-loader__text">Shiftiq</p>
+  </div>
 
   <!-- Header -->
   <header class="header" id="header">
@@ -47,9 +62,15 @@
               </a>
             </li>
             <li>
-              <a href="#segmentos" class="nav__link" data-section="segmentos">
-                <i data-lucide="users" class="nav__icon" aria-hidden="true"></i>
-                <span data-i18n="nav.segments">Segmentos</span>
+              <a href="#segmentos-talleres" class="nav__link" data-section="segmentos-talleres">
+                <i data-lucide="wrench" class="nav__icon" aria-hidden="true"></i>
+                <span data-i18n="nav.owner">Dueño</span>
+              </a>
+            </li>
+            <li>
+              <a href="#segmentos-propietarios" class="nav__link" data-section="segmentos-propietarios">
+                <i data-lucide="car" class="nav__icon" aria-hidden="true"></i>
+                <span data-i18n="nav.driver">Conductor</span>
               </a>
             </li>
             <li>
@@ -105,11 +126,15 @@
       <div class="hero__overlay" aria-hidden="true"></div>
       <div class="hero__inner">
         <div class="hero__content hero__content--typing" data-hero-content>
-          <h1 class="hero__title" data-i18n="hero.title" data-hero-type="title">Máxima rentabilidad para tu taller,
+          <h1 class="hero__title" data-i18n="hero.title" data-hero-type="title">Máxima rentabilidad
+para tu taller,
 precisión total en cada reparación.</h1>
           <p class="hero__subtitle" data-i18n="hero.subtitle" data-hero-type="subtitle">Conectamos la visión del dueño con la urgencia del piso: órdenes, OBD2, inventario y app móvil en una plataforma hecha para talleres que operan en serio.</p>
           <div class="hero__actions" data-hero-actions>
-            <a href="#planes" class="hero__cta" data-i18n="hero.cta">¡Comienza hoy mismo!</a>
+            <a href="#planes" class="hero__cta">
+              <span data-i18n="hero.cta">¡Comienza hoy mismo!</span>
+              <i data-lucide="arrow-right" class="hero__cta-icon" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -128,38 +153,74 @@ precisión total en cada reparación.</h1>
             <span data-i18n="statement.eyebrow">Diseñado para el taller moderno</span>
           </p>
           <p class="statement__text" data-statement-reveal data-i18n="statement.text">
-            Convierte los datos de tu operación en decisiones inteligentes. Monitorea cada sede, anticipa fallas con OBD2 y actúa antes para proteger ingresos y la productividad de tu equipo.
+            Convierte los datos de tu operación en decisiones inteligentes.
           </p>
         </div>
         <div class="statement__marquee" aria-hidden="true">
           <div class="marquee">
             <div class="marquee__track">
               <div class="marquee__group">
-                <span data-i18n="marquee.item1">Órdenes de Trabajo</span>
+                <span class="marquee__item">
+                  <i data-lucide="clipboard-check" aria-hidden="true"></i>
+                  <span data-i18n="marquee.item1">Órdenes de Trabajo</span>
+                </span>
                 <span class="marquee__sep"></span>
-                <span data-i18n="marquee.item2">Telemetría OBD2</span>
+                <span class="marquee__item">
+                  <i data-lucide="activity" aria-hidden="true"></i>
+                  <span data-i18n="marquee.item2">Telemetría OBD2</span>
+                </span>
                 <span class="marquee__sep"></span>
-                <span data-i18n="marquee.item3">Gestión Multi-Sede</span>
+                <span class="marquee__item">
+                  <i data-lucide="building-2" aria-hidden="true"></i>
+                  <span data-i18n="marquee.item3">Gestión Multi-Sede</span>
+                </span>
                 <span class="marquee__sep"></span>
-                <span data-i18n="marquee.item4">Inventario Inteligente</span>
+                <span class="marquee__item">
+                  <i data-lucide="package" aria-hidden="true"></i>
+                  <span data-i18n="marquee.item4">Inventario Inteligente</span>
+                </span>
                 <span class="marquee__sep"></span>
-                <span data-i18n="marquee.item5">App para Mecánicos</span>
+                <span class="marquee__item">
+                  <i data-lucide="smartphone" aria-hidden="true"></i>
+                  <span data-i18n="marquee.item5">App para Mecánicos</span>
+                </span>
                 <span class="marquee__sep"></span>
-                <span data-i18n="marquee.item6">Dashboard Ejecutivo</span>
+                <span class="marquee__item">
+                  <i data-lucide="layout-dashboard" aria-hidden="true"></i>
+                  <span data-i18n="marquee.item6">Dashboard Ejecutivo</span>
+                </span>
                 <span class="marquee__sep"></span>
               </div>
               <div class="marquee__group" aria-hidden="true">
-                <span data-i18n="marquee.item1">Órdenes de Trabajo</span>
+                <span class="marquee__item">
+                  <i data-lucide="clipboard-check" aria-hidden="true"></i>
+                  <span data-i18n="marquee.item1">Órdenes de Trabajo</span>
+                </span>
                 <span class="marquee__sep"></span>
-                <span data-i18n="marquee.item2">Telemetría OBD2</span>
+                <span class="marquee__item">
+                  <i data-lucide="activity" aria-hidden="true"></i>
+                  <span data-i18n="marquee.item2">Telemetría OBD2</span>
+                </span>
                 <span class="marquee__sep"></span>
-                <span data-i18n="marquee.item3">Gestión Multi-Sede</span>
+                <span class="marquee__item">
+                  <i data-lucide="building-2" aria-hidden="true"></i>
+                  <span data-i18n="marquee.item3">Gestión Multi-Sede</span>
+                </span>
                 <span class="marquee__sep"></span>
-                <span data-i18n="marquee.item4">Inventario Inteligente</span>
+                <span class="marquee__item">
+                  <i data-lucide="package" aria-hidden="true"></i>
+                  <span data-i18n="marquee.item4">Inventario Inteligente</span>
+                </span>
                 <span class="marquee__sep"></span>
-                <span data-i18n="marquee.item5">App para Mecánicos</span>
+                <span class="marquee__item">
+                  <i data-lucide="smartphone" aria-hidden="true"></i>
+                  <span data-i18n="marquee.item5">App para Mecánicos</span>
+                </span>
                 <span class="marquee__sep"></span>
-                <span data-i18n="marquee.item6">Dashboard Ejecutivo</span>
+                <span class="marquee__item">
+                  <i data-lucide="layout-dashboard" aria-hidden="true"></i>
+                  <span data-i18n="marquee.item6">Dashboard Ejecutivo</span>
+                </span>
                 <span class="marquee__sep"></span>
               </div>
             </div>
@@ -272,9 +333,12 @@ precisión total en cada reparación.</h1>
       </div>
     </section>
 
-    <!-- Video expand al scroll — patrón Viora / problem-panel -->
+    <!-- Video expand al scroll -->
     <section class="challenge-video" data-video-expand-section aria-labelledby="challenge-video-title">
       <div class="challenge-video__sticky" data-video-expand-sticky>
+        <div class="challenge-video__ambient" aria-hidden="true">
+          <div class="challenge-video__grid"></div>
+        </div>
         <div class="challenge-video__intro">
           <div class="challenge-video__intro-content">
             <h2 class="challenge-video__intro-text" id="challenge-video-title" data-i18n="challenge.video.intro">
@@ -308,7 +372,7 @@ precisión total en cada reparación.</h1>
     <section class="section funciones-solution section--light" id="solucion">
       <div class="funciones-solution__curve" aria-hidden="true">
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0,0 L0,25 C360,75 720,5 1080,30 C1260,45 1380,55 1440,20 L1440,0 Z" fill="currentColor"/>
+          <path d="M0,32 C240,72 480,8 720,36 C960,64 1200,70 1440,28 L1440,0 L0,0 Z" fill="currentColor"/>
         </svg>
       </div>
       <div class="container">
@@ -321,13 +385,16 @@ precisión total en cada reparación.</h1>
             <p class="solution__tagline" data-i18n="solution.tagline">Opera mejor. Decide antes.</p>
           </div>
           <div class="sol-carousel reveal" id="solutionCarousel" data-solution-carousel>
+            <button type="button" class="sol-carousel__arrow sol-carousel__arrow--prev" data-sol-prev aria-label="Anterior">
+              <i data-lucide="chevron-left" aria-hidden="true"></i>
+            </button>
             <div class="sol-carousel__viewport">
               <div class="sol-carousel__track">
                 <article class="sol-card is-active" data-real-index="0">
                   <button class="sol-card__btn" type="button">
                     <h3 class="sol-card__title" data-i18n="solution.slide1.title">Órdenes de trabajo</h3>
                     <span class="sol-card__icon-wrap">
-                      <i data-lucide="clipboard-check" class="sol-card__icon" aria-hidden="true"></i>
+                      <img class="sol-card__icon-img" src="assets/icons/solution/work-order.png" alt="" width="120" height="120" loading="lazy" draggable="false">
                     </span>
                     <p class="sol-card__desc" data-i18n="solution.slide1.text">Crea, asigna y da seguimiento a cada reparación desde la web principal.</p>
                   </button>
@@ -336,7 +403,7 @@ precisión total en cada reparación.</h1>
                   <button class="sol-card__btn" type="button">
                     <h3 class="sol-card__title" data-i18n="solution.slide2.title">Inventario inteligente</h3>
                     <span class="sol-card__icon-wrap">
-                      <i data-lucide="warehouse" class="sol-card__icon" aria-hidden="true"></i>
+                      <img class="sol-card__icon-img" src="assets/icons/solution/inventory.png" alt="" width="120" height="120" loading="lazy" draggable="false">
                     </span>
                     <p class="sol-card__desc" data-i18n="solution.slide2.text">Productos, lotes y reserva de repuestos vinculados a cada tarea.</p>
                   </button>
@@ -345,7 +412,7 @@ precisión total en cada reparación.</h1>
                   <button class="sol-card__btn" type="button">
                     <h3 class="sol-card__title" data-i18n="solution.slide3.title">OBD2 y telemetría</h3>
                     <span class="sol-card__icon-wrap">
-                      <i data-lucide="car-front" class="sol-card__icon" aria-hidden="true"></i>
+                      <img class="sol-card__icon-img" src="assets/icons/solution/obd.png" alt="" width="120" height="120" loading="lazy" draggable="false">
                     </span>
                     <p class="sol-card__desc" data-i18n="solution.slide3.text">Vincula dispositivos, recibe alertas DTC y consulta datos técnicos del vehículo.</p>
                   </button>
@@ -354,7 +421,7 @@ precisión total en cada reparación.</h1>
                   <button class="sol-card__btn" type="button">
                     <h3 class="sol-card__title" data-i18n="solution.slide4.title">Dashboard ejecutivo</h3>
                     <span class="sol-card__icon-wrap">
-                      <i data-lucide="chart-column-big" class="sol-card__icon" aria-hidden="true"></i>
+                      <img class="sol-card__icon-img" src="assets/icons/solution/dashboard.png" alt="" width="120" height="120" loading="lazy" draggable="false">
                     </span>
                     <p class="sol-card__desc" data-i18n="solution.slide4.text">Ingresos, ganancias y métricas por sede para dueños y gerentes.</p>
                   </button>
@@ -363,27 +430,20 @@ precisión total en cada reparación.</h1>
                   <button class="sol-card__btn" type="button">
                     <h3 class="sol-card__title" data-i18n="solution.slide5.title">App para mecánicos</h3>
                     <span class="sol-card__icon-wrap">
-                      <i data-lucide="tablet-smartphone" class="sol-card__icon" aria-hidden="true"></i>
+                      <img class="sol-card__icon-img" src="assets/icons/solution/mobile-app.png" alt="" width="120" height="120" loading="lazy" draggable="false">
                     </span>
                     <p class="sol-card__desc" data-i18n="solution.slide5.text">Tareas, repuestos y telemetría en tiempo real desde el piso del taller.</p>
                   </button>
                 </article>
               </div>
             </div>
-            <div class="sol-carousel__footer">
-              <div class="sol-carousel__nav">
-                <button type="button" class="sol-carousel__arrow" data-sol-prev aria-label="Anterior">
-                  <i data-lucide="chevron-left" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="sol-carousel__arrow" data-sol-next aria-label="Siguiente">
-                  <i data-lucide="chevron-right" aria-hidden="true"></i>
-                </button>
-              </div>
-            </div>
+            <button type="button" class="sol-carousel__arrow sol-carousel__arrow--next" data-sol-next aria-label="Siguiente">
+              <i data-lucide="chevron-right" aria-hidden="true"></i>
+            </button>
           </div>
       </div>
 
-      <!-- Splits full-bleed con videos — patrón Viora expected-outcomes -->
+      <!-- Splits full-bleed con videos -->
       <div class="solution-outcomes" data-outcomes-parallax-section>
         <div class="solution-results reveal">
           <div class="solution-results__media sol-split__media sol-split__media--from-left" aria-hidden="true">
@@ -430,7 +490,10 @@ precisión total en cada reparación.</h1>
             <h3 class="solution-marketplace__title sol-split__item" data-i18n="solution.marketplace.title">Nunca enfrentes una avería crítica solo</h3>
             <div class="solution-marketplace__connector sol-split__item" aria-hidden="true"></div>
             <p class="solution-marketplace__text sol-split__item" data-i18n="solution.marketplace.text">Cuando el riesgo aumenta, Shiftiq te conecta con talleres y especialistas cercanos que pueden revisar los datos de tu vehículo, evaluar la situación y ayudarte a responder más rápido con acciones técnicas focalizadas.</p>
-            <a href="#segmentos" class="solution-marketplace__cta sol-split__item" data-i18n="solution.marketplace.cta">Explorar la red</a>
+            <a href="#segmentos" class="solution-marketplace__cta sol-split__item">
+              <span data-i18n="solution.marketplace.cta">Explorar la red</span>
+              <i data-lucide="arrow-right" class="solution-marketplace__cta-icon" aria-hidden="true"></i>
+            </a>
           </div>
           <div class="solution-marketplace__media sol-split__media sol-split__media--from-right" aria-hidden="true">
             <video
@@ -581,23 +644,38 @@ precisión total en cada reparación.</h1>
       </div>
     </section>
 
-    <!-- Segmentos B2B / B2C — scroll story estilo Viora -->
+    <!-- Segmentos B2B / B2C — scroll story -->
     <section class="segments-overview section--light" id="segmentos" aria-labelledby="segments-overview-title">
       <div class="container segments-overview__inner">
-        <div class="segments-overview__topline">
-          <span class="segments-overview__label" data-i18n="segments.label">Segmentos</span>
+        <div class="segments-overview__divider">
+          <span class="segments-overview__tag">
+            <span class="statement__dot" aria-hidden="true"></span>
+            <span data-i18n="segments.label">Dueño y Conductor</span>
+          </span>
+          <span class="segments-overview__line" aria-hidden="true">
+            <span class="segments-overview__line-light"></span>
+          </span>
         </div>
         <div class="segments-overview__intro">
-          <h2 class="segments-overview__title" id="segments-overview-title" data-i18n="segments.title">Una plataforma. Dos experiencias poderosas.</h2>
+          <h2 class="segments-overview__title" id="segments-overview-title">
+            <span data-i18n="segments.titleLine1">Una plataforma.</span><br>
+            <span data-i18n="segments.titleLine2">Dos experiencias poderosas.</span>
+          </h2>
           <p class="segments-overview__description" data-i18n="segments.intro">Conectamos talleres automotrices con propietarios de vehículos en un ecosistema digital integrado.</p>
         </div>
         <nav class="segments-overview__nav" aria-label="Elegir segmento">
-          <a class="segments-overview__arrow segments-overview__arrow--prev" href="#segmentos-talleres" aria-label="Ir a Talleres">
+          <a class="segments-overview__arrow segments-overview__arrow--prev" href="#segmentos-talleres" aria-label="Ir a Dueños">
             <i data-lucide="chevron-left" aria-hidden="true"></i>
           </a>
-          <a class="segments-overview__option segments-overview__option--b2b" href="#segmentos-talleres" data-i18n="segments.tab.b2b">Talleres</a>
-          <a class="segments-overview__option segments-overview__option--b2c" href="#segmentos-propietarios" data-i18n="segments.tab.b2c">Propietarios</a>
-          <a class="segments-overview__arrow segments-overview__arrow--next" href="#segmentos-propietarios" aria-label="Ir a Propietarios">
+          <a class="segments-overview__option segments-overview__option--b2b" href="#segmentos-talleres">
+            <i data-lucide="building-2" aria-hidden="true"></i>
+            <span data-i18n="segments.tab.b2b">Dueños</span>
+          </a>
+          <a class="segments-overview__option segments-overview__option--b2c" href="#segmentos-propietarios">
+            <i data-lucide="car-front" aria-hidden="true"></i>
+            <span data-i18n="segments.tab.b2c">Conductores</span>
+          </a>
+          <a class="segments-overview__arrow segments-overview__arrow--next" href="#segmentos-propietarios" aria-label="Ir a Conductores">
             <i data-lucide="chevron-right" aria-hidden="true"></i>
           </a>
         </nav>
@@ -609,7 +687,7 @@ precisión total en cada reparación.</h1>
         <div class="segment-story__sticky">
           <article class="segment-story__card">
             <div class="segment-story__content">
-              <p class="segment-story__eyebrow" data-segment-eyebrow>Talleres</p>
+              <p class="segment-story__eyebrow" data-segment-eyebrow>Dueños</p>
               <h2 class="segment-story__title" id="segment-story-b2b-title" data-segment-title>Gestiona tu taller desde un solo lugar</h2>
               <p class="segment-story__description" data-segment-description></p>
               <ul class="segment-story__bullets" data-segment-bullets></ul>
@@ -634,7 +712,7 @@ precisión total en cada reparación.</h1>
         <div class="segment-story__sticky">
           <article class="segment-story__card">
             <div class="segment-story__content">
-              <p class="segment-story__eyebrow" data-segment-eyebrow>Propietarios</p>
+              <p class="segment-story__eyebrow" data-segment-eyebrow>Conductores</p>
               <h2 class="segment-story__title" id="segment-story-b2c-title" data-segment-title>Monitorea la salud de tu vehículo en tiempo real</h2>
               <p class="segment-story__description" data-segment-description></p>
               <ul class="segment-story__bullets" data-segment-bullets></ul>
@@ -681,19 +759,19 @@ precisión total en cada reparación.</h1>
           <div class="story-scroll__cards" data-story-cards>
             <article class="story-card story-card--left" data-story-card="left">
               <div class="story-card__media story-card__media--blue">
-                <lottie-player src="assets/animations/repair.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                <img class="story-card__img" src="assets/images/story/operacion.jpg" alt="" width="480" height="640" loading="lazy" decoding="async" draggable="false">
               </div>
               <span class="story-card__label" data-i18n="story.card1">Operación diaria</span>
             </article>
             <article class="story-card story-card--center is-hero" data-story-card="center">
               <div class="story-card__media story-card__media--navy">
-                <lottie-player src="assets/animations/garage.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                <img class="story-card__img" src="assets/images/story/control.jpg" alt="" width="480" height="640" loading="lazy" decoding="async" draggable="false">
               </div>
               <span class="story-card__label" data-i18n="story.card2">Control integral</span>
             </article>
             <article class="story-card story-card--right" data-story-card="right">
               <div class="story-card__media story-card__media--gold">
-                <lottie-player src="assets/animations/obd-diagnostics.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                <img class="story-card__img" src="assets/images/story/obd.jpg" alt="" width="480" height="640" loading="lazy" decoding="async" draggable="false">
               </div>
               <span class="story-card__label" data-i18n="story.card3">Telemetría OBD2</span>
             </article>
@@ -706,17 +784,24 @@ precisión total en cada reparación.</h1>
     <section class="pricing section section--light" id="planes" data-pricing data-pricing-segment="b2b">
       <div class="container pricing__wrap reveal">
         <div class="pricing__head">
-          <span class="pricing__label" data-i18n="plans.label">Planes de precio</span>
-          <div class="pricing__rule" aria-hidden="true"></div>
+          <div class="pricing__divider">
+            <span class="pricing__tag">
+              <span class="statement__dot" aria-hidden="true"></span>
+              <span data-i18n="plans.label">Planes de precio</span>
+            </span>
+            <span class="pricing__line" aria-hidden="true">
+              <span class="pricing__line-light"></span>
+            </span>
+          </div>
 
           <div class="pricing__controls">
             <div class="pricing__nav" aria-label="Navegación de segmentos">
               <button type="button" class="pricing__arrow" data-pricing-prev aria-label="Segmento anterior">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg>
+                <i data-lucide="chevron-left" aria-hidden="true"></i>
               </button>
               <span class="pricing__counter" data-pricing-counter>1/2</span>
               <button type="button" class="pricing__arrow" data-pricing-next aria-label="Segmento siguiente">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg>
+                <i data-lucide="chevron-right" aria-hidden="true"></i>
               </button>
             </div>
 
@@ -768,10 +853,14 @@ precisión total en cada reparación.</h1>
                 <span class="pricing-panel__period" data-i18n="plans.period.monthly">/mes</span>
               </div>
               <p class="pricing-panel__note" data-pricing-annual-note hidden data-i18n="plans.billing.note">Facturación anual · ahorra 2 meses</p>
-              <a href="#" class="pricing-cta">
-                <span data-i18n="plans.cta">Registrarse</span>
-                <span class="pricing-cta__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              </a>
+              <div class="pricing-panel__actions">
+                <a href="#" class="pricing-cta">
+                  <span data-i18n="plans.cta">Registrarse</span>
+                </a>
+                <a href="#" class="pricing-cta pricing-cta--icon" aria-label="Registrarse">
+                  <i data-lucide="arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
             </article>
 
             <!-- B2B: Profesional -->
@@ -794,10 +883,14 @@ precisión total en cada reparación.</h1>
                 <span class="pricing-panel__period" data-i18n="plans.period.monthly">/mes</span>
               </div>
               <p class="pricing-panel__note" data-pricing-annual-note hidden data-i18n="plans.billing.note">Facturación anual · ahorra 2 meses</p>
-              <a href="#" class="pricing-cta pricing-cta--featured">
-                <span data-i18n="plans.cta">Registrarse</span>
-                <span class="pricing-cta__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              </a>
+              <div class="pricing-panel__actions">
+                <a href="#" class="pricing-cta pricing-cta--featured">
+                  <span data-i18n="plans.cta">Registrarse</span>
+                </a>
+                <a href="#" class="pricing-cta pricing-cta--featured pricing-cta--icon" aria-label="Registrarse">
+                  <i data-lucide="arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
             </article>
 
             <!-- B2C: Gratis -->
@@ -819,10 +912,14 @@ precisión total en cada reparación.</h1>
                 <span class="pricing-panel__amount" data-i18n="plans.b2c.free.price">Gratis</span>
                 <span class="pricing-panel__period" data-i18n="plans.b2c.free.period">para siempre</span>
               </div>
-              <a href="#" class="pricing-cta pricing-cta--gold">
-                <span data-i18n="plans.b2c.free.cta">Descargar app</span>
-                <span class="pricing-cta__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              </a>
+              <div class="pricing-panel__actions">
+                <a href="#" class="pricing-cta pricing-cta--gold">
+                  <span data-i18n="plans.b2c.free.cta">Descargar app</span>
+                </a>
+                <a href="#" class="pricing-cta pricing-cta--gold pricing-cta--icon" aria-label="Descargar app">
+                  <i data-lucide="arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
             </article>
 
             <!-- B2C: Premium -->
@@ -845,10 +942,14 @@ precisión total en cada reparación.</h1>
                 <span class="pricing-panel__period" data-i18n="plans.period.monthly">/mes</span>
               </div>
               <p class="pricing-panel__note" data-pricing-annual-note hidden data-i18n="plans.b2c.premium.note">Equivale a S/ 6.58/mes facturado anualmente</p>
-              <a href="#" class="pricing-cta pricing-cta--gold">
-                <span data-i18n="plans.cta">Registrarse</span>
-                <span class="pricing-cta__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              </a>
+              <div class="pricing-panel__actions">
+                <a href="#" class="pricing-cta pricing-cta--gold">
+                  <span data-i18n="plans.cta">Registrarse</span>
+                </a>
+                <a href="#" class="pricing-cta pricing-cta--gold pricing-cta--icon" aria-label="Registrarse">
+                  <i data-lucide="arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
             </article>
           </div>
         </div>
@@ -861,7 +962,7 @@ precisión total en cada reparación.</h1>
     <section class="about-shift" id="nosotros" data-about>
       <div class="about-shift__curve" aria-hidden="true">
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0,0 L0,25 C360,75 720,5 1080,30 C1260,45 1380,55 1440,20 L1440,0 Z" fill="currentColor"/>
+          <path d="M0,28 C240,72 480,8 720,36 C960,64 1200,70 1440,24 L1440,80 L0,80 Z" fill="currentColor"/>
         </svg>
       </div>
       <div class="about-shift__ambient" aria-hidden="true">
@@ -871,11 +972,18 @@ precisión total en cada reparación.</h1>
       </div>
 
       <div class="about-shift__shell">
-        <span class="about-shift__label" data-i18n="about.label">Nosotros</span>
+        <div class="about-shift__divider">
+          <span class="about-shift__tag">
+            <span class="statement__dot" aria-hidden="true"></span>
+            <span data-i18n="about.label">Nosotros</span>
+          </span>
+          <span class="about-shift__line" aria-hidden="true">
+            <span class="about-shift__line-light"></span>
+          </span>
+        </div>
 
         <div class="about-shift__hero" data-about-hero>
           <div class="about-shift__intro" data-about-intro>
-            <span class="about-shift__badge" data-i18n="about.badge">El equipo</span>
             <h2 class="about-shift__title" data-i18n="about.mission.heading">Nuestra misión</h2>
             <p class="about-shift__tagline" data-i18n="about.tagline">Con raíces en la industria automotriz, impulsados por la precisión.</p>
           </div>
@@ -890,8 +998,8 @@ precisión total en cada reparación.</h1>
           <div class="about-shift__stage" data-about-deck>
             <article class="about-mission-card about-mission-card--slate about-mission-card--left" data-about-card data-about-float="left">
               <div class="about-mission-card__shine" aria-hidden="true"></div>
-              <div class="about-mission-card__visual">
-                <img src="assets/icons/solution/work-order.svg" alt="" width="88" height="88" draggable="false">
+              <div class="about-mission-card__visual about-mission-card__visual--photo">
+                <img src="assets/images/nosotros/equipo-taller.jpg" alt="Equipo en taller con dashboard" width="640" height="480" loading="lazy" decoding="async" draggable="false">
               </div>
               <div class="about-mission-card__body">
                 <span class="about-mission-card__icon" aria-hidden="true">
@@ -908,8 +1016,8 @@ precisión total en cada reparación.</h1>
 
             <article class="about-mission-card about-mission-card--mint about-mission-card--right" data-about-card data-about-float="right">
               <div class="about-mission-card__shine" aria-hidden="true"></div>
-              <div class="about-mission-card__visual">
-                <img src="assets/icons/solution/obd.svg" alt="" width="88" height="88" draggable="false">
+              <div class="about-mission-card__visual about-mission-card__visual--photo">
+                <img src="assets/images/nosotros/taller-enfoque.jpg" alt="Taller automotriz especializado" width="640" height="480" loading="lazy" decoding="async" draggable="false">
               </div>
               <div class="about-mission-card__body">
                 <span class="about-mission-card__icon" aria-hidden="true">
@@ -953,12 +1061,14 @@ precisión total en cada reparación.</h1>
                 </div>
               </div>
             </article>
-            <article class="about-team-card" data-about-team-card style="--portrait-from:#1d4ed8;--portrait-to:#1e3a8a">
+            <article class="about-team-card about-team-card--photo" data-about-team-card style="--portrait-from:#0a192f;--portrait-to:#112240">
               <div class="about-team-card__image-container">
-                <div class="about-team-card__portrait" aria-hidden="true"><span>DM</span></div>
+                <div class="about-team-card__portrait">
+                  <img src="assets/images/nosotros/dhilsen.jpeg" alt="Dhilsen Mallqui" width="640" height="800" loading="lazy" decoding="async" draggable="false">
+                </div>
                 <div class="about-team-card__overlay"></div>
                 <div class="about-team-card__badge">
-                  <img src="assets/images/hero/Shiptiq-logo-icono.png" alt="" width="24" height="24" draggable="false">
+                  <img src="assets/images/hero/Shiptiq-logo-icono.png" alt="" width="28" height="28" draggable="false">
                 </div>
                 <div class="about-team-card__info">
                   <h4 class="about-team-card__name" data-i18n="about.team.m3.name">Dhilsen Mallqui</h4>
@@ -1125,7 +1235,7 @@ precisión total en cada reparación.</h1>
       </div>
     </section>
 
-    <!-- Cierre: CTA final (scroll reveal estilo Viora) -->
+    <!-- Cierre: CTA final -->
     <section class="closing-cta" data-closing-cta aria-labelledby="closing-cta-title">
       <div class="container closing-cta__inner">
         <span class="closing-cta__badge" data-closing-cta-extra data-i18n="closing.cta.badge">Empieza hoy</span>
@@ -1250,6 +1360,7 @@ Esa perspectiva es lo que hace que Shiftiq sea diferente.</p>
     </button>
   </div>
 
+  <script src="js/page-loader.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
 
   <script src="js/i18n.js"></script>

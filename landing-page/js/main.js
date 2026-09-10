@@ -14,13 +14,22 @@ function initHeader() {
   const navToggle = document.getElementById('navToggle');
   const nav = document.getElementById('nav');
   const navLinks = nav?.querySelectorAll('.nav__link[data-section]');
-  const sectionIds = ['inicio', 'funciones', 'solucion', 'segmentos', 'planes', 'nosotros'];
+  const sectionIds = [
+    'inicio',
+    'funciones',
+    'solucion',
+    'segmentos',
+    'segmentos-talleres',
+    'segmentos-propietarios',
+    'planes',
+    'nosotros'
+  ];
   const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
   const SCROLL_THRESHOLD = 80;
 
   function setCompact(compact) {
     header.classList.toggle('header--compact', compact);
-    document.documentElement.style.setProperty('--header-h', compact ? '64px' : '88px');
+    document.documentElement.style.setProperty('--header-h', compact ? '72px' : '96px');
   }
 
   function setActiveLink(current, animate = false) {
@@ -54,6 +63,9 @@ function initHeader() {
         current = section.id;
       }
     });
+
+    // Overview "segmentos" maps to Dueño when between overview and conductor section
+    if (current === 'segmentos') current = 'segmentos-talleres';
 
     setActiveLink(current, false);
   }

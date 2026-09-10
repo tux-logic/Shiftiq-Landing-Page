@@ -1,6 +1,6 @@
 /**
  * Shiftiq — Closing sections (orbit + fan deck + CTA scroll reveal)
- * CTA animation adapted from Viora final-cta-section (scroll-driven curtain + line wipe)
+ * CTA final con cortina y wipe al scroll
  */
 const Closing = (() => {
   function clamp(value, min, max) {

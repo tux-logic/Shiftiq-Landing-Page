@@ -1,29 +1,29 @@
 /**
- * Shiftiq — Segmentos scroll-story (patrón Viora role-benefits)
+ * Shiftiq — Segmentos scroll-story
  * Talleres (navy) + Propietarios (gold)
  */
 const SegmentsScroll = (() => {
   const STICKY_OFFSET = 96;
-  const VISUAL_SLOT_SPACING = 1.36;
-  const TEXT_SWITCH_RATIO = 0.5;
+  const VISUAL_SLOT_SPACING = 1.28;
+  const TEXT_SWITCH_RATIO = 0.42;
 
   const STORY_CONFIG = {
     b2b: {
       tagKey: 'segments.b2b.tag',
       steps: [
-        { image: 'assets/icons/solution/dashboard.svg', title: 'segments.b2b.s1.title', text: 'segments.b2b.s1.text', b1: 'segments.b2b.s1.b1', b2: 'segments.b2b.s1.b2', b3: 'segments.b2b.s1.b3', cta: 'segments.b2b.s1.cta' },
-        { image: 'assets/icons/solution/obd.svg', title: 'segments.b2b.s2.title', text: 'segments.b2b.s2.text', b1: 'segments.b2b.s2.b1', b2: 'segments.b2b.s2.b2', b3: 'segments.b2b.s2.b3', cta: 'segments.b2b.s2.cta' },
-        { image: 'assets/icons/solution/inventory.svg', title: 'segments.b2b.s3.title', text: 'segments.b2b.s3.text', b1: 'segments.b2b.s3.b1', b2: 'segments.b2b.s3.b2', b3: 'segments.b2b.s3.b3', cta: 'segments.b2b.s3.cta' },
-        { image: 'assets/icons/solution/work-order.svg', title: 'segments.b2b.s4.title', text: 'segments.b2b.s4.text', b1: 'segments.b2b.s4.b1', b2: 'segments.b2b.s4.b2', b3: 'segments.b2b.s4.b3', cta: 'segments.b2b.s4.cta' },
+        { image: 'assets/icons/solution/dashboard.png', title: 'segments.b2b.s1.title', text: 'segments.b2b.s1.text', b1: 'segments.b2b.s1.b1', b2: 'segments.b2b.s1.b2', b3: 'segments.b2b.s1.b3', cta: 'segments.b2b.s1.cta' },
+        { image: 'assets/icons/solution/obd.png', title: 'segments.b2b.s2.title', text: 'segments.b2b.s2.text', b1: 'segments.b2b.s2.b1', b2: 'segments.b2b.s2.b2', b3: 'segments.b2b.s2.b3', cta: 'segments.b2b.s2.cta' },
+        { image: 'assets/icons/solution/inventory.png', title: 'segments.b2b.s3.title', text: 'segments.b2b.s3.text', b1: 'segments.b2b.s3.b1', b2: 'segments.b2b.s3.b2', b3: 'segments.b2b.s3.b3', cta: 'segments.b2b.s3.cta' },
+        { image: 'assets/icons/solution/work-order.png', title: 'segments.b2b.s4.title', text: 'segments.b2b.s4.text', b1: 'segments.b2b.s4.b1', b2: 'segments.b2b.s4.b2', b3: 'segments.b2b.s4.b3', cta: 'segments.b2b.s4.cta' },
       ],
     },
     b2c: {
       tagKey: 'segments.b2c.tag',
       steps: [
-        { image: 'assets/icons/solution/mobile-app.svg', title: 'segments.b2c.s1.title', text: 'segments.b2c.s1.text', b1: 'segments.b2c.s1.b1', b2: 'segments.b2c.s1.b2', b3: 'segments.b2c.s1.b3', cta: 'segments.b2c.s1.cta' },
-        { image: 'assets/icons/solution/obd.svg', title: 'segments.b2c.s2.title', text: 'segments.b2c.s2.text', b1: 'segments.b2c.s2.b1', b2: 'segments.b2c.s2.b2', b3: 'segments.b2c.s2.b3', cta: 'segments.b2c.s2.cta' },
-        { image: 'assets/icons/solution/work-order.svg', title: 'segments.b2c.s3.title', text: 'segments.b2c.s3.text', b1: 'segments.b2c.s3.b1', b2: 'segments.b2c.s3.b2', b3: 'segments.b2c.s3.b3', cta: 'segments.b2c.s3.cta' },
-        { image: 'assets/icons/solution/mobile-app.svg', title: 'segments.b2c.s4.title', text: 'segments.b2c.s4.text', b1: 'segments.b2c.s4.b1', b2: 'segments.b2c.s4.b2', b3: 'segments.b2c.s4.b3', cta: 'segments.b2c.s4.cta' },
+        { image: 'assets/icons/solution/mobile-app.png', title: 'segments.b2c.s1.title', text: 'segments.b2c.s1.text', b1: 'segments.b2c.s1.b1', b2: 'segments.b2c.s1.b2', b3: 'segments.b2c.s1.b3', cta: 'segments.b2c.s1.cta' },
+        { image: 'assets/icons/solution/obd.png', title: 'segments.b2c.s2.title', text: 'segments.b2c.s2.text', b1: 'segments.b2c.s2.b1', b2: 'segments.b2c.s2.b2', b3: 'segments.b2c.s2.b3', cta: 'segments.b2c.s2.cta' },
+        { image: 'assets/icons/solution/work-order.png', title: 'segments.b2c.s3.title', text: 'segments.b2c.s3.text', b1: 'segments.b2c.s3.b1', b2: 'segments.b2c.s3.b2', b3: 'segments.b2c.s3.b3', cta: 'segments.b2c.s3.cta' },
+        { image: 'assets/icons/solution/mobile-app.png', title: 'segments.b2c.s4.title', text: 'segments.b2c.s4.text', b1: 'segments.b2c.s4.b1', b2: 'segments.b2c.s4.b2', b3: 'segments.b2c.s4.b3', cta: 'segments.b2c.s4.cta' },
       ],
     },
   };
@@ -61,7 +61,7 @@ const SegmentsScroll = (() => {
       <div class="segment-story__image-stage">
         <div class="segment-story__image-track">
           ${config.steps.map((step, stepIndex) => `
-            <div class="segment-story__image-slot" style="--segment-slot-index: ${stepIndex};">
+            <div class="segment-story__image-slot" style="--segment-slot-index: ${stepIndex};" data-segment-slot="${stepIndex}">
               <div class="segment-story__visual-plate">
                 <img class="segment-story__character" src="${step.image}" alt="" loading="lazy" aria-hidden="true" />
               </div>
@@ -75,7 +75,7 @@ const SegmentsScroll = (() => {
   function renderDots(container, count, activeIndex) {
     if (!container) return;
     container.innerHTML = Array.from({ length: count }, (_, index) => (
-      `<span class="segment-story__dot${index === activeIndex ? ' segment-story__dot--active' : ''}"></span>`
+      `<button type="button" class="segment-story__dot${index === activeIndex ? ' segment-story__dot--active' : ''}" data-segment-dot="${index}" aria-label="Paso ${index + 1}"></button>`
     )).join('');
   }
 
@@ -105,6 +105,11 @@ const SegmentsScroll = (() => {
       renderBullets(bullets, text.bullets);
       renderDots(dots, config.steps.length, index);
       section.dataset.activeSegmentStep = String(index);
+      section.querySelectorAll('[data-segment-slot]').forEach((slot) => {
+        const slotIndex = Number(slot.dataset.segmentSlot);
+        slot.classList.toggle('is-active', slotIndex === index);
+        slot.classList.toggle('is-near', Math.abs(slotIndex - index) === 1);
+      });
     };
 
     if (force) {
@@ -116,7 +121,7 @@ const SegmentsScroll = (() => {
     window.setTimeout(() => {
       update();
       content?.classList.remove('segment-story__content--switching');
-    }, 140);
+    }, 180);
   }
 
   function createMobileCard(storyKey, index) {
@@ -150,6 +155,17 @@ const SegmentsScroll = (() => {
     list.innerHTML = config.steps.map((_, index) => createMobileCard(storyKey, index)).join('');
   }
 
+  function scrollToStep(section, config, index) {
+    const target = clamp(index, 0, config.steps.length - 1);
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const scrollableDistance = Math.max(section.offsetHeight - viewportHeight, 1);
+    const maxStep = Math.max(config.steps.length - 1, 1);
+    const progress = target / maxStep;
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+    const targetTop = sectionTop - STICKY_OFFSET + progress * scrollableDistance;
+    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+  }
+
   function attachSegmentStory(section) {
     if (!section || section.dataset.segmentStoryInitialized === 'true') return;
 
@@ -178,10 +194,9 @@ const SegmentsScroll = (() => {
       const renderedTrackPosition = reducedMotion.matches
         ? activeIndex * VISUAL_SLOT_SPACING
         : visualTrackPosition;
-      const visualScale = reducedMotion.matches ? 1 : 0.985 + progress * 0.015;
 
       section.style.setProperty('--segment-track-position', renderedTrackPosition.toFixed(3));
-      section.style.setProperty('--segment-visual-scale', visualScale.toFixed(3));
+      section.style.setProperty('--segment-visual-scale', '1');
 
       if (activeIndex !== currentIndex) {
         renderStep(section, storyKey, activeIndex);
@@ -209,7 +224,14 @@ const SegmentsScroll = (() => {
       renderStep(section, storyKey, activeIndex, true);
       renderMobileList(section, storyKey);
       requestUpdate();
+      if (window.lucide) lucide.createIcons();
     }
+
+    section.querySelector('[data-segment-dots]')?.addEventListener('click', (event) => {
+      const dot = event.target.closest('[data-segment-dot]');
+      if (!dot) return;
+      scrollToStep(section, config, Number(dot.dataset.segmentDot));
+    });
 
     window.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', requestUpdate);
