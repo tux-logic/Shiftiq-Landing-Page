@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en" class="is-loading">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="ShiftIQ — Gestión inteligente para talleres automotrices: órdenes de trabajo, telemetría OBD2, inventario y app móvil para mecánicos.">
+    <title>ShiftIQ</title>
+    <link rel="icon" type="image/png" href="Imagenes/Shiftiq-Logo-icono-color.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .page-loader{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:#112433}
+        html.is-loading,html.is-loading body{overflow:hidden}
+    </style>
+</head>
+
+<body>
+
+<div id="pageLoader" class="page-loader" aria-hidden="true">
+    <div class="page-loader__ambient"></div>
+    <div class="page-loader__stage">
+        <div class="page-loader__ring"></div>
+        <div class="page-loader__core">
+            <img src="Imagenes/Shiftiq-Logo-icono-color.png" alt="ShiftIQ" class="page-loader__logo">
+        </div>
+    </div>
+    <p class="page-loader__text">ShiftIQ</p>
+</div>
+
+<div class="site-header" id="siteHeader">
+    <div class="site-header__wrap">
+        <nav class="navbar navbar-expand-lg site-header__bar" aria-label="Principal">
+            <a class="navbar-brand d-flex align-items-center" href="#inicio">
+                <img src="Imagenes/Shiftiq-Logo-icono.png" alt="ShiftIQ Logo" height="40" class="me-2">
+                <span class="fw-bold fs-4 brand-wordmark">Shift<span class="text-orange">IQ</span></span>
+            </a>
+            <button class="navbar-toggler border-0 site-header__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menú">
+                <i class="bi bi-list"></i>
+            </button>
+            <div class="collapse navbar-collapse site-header__collapse" id="navbarNav">
+                <ul class="navbar-nav site-header__links">
+                    <li class="nav-item"><a class="nav-link active" href="#inicio"><span data-i18n="nav_inicio">Inicio</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tecnologia"><span data-i18n="nav_tecnologia">Solución</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sectores"><span data-i18n="nav_sectores">Segmentos</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#nosotros"><span data-i18n="nav_nosotros">Nosotros</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#equipo"><span data-i18n="nav_equipo">Equipo</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#planes"><span data-i18n="nav_planes">Planes</span></a></li>
+                </ul>
+                <div class="site-header__actions">
+                    <div class="lang-switch lang-switch--nav d-flex align-items-center" role="group" data-i18n-aria="lang_group_aria" aria-label="Seleccionar idioma">
+                        <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+                        <span class="lang-divider" aria-hidden="true">|</span>
+                        <button type="button" class="lang-btn active" data-lang="es" aria-pressed="true">ES</button>
+                    </div>
+                    <a href="#planes" class="btn-nav-cta btn-hero-sweep">
+                        <span data-i18n="nav_cta">Comienza ahora</span>
+                        <span class="btn-hero-icon" aria-hidden="true"><i class="bi bi-arrow-right"></i></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<header id="inicio" class="hero-section">
+    <video class="hero-video" autoplay muted loop playsinline poster="Imagenes/section_home-hero.png" aria-hidden="true">
+        <source src="Videos/video-4-shiftiq.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay" aria-hidden="true"></div>
+
+    <div class="container h-100 d-flex align-items-center justify-content-center position-relative">
+        <div class="row justify-content-center w-100">
+            <div class="col-lg-10 col-xl-9">
+                <div class="hero-copy" aria-live="polite">
+                    <span id="typing-tagline" class="hero-tagline">Gestión de talleres · OBD2</span>
+                    <h1 id="typing-title" class="hero-title">Máxima rentabilidad para tu taller, precisión total en cada reparación</h1>
+                    <div class="hero-separator"></div>
+                    <p id="typing-desc" class="hero-subtitle">Órdenes, telemetría OBD2, inventario y app móvil en una plataforma hecha para talleres que operan en serio.</p>
+                </div>
+
+                <div class="d-flex justify-content-center mt-4 mt-md-5">
+                    <a href="#planes" id="hero-login" class="btn btn-hero btn-hero-sweep">
+                        <span data-i18n="hero_btn_login">¡Comienza hoy mismo!</span>
+                        <span class="btn-hero-icon" aria-hidden="true"><i class="bi bi-arrow-right"></i></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section id="problema" class="floating-cards-wrapper grid-pattern-bg">
+    <div class="container">
+        <div class="kairo-partners">
+            <div class="kairo-partners__card">
+                <div class="kairo-partners__copy">
+                    <span class="kairo-partners__kicker" data-i18n="about_partners_kicker">Marco regulatorio</span>
+                    <p data-i18n-html="about_partners_html">Alineados con las <em>instituciones</em> del sector</p>
+                </div>
+                <div class="kairo-partners__rail">
+                    <div class="kairo-marquee">
+                        <div class="kairo-marquee__track">
+                            <div class="kairo-marquee__group">
+                                <img class="kairo-marquee__logo" src="Imagenes/Empresas/sunat.png" alt="SUNAT">
+                                <img class="kairo-marquee__logo kairo-marquee__logo--badge" src="Imagenes/Empresas/mtc.png" alt="Ministerio de Transportes y Comunicaciones">
+                                <img class="kairo-marquee__logo" src="Imagenes/Empresas/sutran.png" alt="SUTRAN">
+                                <img class="kairo-marquee__logo kairo-marquee__logo--badge" src="Imagenes/Empresas/sunarp.png" alt="SUNARP">
+                                <img class="kairo-marquee__logo" src="Imagenes/Empresas/indecopi.png" alt="INDECOPI">
+                                <img class="kairo-marquee__logo" src="Imagenes/Empresas/senati.svg" alt="SENATI">
+                            </div>
+                            <div class="kairo-marquee__group" aria-hidden="true">
+                                <img class="kairo-marquee__logo" src="Imagenes/Empresas/sunat.png" alt="">
+                                <img class="kairo-marquee__logo kairo-marquee__logo--badge" src="Imagenes/Empresas/mtc.png" alt="">
+                                <img class="kairo-marquee__logo" src="Imagenes/Empresas/sutran.png" alt="">
+                                <img class="kairo-marquee__logo kairo-marquee__logo--badge" src="Imagenes/Empresas/sunarp.png" alt="">
+                                <img class="kairo-marquee__logo" src="Imagenes/Empresas/indecopi.png" alt="">
+                                <img class="kairo-marquee__logo" src="Imagenes/Empresas/senati.svg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="nosotros" class="kairo-about">
+    <div class="kairo-about__ambient" aria-hidden="true">
+        <div class="kairo-about__grid-bg"></div>
+    </div>
+    <div class="container kairo-about__wrap">
+        <div class="kairo-about__layout">
+            <div class="kairo-acc" data-kairo-acc>
+                <div class="kairo-acc__heading">
+                    <span data-i18n="about_panel">Los retos del taller</span>
+                    <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                </div>
+                <article class="kairo-acc__item is-open" data-kairo-acc-item>
+                    <button type="button" class="kairo-acc__trigger" data-kairo-acc-open>
+                        <span data-i18n="about_mission_t">Operación fragmentada</span>
+                        <i class="bi bi-plus" aria-hidden="true"></i>
+                    </button>
+                    <div class="kairo-acc__card">
+                        <div class="kairo-acc__card-head">
+                            <h3 data-i18n="about_mission_t">Operación fragmentada</h3>
+                            <span class="kairo-acc__num">01</span>
+                        </div>
+                        <p data-i18n="about_mission_p">Citas, órdenes y repuestos en sistemas distintos o en papel, generando errores y retrasos.</p>
+                    </div>
+                </article>
+                <article class="kairo-acc__item" data-kairo-acc-item>
+                    <button type="button" class="kairo-acc__trigger" data-kairo-acc-open>
+                        <span data-i18n="about_vision_t">Inventario sin control</span>
+                        <i class="bi bi-plus" aria-hidden="true"></i>
+                    </button>
+                    <div class="kairo-acc__card">
+                        <div class="kairo-acc__card-head">
+                            <h3 data-i18n="about_vision_t">Inventario sin control</h3>
+                            <span class="kairo-acc__num">02</span>
+                        </div>
+                        <p data-i18n="about_vision_p">Repuestos reservados sin trazabilidad y stock desactualizado que frena las reparaciones.</p>
+                    </div>
+                </article>
+                <article class="kairo-acc__item" data-kairo-acc-item>
+                    <button type="button" class="kairo-acc__trigger" data-kairo-acc-open>
+                        <span data-i18n="about_acc3_t">Sin telemetría OBD2</span>
+                        <i class="bi bi-plus" aria-hidden="true"></i>
+                    </button>
+                    <div class="kairo-acc__card">
+                        <div class="kairo-acc__card-head">
+                            <h3 data-i18n="about_acc3_t">Sin telemetría OBD2</h3>
+                            <span class="kairo-acc__num">03</span>
+                        </div>
+                        <p data-i18n="about_acc3_p">Diagnósticos manuales sin alertas DTC en tiempo real ni historial del vehículo.</p>
+                    </div>
+                </article>
+                <article class="kairo-acc__item" data-kairo-acc-item>
+                    <button type="button" class="kairo-acc__trigger" data-kairo-acc-open>
+                        <span data-i18n="about_acc4_t">Ceguera estratégica</span>
+                        <i class="bi bi-plus" aria-hidden="true"></i>
+                    </button>
+                    <div class="kairo-acc__card">
+                        <div class="kairo-acc__card-head">
+                            <h3 data-i18n="about_acc4_t">Ceguera estratégica</h3>
+                            <span class="kairo-acc__num">04</span>
+                        </div>
+                        <p data-i18n="about_acc4_p">Dueños sin métricas por sede, ingresos ni alertas de negocio hasta que es demasiado tarde.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="kairo-about__copy">
+                <span class="kairo-about__kicker" data-i18n="about_kicker">El desafío</span>
+                <h2 data-i18n="about_h2">La gestión tradicional del taller deja demasiado al azar</h2>
+                <p data-i18n-html="about_lead_html">
+                    Órdenes en papel, inventario desactualizado, sin visibilidad de telemetría y reportes que llegan tarde. <strong>ShiftIQ</strong> nace para cerrar la brecha entre la <strong>operación del taller</strong> y la <strong>visión del negocio</strong>: control operativo, alertas tempranas y mejores decisiones por sede.
+                </p>
+                <a href="#tecnologia" class="kairo-about__cta btn-hero-sweep">
+                    <span data-i18n="about_cta">Conoce la solución</span>
+                    <span class="btn-hero-icon" aria-hidden="true"><i class="bi bi-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="kairo-expand" data-video-expand-section aria-labelledby="kairo-expand-title">
+    <div class="kairo-expand__sticky" data-video-expand-sticky>
+        <div class="kairo-expand__ambient" aria-hidden="true">
+            <div class="kairo-expand__grid"></div>
+        </div>
+        <div class="kairo-expand__intro">
+            <div class="kairo-expand__intro-content">
+                <h2 class="kairo-expand__intro-text" id="kairo-expand-title" data-kairo-expand-copy data-i18n="expand_intro">Cada día sin datos claros es una oportunidad perdida: demoras, costos ocultos y clientes que no vuelven.</h2>
+            </div>
+            <div class="kairo-expand__placeholder" data-video-expand-placeholder></div>
+        </div>
+        <figure class="kairo-expand__media" data-video-expand-media>
+            <video class="kairo-expand__video" autoplay muted loop playsinline>
+                <source src="Videos/video-3-shiftiq.mp4" type="video/mp4">
+            </video>
+            <figcaption class="kairo-expand__caption" data-video-expand-caption>
+                <p class="kairo-expand__caption-text" data-i18n="expand_caption">ShiftIQ muestra el taller como es: órdenes, alertas OBD2 e inventario en una sola vista para actuar a tiempo.</p>
+                <span class="kairo-expand__caption-info" aria-hidden="true"><i class="bi bi-info"></i></span>
+            </figcaption>
+        </figure>
+    </div>
+</section>
+
+<section id="tecnologia" class="bg-light">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <div class="bg-text-watermark reveal-watermark" data-i18n="tech_wm">LA SOLUCIÓN</div>
+            <span class="text-orange fw-bold text-uppercase letter-spacing-2 reveal-item" data-i18n="tech_kicker">Opera mejor. Decide antes.</span>
+            <h2 class="display-5 fw-bold mt-2 reveal-item" data-i18n="tech_h2">Convierte la operación del taller en decisiones inteligentes</h2>
+            <p class="text-muted mx-auto reveal-item" style="max-width: 700px;" data-i18n="tech_lead">
+                ShiftIQ conecta la visión del dueño con la urgencia del piso: órdenes, OBD2, inventario y app móvil en una sola plataforma.
+            </p>
+        </div>
+
+        <div class="offer-carousel mb-5" data-offer-carousel>
+            <button type="button" class="offer-carousel__btn offer-carousel__btn--prev" data-offer-prev aria-label="Anterior">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="offer-carousel__viewport">
+                <div class="offer-carousel__track" data-offer-track>
+                    <article class="offer-card">
+                        <figure class="offer-card__photo">
+                            <img src="Imagenes/Soluciones/ordenes.jpg" alt="Asesor revisando una orden de trabajo en tablet" loading="lazy" data-offer-image>
+                            <div class="offer-card__icon"><i class="bi bi-clipboard-check"></i></div>
+                        </figure>
+                        <div class="offer-card__body">
+                            <h4 data-i18n="tech_f1h">Órdenes de trabajo</h4>
+                            <p data-i18n="tech_f1p">Crea, asigna y da seguimiento a cada reparación desde la web principal.</p>
+                        </div>
+                    </article>
+                    <article class="offer-card">
+                        <figure class="offer-card__photo">
+                            <img src="Imagenes/Soluciones/inventario.jpg" alt="Almacén de repuestos del taller" loading="lazy" data-offer-image>
+                            <div class="offer-card__icon"><i class="bi bi-box-seam"></i></div>
+                        </figure>
+                        <div class="offer-card__body">
+                            <h4 data-i18n="tech_f2h">Inventario inteligente</h4>
+                            <p data-i18n="tech_f2p">Productos, lotes y reserva de repuestos vinculados a cada tarea.</p>
+                        </div>
+                    </article>
+                    <article class="offer-card">
+                        <figure class="offer-card__photo">
+                            <img src="Imagenes/Soluciones/obd2.jpg" alt="Escáner OBD2 conectado al vehículo" loading="lazy" data-offer-image>
+                            <div class="offer-card__icon"><i class="bi bi-speedometer2"></i></div>
+                        </figure>
+                        <div class="offer-card__body">
+                            <h4 data-i18n="tech_f3h">OBD2 y telemetría</h4>
+                            <p data-i18n="tech_f3p">Vincula dispositivos, recibe alertas DTC y consulta datos técnicos del vehículo.</p>
+                        </div>
+                    </article>
+                    <article class="offer-card">
+                        <figure class="offer-card__photo">
+                            <img src="Imagenes/Soluciones/dashboard.jpg" alt="Dueño del taller revisando el dashboard" loading="lazy" data-offer-image>
+                            <div class="offer-card__icon"><i class="bi bi-graph-up-arrow"></i></div>
+                        </figure>
+                        <div class="offer-card__body">
+                            <h4 data-i18n="tech_f4h">Dashboard ejecutivo</h4>
+                            <p data-i18n="tech_f4p">Ingresos, ganancias y métricas por sede para dueños y gerentes.</p>
+                        </div>
+                    </article>
+                    <article class="offer-card">
+                        <figure class="offer-card__photo">
+                            <img src="Imagenes/Soluciones/app.jpg" alt="Mecánico usando la app en el celular" loading="lazy" data-offer-image>
+                            <div class="offer-card__icon"><i class="bi bi-phone"></i></div>
+                        </figure>
+                        <div class="offer-card__body">
+                            <h4 data-i18n="tech_f5h">App para mecánicos</h4>
+                            <p data-i18n="tech_f5p">Tareas, repuestos y telemetría en tiempo real desde el piso del taller.</p>
+                        </div>
+                    </article>
+                    <article class="offer-card">
+                        <figure class="offer-card__photo">
+                            <img src="Imagenes/Soluciones/cotizaciones.jpg" alt="Cliente aprobando una cotización y pagando" loading="lazy" data-offer-image>
+                            <div class="offer-card__icon"><i class="bi bi-receipt"></i></div>
+                        </figure>
+                        <div class="offer-card__body">
+                            <h4 data-i18n="tech_f6h">Cotizaciones y pagos</h4>
+                            <p data-i18n="tech_f6p">Facturación, cotizaciones y aprobación del cliente desde la app, sin papeles.</p>
+                        </div>
+                    </article>
+                    <article class="offer-card">
+                        <figure class="offer-card__photo">
+                            <img src="Imagenes/Soluciones/multisede.jpg" alt="Centro de servicio automotriz con varias bahías" loading="lazy" data-offer-image>
+                            <div class="offer-card__icon"><i class="bi bi-diagram-3"></i></div>
+                        </figure>
+                        <div class="offer-card__body">
+                            <h4 data-i18n="tech_f7h">Gestión multi-sede</h4>
+                            <p data-i18n="tech_f7p">Supervisa el rendimiento de cada sucursal en tiempo real desde web y móvil.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <button type="button" class="offer-carousel__btn offer-carousel__btn--next" data-offer-next aria-label="Siguiente">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="product-mosaic">
+            <article class="product-mosaic__media">
+                <video autoplay muted loop playsinline>
+                    <source src="Videos/video-2-shiftiq.mp4" type="video/mp4">
+                </video>
+            </article>
+            <article class="product-mosaic__panel">
+                <p class="product-mosaic__kicker" data-i18n="mosaic_kicker">Resultados esperados</p>
+                <h3 class="product-mosaic__title" data-i18n="mosaic_title">Toma decisiones más inteligentes en tu taller y reduce el riesgo operativo.</h3>
+                <ul class="product-mosaic__stats">
+                    <li>
+                        <i class="bi bi-lightning-charge-fill" aria-hidden="true"></i>
+                        <strong data-i18n="mosaic_s1v">&lt; 5 min</strong>
+                        <span data-i18n="mosaic_s1l">Meta de respuesta a alertas OBD2</span>
+                    </li>
+                    <li>
+                        <i class="bi bi-tools" aria-hidden="true"></i>
+                        <strong data-i18n="mosaic_s2v">200+</strong>
+                        <span data-i18n="mosaic_s2l">Talleres en adopción temprana</span>
+                    </li>
+                    <li>
+                        <i class="bi bi-people-fill" aria-hidden="true"></i>
+                        <strong data-i18n="mosaic_s3v">40+</strong>
+                        <span data-i18n="mosaic_s3l">Especialistas objetivo en la red</span>
+                    </li>
+                    <li>
+                        <i class="bi bi-graph-down-arrow" aria-hidden="true"></i>
+                        <strong data-i18n="mosaic_s4v">20%</strong>
+                        <span data-i18n="mosaic_s4l">Reducción estimada en tiempos muertos</span>
+                    </li>
+                </ul>
+            </article>
+            <article class="product-mosaic__copy">
+                <p class="product-mosaic__eyebrow" data-i18n="mosaic_eyebrow">Una recomendación de ShiftIQ</p>
+                <h3 data-i18n="mosaic_h3">Nunca enfrentes una avería crítica solo</h3>
+                <p data-i18n="mosaic_p">Cuando el riesgo aumenta, ShiftIQ te conecta con talleres y especialistas cercanos que pueden revisar los datos de tu vehículo, evaluar la situación y ayudarte a responder más rápido.</p>
+                <a href="#sectores" class="btn btn-hero btn-hero-sweep btn-hero-sweep--light">
+                    <span data-i18n="mosaic_btn">Explorar la red</span>
+                    <span class="btn-hero-icon" aria-hidden="true"><i class="bi bi-arrow-right"></i></span>
+                </a>
+            </article>
+            <article class="product-mosaic__media">
+                <video autoplay muted loop playsinline>
+                    <source src="Videos/video-5-shiftiq.mp4" type="video/mp4">
+                </video>
+            </article>
+    </div>
+
+    <div class="container showcase-wrap">
+        <div class="yt-showcase" data-yt-showcase>
+            <div class="yt-showcase__stage" data-yt-stage style="background-image: url('https://img.youtube.com/vi/P4EXeRWgNtw/maxresdefault.jpg');">
+                <p class="yt-showcase__caption" data-i18n-html="yt_caption">Mira cómo funciona ShiftIQ<br>en tu taller</p>
+            </div>
+            <div class="yt-plus-overlay" data-yt-plus-overlay hidden>
+                <div class="yt-plus-overlay__orbit" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="yt-plus-overlay__card">
+                    <div class="yt-plus-overlay__icon">
+                        <img src="Imagenes/Shiftiq-Logo-icono.png" alt="ShiftIQ">
+                    </div>
+                    <h3 data-i18n="yt_plus_h">¿Listo para ver ShiftIQ en acción?</h3>
+                    <p data-i18n="yt_plus_p">No reproduzcas el video todavía: ve directo a los planes y lleva ShiftIQ a tu taller.</p>
+                    <a href="#planes" class="btn btn-hero btn-hero-sweep">
+                        <span data-i18n="yt_plus_btn">Obtener la app</span>
+                        <span class="btn-hero-icon" aria-hidden="true"><i class="bi bi-arrow-right"></i></span>
+                    </a>
+                </div>
+            </div>
+            <div class="yt-showcase__controls">
+                <button type="button" class="yt-showcase__chip yt-showcase__chip--yt" data-yt-play aria-label="Reproducir en YouTube">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF0000" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8z"/><path fill="#fff" d="M9.6 15.6V8.4L15.8 12z"/></svg>
+                </button>
+                <button type="button" class="yt-showcase__chip" data-yt-play aria-label="Reproducir video">
+                    <i class="bi bi-play-fill"></i>
+                </button>
+                <button type="button" class="yt-showcase__chip yt-showcase__plus" data-yt-plus aria-label="Obtener la app" aria-expanded="false">
+                    <span class="yt-plus-mark" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="sectores" class="bg-white grid-pattern-bg">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <div class="bg-text-watermark reveal-watermark" data-i18n="sec_wm">SEGMENTOS</div>
+            <span class="text-orange fw-bold text-uppercase letter-spacing-2 reveal-item" data-i18n="sec_kicker">Dueños y Conductores</span>
+            <h2 class="display-5 fw-bold mt-2 reveal-item" data-i18n="sec_h2">Una plataforma. Dos experiencias.</h2>
+            <p class="text-muted mx-auto reveal-item" style="max-width: 650px;" data-i18n="sec_lead">
+                Conectamos talleres automotrices con propietarios de vehículos en un ecosistema digital integrado.
+            </p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-6">
+                <div class="sector-card-premium reveal-zoom">
+                    <div class="sector-img-wrapper">
+                        <img src="Imagenes/equipo-taller.jpg" class="sector-img" alt="Dueños de taller revisando el dashboard">
+                        <div class="sector-badge orange">
+                            <i class="bi bi-person-badge"></i> <span data-i18n="sec_b1">Segmento 01</span>
+                        </div>
+                    </div>
+                    <div class="sector-floating-icon">
+                        <i class="bi bi-tools"></i>
+                    </div>
+                    <div class="sector-content">
+                        <h3 class="sector-title" data-i18n="sec_t1">Dueños, administradores y mecánicos de talleres</h3>
+                        <p class="sector-text" data-i18n="sec_p1">
+                            Gestiona tu taller desde un solo lugar: ingresos, empleados, repuestos y alertas OBD2 de vehículos cercanos que puedes convertir en órdenes de trabajo.
+                        </p>
+                        <div class="sector-tags mb-4">
+                            <span class="tag" data-i18n="sec_tag1a">Talleres independientes</span>
+                            <span class="tag" data-i18n="sec_tag1b">Cadenas</span>
+                            <span class="tag" data-i18n="sec_tag1c">Especializados</span>
+                        </div>
+                        <div class="sector-footer">
+                            <a href="#contacto" class="sector-link"><span data-i18n="sec_l1">SABER MÁS</span> <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="sector-card-premium reveal-zoom">
+                    <div class="sector-img-wrapper">
+                        <img src="Imagenes/taller-enfoque.jpg" class="sector-img" alt="Vehículo en mantenimiento">
+                        <div class="sector-badge blue">
+                            <i class="bi bi-car-front"></i> <span data-i18n="sec_b2">Segmento 02</span>
+                        </div>
+                    </div>
+                    <div class="sector-floating-icon">
+                        <i class="bi bi-phone"></i>
+                    </div>
+                    <div class="sector-content">
+                        <h3 class="sector-title" data-i18n="sec_t2">Conductores y propietarios de vehículos</h3>
+                        <p class="sector-text" data-i18n="sec_p2">
+                            Monitorea la salud de tu vehículo desde la app, recibe códigos DTC explicados en lenguaje simple y actúa antes de la avería.
+                        </p>
+                        <div class="sector-tags mb-4">
+                            <span class="tag" data-i18n="sec_tag2a">Autos particulares</span>
+                            <span class="tag" data-i18n="sec_tag2b">Flotas</span>
+                            <span class="tag" data-i18n="sec_tag2c">Alta gama</span>
+                        </div>
+                        <div class="sector-footer">
+                            <a href="#contacto" class="sector-link"><span data-i18n="sec_l2">MÁS INFO</span> <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="kairo-story" data-kairo-story>
+    <div class="kairo-story__ambient" aria-hidden="true">
+        <div class="kairo-story__grid"></div>
+        <div class="kairo-story__glow"></div>
+    </div>
+    <div class="kairo-story__track" data-kairo-story-track>
+        <div class="kairo-story__sticky">
+            <div class="kairo-story__text">
+                <div class="kairo-story__block is-active" data-kairo-story-text="0">
+                    <h2 data-i18n="connect_h2">Deja de operar tu taller a ciegas</h2>
+                    <p data-i18n="connect_lead">Gestionar con papel, Excel y llamadas sueltas suele costar más que anticipar fallas, stock y cuellos de botella con datos en tiempo real.</p>
+                </div>
+                <div class="kairo-story__block" data-kairo-story-text="1">
+                    <h2 data-i18n="connect_h2b">Conecta operación, equipo y clientes</h2>
+                    <p data-i18n="connect_leadb">ShiftIQ une la web ejecutiva, la operación del taller y la app móvil en un solo ecosistema que todos entienden.</p>
+                </div>
+                <div class="kairo-story__block" data-kairo-story-text="2">
+                    <h2 data-i18n="connect_h2c">Invierte en un taller proactivo</h2>
+                    <p data-i18n="connect_leadc">Convierte cada alerta OBD2, cada orden y cada sede en decisiones que protegen tu rentabilidad.</p>
+                </div>
+            </div>
+            <div class="kairo-story__cards">
+                <article class="kairo-story__card" data-kairo-story-card="left">
+                    <figure class="kairo-story__media">
+                        <img src="Imagenes/operacion.jpg" alt="Operación diaria">
+                    </figure>
+                    <h3 data-i18n="connect_c1">Operación diaria</h3>
+                </article>
+                <article class="kairo-story__card kairo-story__card--center is-hero" data-kairo-story-card="center">
+                    <figure class="kairo-story__media">
+                        <img src="Imagenes/control.jpg" alt="Control integral">
+                    </figure>
+                    <h3 data-i18n="connect_c2">Control integral</h3>
+                </article>
+                <article class="kairo-story__card" data-kairo-story-card="right">
+                    <figure class="kairo-story__media">
+                        <img src="Imagenes/obd.jpg" alt="Telemetría OBD2">
+                    </figure>
+                    <h3 data-i18n="connect_c3">Telemetría OBD2</h3>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="equipo" class="team-equipo-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="team-equipo-kicker d-block mb-2">EQUIPO SHIFTIQ</span>
+            <h2 class="display-5 fw-bold mb-2 text-dark" data-i18n="team_h2">Conoce al equipo ShiftIQ</h2>
+            <p class="text-muted mx-auto mb-0 team-equipo-lead" data-i18n="team_lead">
+                Con raíces en la industria automotriz, impulsados por la precisión
+            </p>
+            <div class="team-equipo-rule mx-auto mt-3 mb-5" aria-hidden="true"></div>
+        </div>
+
+        <div class="team-carousel" data-team-carousel>
+            <div class="team-carousel__viewport">
+                <div class="team-carousel__track" data-team-track>
+                    <article class="team-equipo-card">
+                        <img class="team-equipo-card__badge" src="Imagenes/Shiftiq-Logo-icono-color.png" alt="ShiftIQ">
+                        <div class="team-equipo-card__photo-wrap">
+                            <img src="Imagenes/dhilsen.jpeg" alt="Dhilsen Mallqui" width="400" height="500" loading="lazy">
+                        </div>
+                        <p class="team-equipo-card__name">Dhilsen Mallqui</p>
+                        <p class="team-equipo-card__role">Equipo ShiftIQ</p>
+                        <div class="team-equipo-card__hover">
+                            <p class="team-equipo-card__bio" data-i18n="team_b1">Desarrollo de la plataforma, despliegue continuo y documentación.</p>
+                        </div>
+                    </article>
+                    <article class="team-equipo-card">
+                        <img class="team-equipo-card__badge" src="Imagenes/Shiftiq-Logo-icono-color.png" alt="ShiftIQ">
+                        <div class="team-equipo-card__photo-wrap team-equipo-card__photo-wrap--initials" data-initials="AM">
+                            <span>AM</span>
+                        </div>
+                        <p class="team-equipo-card__name">Alan Mamani</p>
+                        <p class="team-equipo-card__role">Equipo ShiftIQ</p>
+                        <div class="team-equipo-card__hover">
+                            <p class="team-equipo-card__bio" data-i18n="team_b2">Web ejecutiva y dashboard: métricas por sede para dueños y gerentes.</p>
+                        </div>
+                    </article>
+                    <article class="team-equipo-card">
+                        <img class="team-equipo-card__badge" src="Imagenes/Shiftiq-Logo-icono-color.png" alt="ShiftIQ">
+                        <div class="team-equipo-card__photo-wrap team-equipo-card__photo-wrap--initials" data-initials="AM">
+                            <span>AM</span>
+                        </div>
+                        <p class="team-equipo-card__name">Aldo Machacca</p>
+                        <p class="team-equipo-card__role">Equipo ShiftIQ</p>
+                        <div class="team-equipo-card__hover">
+                            <p class="team-equipo-card__bio" data-i18n="team_b3">Órdenes de trabajo, inventario y flujo operativo del taller.</p>
+                        </div>
+                    </article>
+                    <article class="team-equipo-card">
+                        <img class="team-equipo-card__badge" src="Imagenes/Shiftiq-Logo-icono-color.png" alt="ShiftIQ">
+                        <div class="team-equipo-card__photo-wrap team-equipo-card__photo-wrap--initials" data-initials="DR">
+                            <span>DR</span>
+                        </div>
+                        <p class="team-equipo-card__name">Diego Ramos</p>
+                        <p class="team-equipo-card__role">Equipo ShiftIQ</p>
+                        <div class="team-equipo-card__hover">
+                            <p class="team-equipo-card__bio" data-i18n="team_b4">App móvil para mecánicos y conductores.</p>
+                        </div>
+                    </article>
+                    <article class="team-equipo-card">
+                        <img class="team-equipo-card__badge" src="Imagenes/Shiftiq-Logo-icono-color.png" alt="ShiftIQ">
+                        <div class="team-equipo-card__photo-wrap team-equipo-card__photo-wrap--initials" data-initials="JV">
+                            <span>JV</span>
+                        </div>
+                        <p class="team-equipo-card__name">Jareth Vidal</p>
+                        <p class="team-equipo-card__role">Equipo ShiftIQ</p>
+                        <div class="team-equipo-card__hover">
+                            <p class="team-equipo-card__bio" data-i18n="team_b5">Telemetría OBD2, alertas DTC e integraciones.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="team-carousel__progress" aria-hidden="true">
+                <span data-team-progress></span>
+            </div>
+        </div>
+
+        <div class="team-media" data-team-media>
+            <div class="team-media__switch" role="tablist">
+                <button type="button" class="is-active" data-team-tab="video" data-i18n="team_tab_video">Video</button>
+                <button type="button" data-team-tab="image" data-i18n="team_tab_image">Imagen</button>
+            </div>
+            <div class="team-media__stage is-video" data-team-stage="video">
+                <button type="button" class="team-media__play" data-team-play aria-label="Reproducir video">
+                    <i class="bi bi-play-fill"></i>
+                </button>
+            </div>
+            <div class="team-media__stage is-image" data-team-stage="image" hidden>
+                <div class="team-media__placeholder">
+                    <span class="team-media__spinner" aria-hidden="true"></span>
+                    <p data-i18n="team_img_soon">Imagen del equipo en preparación</p>
+                </div>
+            </div>
+            <p class="team-media__copy" data-team-copy data-i18n="team_media_copy">Nuestro equipo entiende ambos lados del taller. Desde desarrolladores y diseñadores hasta especialistas en movilidad y telemetría automotriz, en ShiftIQ convertimos datos, procesos y experiencia compartida en talleres más eficientes y rentables.</p>
+        </div>
+    </div>
+</section>
+
+<section class="kairo-orbit" data-kairo-orbit aria-label="Perspectiva ShiftIQ">
+    <div class="kairo-orbit__ambient" aria-hidden="true">
+        <div class="kairo-orbit__glow kairo-orbit__glow--1"></div>
+        <div class="kairo-orbit__glow kairo-orbit__glow--2"></div>
+    </div>
+    <div class="kairo-orbit__center">
+        <div class="kairo-orbit__text-glow" aria-hidden="true"></div>
+        <p class="kairo-orbit__text" data-i18n="orbit_text">Nuestro equipo entiende ambos lados del taller: la urgencia del piso y la visión del dueño. Esa perspectiva es lo que hace que ShiftIQ sea diferente.</p>
+    </div>
+    <div class="kairo-orbit__items" aria-hidden="true">
+        <div class="kairo-orbit__item" data-kairo-orbit-item>
+            <div class="kairo-orbit__item-glow"></div>
+            <div class="kairo-orbit__item-content"><i class="bi bi-speedometer2"></i></div>
+        </div>
+        <div class="kairo-orbit__item" data-kairo-orbit-item>
+            <div class="kairo-orbit__item-glow"></div>
+            <div class="kairo-orbit__item-content"><i class="bi bi-clock-history"></i></div>
+        </div>
+        <div class="kairo-orbit__item" data-kairo-orbit-item>
+            <div class="kairo-orbit__item-glow"></div>
+            <div class="kairo-orbit__item-content"><i class="bi bi-wrench-adjustable"></i></div>
+        </div>
+        <div class="kairo-orbit__item" data-kairo-orbit-item>
+            <div class="kairo-orbit__item-glow"></div>
+            <div class="kairo-orbit__item-content"><i class="bi bi-car-front-fill"></i></div>
+        </div>
+        <div class="kairo-orbit__item" data-kairo-orbit-item>
+            <div class="kairo-orbit__item-glow"></div>
+            <div class="kairo-orbit__item-content"><i class="bi bi-box-seam"></i></div>
+        </div>
+        <div class="kairo-orbit__item" data-kairo-orbit-item>
+            <div class="kairo-orbit__item-glow"></div>
+            <div class="kairo-orbit__item-content"><i class="bi bi-phone"></i></div>
+        </div>
+        <div class="kairo-orbit__item" data-kairo-orbit-item>
+            <div class="kairo-orbit__item-glow"></div>
+            <div class="kairo-orbit__item-content"><i class="bi bi-bell-fill"></i></div>
+        </div>
+        <div class="kairo-orbit__item" data-kairo-orbit-item>
+            <div class="kairo-orbit__item-glow"></div>
+            <div class="kairo-orbit__item-content"><i class="bi bi-graph-up-arrow"></i></div>
+        </div>
+    </div>
+</section>
+
+<section id="planes" class="pricing-section-premium grid-pattern-bg">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <div class="bg-text-watermark reveal-watermark" data-i18n="plan_wm">NUESTROS PLANES</div>
+            <span class="text-orange fw-bold text-uppercase letter-spacing-2 reveal-item" data-i18n="plan_kicker">Planes de precio</span>
+            <h2 class="display-5 fw-bold mt-2 reveal-item" data-i18n="plan_h2">Cada taller merece las herramientas correctas</h2>
+            <p class="text-muted mx-auto mb-4 reveal-item" style="max-width: 650px;" data-i18n="plan_lead">
+                Planes que escalan contigo: desde el taller independiente hasta cadenas multi-sede y propietarios de vehículos.
+            </p>
+        </div>
+
+        <div class="pricing-fan" data-pricing-fan>
+            <div class="pricing-fan__viewport" data-pricing-fan-viewport>
+                <div class="pricing-fan__deck">
+                    <article class="pricing-card-white" data-pricing-fan-card>
+                        <div class="pricing-header">
+                            <span class="plan-name" data-i18n="plan_pilot">APP FREE</span>
+                            <div class="plan-price">S/ 0<span class="price-period" data-i18n="plan_period">/mes</span></div>
+                            <p class="plan-desc" data-i18n="plan_d0">Para propietarios de vehículos: monitoreo, recordatorios e historial en la red ShiftIQ.</p>
+                        </div>
+                        <div class="pricing-divider"></div>
+                        <ul class="pricing-features">
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan0_f1">Registro de vehículos y perfil</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan0_f2">Monitoreo básico del vehículo</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan0_f3">Recordatorios de mantenimiento</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan0_f4">Historial en talleres afiliados</span></li>
+                            <li class="inactive"><i class="bi bi-x-circle-fill"></i> <span data-i18n="plan0_f5">Lectura avanzada de DTC</span></li>
+                            <li class="inactive"><i class="bi bi-x-circle-fill"></i> <span data-i18n="plan0_f6">Alertas proactivas</span></li>
+                        </ul>
+                        <div class="pricing-footer">
+                            <a href="#contacto" class="btn btn-outline-pricing" data-i18n="plan0_btn">Descargar app</a>
+                        </div>
+                    </article>
+
+                    <article class="pricing-card-white" data-pricing-fan-card>
+                        <div class="pricing-header">
+                            <span class="plan-name" data-i18n="plan_basic">BÁSICO</span>
+                            <div class="plan-price">S/ 199<span class="price-period" data-i18n="plan_period">/mes</span></div>
+                            <p class="plan-desc" data-i18n="plan_d1">Para talleres independientes: órdenes, facturación y citas en un solo lugar.</p>
+                        </div>
+                        <div class="pricing-divider"></div>
+                        <ul class="pricing-features">
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan1_f1">Gestión de órdenes de trabajo</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan1_f2">Facturación, cotizaciones y pagos</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan1_f3">Registro de clientes y vehículos</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan1_f4">Hasta 2 usuarios · 1 sede</span></li>
+                            <li class="inactive"><i class="bi bi-x-circle-fill"></i> <span data-i18n="plan1_f5">Conexión OBD2</span></li>
+                            <li class="inactive"><i class="bi bi-x-circle-fill"></i> <span data-i18n="plan1_f6">Reportes financieros</span></li>
+                        </ul>
+                        <div class="pricing-footer">
+                            <a href="#contacto" class="btn btn-outline-pricing" data-i18n="plan1_btn">Seleccionar Básico</a>
+                        </div>
+                    </article>
+
+                    <article class="pricing-card-white highlight" data-pricing-fan-card>
+                        <div class="recommended-badge" data-i18n="plan_rec">RECOMENDADO</div>
+                        <div class="pricing-header">
+                            <span class="plan-name orange-text" data-i18n="plan_pro">PROFESIONAL</span>
+                            <div class="plan-price">S/ 449<span class="price-period" data-i18n="plan_period">/mes</span></div>
+                            <p class="plan-desc" data-i18n="plan_d2">Para talleres en crecimiento: OBD2, portal de clientes y reportes.</p>
+                        </div>
+                        <div class="pricing-divider"></div>
+                        <ul class="pricing-features">
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan2_f1">Todo lo del plan Básico</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan2_f2">Conexión OBD2 y códigos DTC</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan2_f3">Portal para clientes</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan2_f4">Informes operativos y financieros</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan2_f5">App móvil para mecánicos</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan2_f6">Hasta 5 usuarios · 3 sedes</span></li>
+                        </ul>
+                        <div class="pricing-footer">
+                            <a href="#contacto" class="btn btn-solid-pricing"><span data-i18n="plan2_btn">Comenzar ahora</span> <i class="bi bi-arrow-right ms-2"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="pricing-card-white" data-pricing-fan-card>
+                        <div class="pricing-header">
+                            <span class="plan-name" data-i18n="plan_hosp">APP PREMIUM</span>
+                            <div class="plan-price">S/ 7.90<span class="price-period" data-i18n="plan_period">/mes</span></div>
+                            <p class="plan-desc" data-i18n="plan_d4">Para conductores que quieren diagnóstico avanzado y alertas antes de la avería.</p>
+                        </div>
+                        <div class="pricing-divider"></div>
+                        <ul class="pricing-features">
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan4_f1">Lectura avanzada de DTC</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan4_f2">Telemetría detallada</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan4_f3">Alertas proactivas</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan4_f4">Historial completo de servicios</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan4_f5">Integración con talleres afiliados</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan4_f6">Aprobación de cotizaciones</span></li>
+                        </ul>
+                        <div class="pricing-footer">
+                            <a href="#contacto" class="btn btn-outline-pricing" data-i18n="plan4_btn">Elegir Premium</a>
+                        </div>
+                    </article>
+
+                    <article class="pricing-card-white" data-pricing-fan-card>
+                        <div class="pricing-header">
+                            <span class="plan-name" data-i18n="plan_prem">CORPORATIVO</span>
+                            <div class="plan-price"><span data-i18n="plan_custom">A medida</span></div>
+                            <p class="plan-desc" data-i18n="plan_d3">Para cadenas de talleres con múltiples sedes. Desde S/ 899 al mes.</p>
+                        </div>
+                        <div class="pricing-divider"></div>
+                        <ul class="pricing-features">
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan3_f1">Todo lo del plan Profesional</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan3_f2">Múltiples sedes</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan3_f3">Usuarios ilimitados</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan3_f4">Dashboard ejecutivo global</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan3_f5">Integraciones vía API</span></li>
+                            <li class="active"><i class="bi bi-check-circle-fill"></i> <span data-i18n="plan3_f6">Soporte prioritario y onboarding</span></li>
+                        </ul>
+                        <div class="pricing-footer">
+                            <a href="#contacto" class="btn btn-outline-pricing"><span data-i18n="plan3_btn">Contactar ventas</span> <i class="bi bi-arrow-right ms-2"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+        <div class="pricing-bottom-info text-center mt-5 reveal-item">
+            <p class="text-muted small"><i class="bi bi-shield-check text-orange me-2"></i> <span data-i18n="plan_note">Facturación anual disponible: ahorra 2 meses en cualquier plan de taller</span></p>
+        </div>
+    </div>
+</section>
+
+<section id="contacto" class="kairo-cta" data-kairo-cta>
+    <div class="kairo-cta__inner">
+        <span class="kairo-cta__badge" data-kairo-cta-extra data-i18n="cta_v_badge">Empieza hoy</span>
+        <h2 class="kairo-cta__title" data-kairo-cta-reveal data-i18n="cta_v_title">Talleres inteligentes.
+Operación más fuerte.
+Hecho para quienes reparan.</h2>
+        <p class="kairo-cta__sub" data-kairo-cta-reveal data-i18n="cta_v_sub">Nuestro equipo entiende ambos lados del taller: la urgencia del piso y la visión del dueño. Esa perspectiva es lo que hace que ShiftIQ sea diferente.</p>
+        <div class="kairo-cta__actions" data-kairo-cta-extra>
+            <a href="#planes" class="kairo-cta__btn">
+                <span data-i18n="cta_v_btn">Comenzar</span>
+                <span class="kairo-cta__btn-icon" aria-hidden="true"><i class="bi bi-arrow-right"></i></span>
+            </a>
+        </div>
+        <ul class="kairo-cta__perks" data-kairo-cta-extra>
+            <li class="kairo-cta__perk kairo-cta__perk--a">
+                <span class="kairo-cta__perk-icon"><i class="bi bi-unlock"></i></span>
+                <span data-i18n="cta_v_perk1">Sin permanencia</span>
+            </li>
+            <li class="kairo-cta__perk kairo-cta__perk--b">
+                <span class="kairo-cta__perk-icon"><i class="bi bi-lightning-charge"></i></span>
+                <span data-i18n="cta_v_perk2">Configuración en minutos</span>
+            </li>
+            <li class="kairo-cta__perk kairo-cta__perk--c">
+                <span class="kairo-cta__perk-icon"><i class="bi bi-headset"></i></span>
+                <span data-i18n="cta_v_perk3">Soporte en español</span>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<footer class="footer-kairo">
+    <div class="footer-kairo__inner">
+        <div class="footer-kairo__grid">
+            <div class="footer-kairo__brand">
+                <nav class="footer-kairo__titles">
+                    <a href="#tecnologia" data-i18n="nav_tecnologia">Solución</a>
+                    <a href="#sectores" data-i18n="nav_sectores">Segmentos</a>
+                    <a href="#equipo" data-i18n="nav_equipo">Equipo</a>
+                    <a href="#planes" data-i18n="nav_planes">Planes</a>
+                </nav>
+                <p class="footer-kairo__credit" data-i18n="footer_credit">Sitio diseñado por el equipo ShiftIQ</p>
+            </div>
+            <div class="footer-kairo__mid">
+                <nav class="footer-kairo__links">
+                    <a href="#inicio" data-i18n="nav_inicio">Inicio</a>
+                    <a href="#nosotros" data-i18n="nav_nosotros">Nosotros</a>
+                    <a href="terminos.html" data-i18n="footer_terms">Términos y Condiciones</a>
+                    <a href="#contacto" data-i18n="footer_nav_contact">Contacto</a>
+                </nav>
+                <div class="footer-kairo__chips">
+                    <span><i class="bi bi-geo-alt"></i> Lima · Perú</span>
+                    <span><i class="bi bi-speedometer2"></i> OBD2 24/7</span>
+                </div>
+            </div>
+            <div class="footer-kairo__cta-col">
+                <p class="footer-kairo__lead" data-i18n="footer_cta_lead">Talleres más inteligentes empiezan aquí. Únete a los equipos que ya operan con datos, no con suposiciones.</p>
+                <a href="#planes" class="footer-kairo__cta">
+                    <span data-i18n="footer_cta_btn">Prueba ShiftIQ ahora</span>
+                    <span aria-hidden="true">:)</span>
+                </a>
+                <div class="footer-kairo__social">
+                    <span class="footer-kairo__social-label" data-i18n="footer_follow">Síguenos:</span>
+                    <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" aria-label="X"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                </div>
+                <p class="footer-kairo__copy" data-i18n="footer_legal_copy">© 2026 ShiftIQ. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-physics" data-footer-physics>
+        <div class="footer-physics__world" data-footer-physics-world aria-hidden="true"></div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/script.js"></script>
+</body>
+
+</html>
