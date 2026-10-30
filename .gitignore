@@ -1,5 +1,12 @@
 Videos/video-5-kairoLabs.mp4
-.gitignore
+
+### VS Code Tasks Protection ###
+
+### Environment & Secrets ###
+.env
+.env.*
+!.env.example
 branch_structure.json
 temp_auto_push.bat
 temp_interactive_push.bat
+.gitignore
