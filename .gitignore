@@ -6,9 +6,7 @@ Videos/video-5-kairoLabs.mp4
 !.env.example
 
 ### VS Code Protection ###
-branch_structure.json
-temp_auto_push.bat
-temp_interactive_push.bat
-.gitignore
-config.bat
 node_modules
+
+### VS Code Protection ###
+config.bat
